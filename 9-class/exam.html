@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIVERS | ТРЕНАЖЕР ОГЭ</title>
+    <title>UNIVERS | ТРЕНАЖЕР ОГЭ 2026</title>
     <style>
         :root { --accent: #00d4ff; --bg: #0a0f1d; --card: #111827; --success: #10b981; --error: #ef4444; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
@@ -11,107 +11,171 @@
         .nav-top { width: 100%; display: flex; justify-content: space-between; padding: 10px 20px; box-sizing: border-box; background: #000; }
         .btn-root { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid var(--accent); padding: 5px 10px; border-radius: 5px; }
         .container { width: 95%; max-width: 800px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* ТАБЛИЦЫ */
         .tools { display: flex; gap: 10px; margin-bottom: 20px; width: 100%; }
-        .tool-btn { flex: 1; background: #1f2937; border: 1px solid var(--accent); color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
-        #exam-menu { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; }
-        .topic-btn { background: var(--card); border: 1px solid #374151; padding: 20px; border-radius: 12px; cursor: pointer; text-align: left; transition: 0.3s; }
+        .tool-btn { flex: 1; background: #1f2937; border: 1px solid var(--accent); color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+
+        /* МЕНЮ */
+        #exam-menu { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; }
+        .topic-btn { background: var(--card); border: 1px solid #374151; padding: 15px; border-radius: 12px; cursor: pointer; text-align: left; transition: 0.3s; }
         .topic-btn:hover { border-color: var(--accent); background: rgba(0,212,255,0.05); }
-        #quiz-zone { display: none; width: 100%; flex-direction: column; }
-        .q-card { background: var(--card); padding: 25px; border-radius: 15px; border-left: 6px solid var(--accent); margin-bottom: 20px; }
-        .opt-btn { background: #1f2937; border: 1px solid #374151; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; font-size: 1rem; margin-bottom: 10px; width: 100%; }
+
+        /* ЭКРАН ТЕСТА */
+        #quiz-zone { display: none; width: 100%; flex-direction: column; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .q-card { background: var(--card); padding: 20px; border-radius: 15px; border-left: 6px solid var(--accent); margin-bottom: 20px; }
+        
+        /* ВАРИАНТЫ ОТВЕТОВ */
+        .options-grid { display: grid; gap: 10px; width: 100%; }
+        .opt-btn { background: #1f2937; border: 1px solid #374151; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; font-size: 0.95rem; }
+        .opt-btn:hover { background: #374151; border-color: var(--accent); }
+        .opt-btn.selected { border-color: var(--accent); background: rgba(0,212,255,0.1); }
         .opt-btn.correct { background: var(--success) !important; color: #000; font-weight: bold; }
         .opt-btn.wrong { background: var(--error) !important; color: #fff; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; cursor: pointer; }
-        .modal-img { max-width: 95%; max-height: 90%; border: 2px solid var(--accent); border-radius: 10px; box-shadow: 0 0 30px var(--accent); }
+
+        /* ВВОД ЧИСЛА / МАТРИЦА */
+        .input-area { display: flex; gap: 10px; margin-top: 15px; }
+        .num-input { background: #000; border: 2px solid var(--accent); color: var(--accent); padding: 10px; width: 80px; text-align: center; font-size: 1.2rem; border-radius: 8px; }
+        .matrix-table td { padding: 5px; text-align: center; }
+
+        /* МОДЕЛЬ АТОМА */
+        #atom-model { width: 150px; height: 150px; margin: 10px auto; background: radial-gradient(circle, #333 0%, #000 70%); border-radius: 50%; border: 2px solid var(--accent); display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 2rem; color: var(--accent); }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-img { max-width: 95%; max-height: 90%; border: 2px solid var(--accent); }
+        
         #progress-bar { width: 100%; height: 6px; background: #1f2937; margin-bottom: 20px; border-radius: 10px; overflow: hidden; }
         #progress-fill { width: 0%; height: 100%; background: var(--accent); transition: 0.4s; }
+        .btn-confirm { background: var(--success); color: #000; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer; display: none; }
     </style>
 </head>
 <body>
-
     <div class="nav-top">
         <a href="../index.html" class="btn-root">← ВЫХОД</a>
-        <div id="score-box" style="color:var(--accent); font-weight:bold;">БАЛЛЫ: 0</div>
+        <div id="score-val" style="color:var(--accent); font-weight:bold;">БАЛЛЫ: 0</div>
     </div>
-
-    <header><h1>ТРЕНАЖЕР ОГЭ • UNIVERS</h1></header>
-
+    <header><h1>ТРЕНАЖЕР ОГЭ 2026</h1></header>
     <div class="container">
         <div class="tools">
-            <button class="tool-btn" onclick="openMod('m-modal')">⚛️ Таблица Менделеева</button>
-            <button class="tool-btn" onclick="openMod('s-modal')">💧 Растворимость</button>
+            <button class="tool-btn" onclick="openMod('m-modal')">⚛️ МЕНДЕЛЕЕВ</button>
+            <button class="tool-btn" onclick="openMod('s-modal')">💧 РАСТВОРИМОСТЬ</button>
         </div>
-
         <div id="progress-bar"><div id="progress-fill"></div></div>
-
-        <div id="exam-menu">
-            <div class="topic-btn" onclick="runQuiz('atom')"><h3>01. Строение атома</h3><p>Ядро, электроны, уровни</p></div>
-            <div class="topic-btn" onclick="runQuiz('periodic')"><h3>02. Периодический закон</h3><p>Изменение свойств элементов</p></div>
-            <div class="topic-btn" onclick="runQuiz('valency')"><h3>03. Степень окисления</h3><p>Определение зарядов ионов</p></div>
-        </div>
-
+        <div id="exam-menu"></div>
         <div id="quiz-zone">
-            <div class="q-card"><p id="q-txt" style="font-size:1.1rem;"></p></div>
-            <div id="opt-grid"></div>
+            <div id="atom-view" style="display:none;"><div id="atom-model">+3</div></div>
+            <div class="q-card"><p id="q-text"></p></div>
+            <div id="options-box" class="options-grid"></div>
+            <div id="input-zone" class="input-area" style="display:none;"></div>
+            <button id="confirm-btn" class="btn-confirm" onclick="checkComplexAnswer()">ОТПРАВИТЬ ОТВЕТ</button>
             <button class="tool-btn" style="margin-top:20px; border:none; opacity:0.5;" onclick="location.reload()">← Назад к темам</button>
         </div>
     </div>
-
-    <!-- МОДАЛКИ С ЛОКАЛЬНЫМИ ФАЙЛАМИ -->
-    <div id="m-modal" class="modal" onclick="this.style.display='none'">
-        <img class="modal-img" src="mendeleev.jpg" onerror="this.src='https://thepresentation.ru'">
-    </div>
-    <div id="s-modal" class="modal" onclick="this.style.display='none'">
-        <img class="modal-img" src="solubility.jpg" onerror="this.src='https://himya.ru'">
-    </div>
-
+    <div id="m-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="mendeleev.jpg"></div>
+    <div id="s-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="solubility.jpg"></div>
 <script>
-    const db = {
-        atom: [
-            { q: "Число электронов во внешнем слое атома фосфора:", a: ["5", "3", "15", "31"], c: 0 },
-            { q: "Атом какого элемента имеет 3 электронных слоя?", a: ["Li", "Al", "Be", "O"], c: 1 }
-        ],
-        periodic: [
-            { q: "Наибольшей электроотрицательностью обладает:", a: ["Si", "P", "S", "Cl"], c: 3 },
-            { q: "Радиус атома в ряду F -> O -> N -> C:", a: ["Увеличивается", "Уменьшается", "Не меняется"], c: 0 }
-        ],
-        valency: [
-            { q: "Степень окисления азота в HNO3:", a: ["+3", "+5", "-3", "+4"], c: 1 },
-            { q: "В соединении SO2 степень окисления серы:", a: ["-2", "+2", "+4", "+6"], c: 2 }
-        ]
-    };
+    const db = [
+        { id: 1, type: "multi", q: "Выберите два утверждения, в которых говорится о хлоре как о простом веществе.", a: ["Хлор при нормальных условиях — ядовитый газ.", "Запасы хлора содержатся в воде морей.", "Газообразный хлор легко сжижается.", "Ткани человека содержат 0,2% хлора.", "С пищей человек получает 3–6 г хлора."], c: [0, 2] },
+        { id: 2, type: "input", q: "На модели изображено ядро атома (+3). Запишите номер периода (X) и заряд ядра (Y).", c: ["2", "3"], labels: ["X:", "Y:"] },
+        { id: 3, type: "order", q: "Расположите элементы (1-Li, 2-K, 3-Na) в порядке увеличения основных свойств их высших оксидов.", a: ["1", "2", "3"], c: "132" },
+        { id: 4, type: "matrix", q: "Установите соответствие (А-MnSO4, Б-K2MnO4, В-MnO2) и С.О. (1-+2, 2-+7, 3-+4, 4-+6).", c: "143", labels: ["А", "Б", "В"] },
+        { id: 5, type: "multi", q: "Выберите два вещества с ковалентной полярной связью.", a: ["PCl3", "Ca3N2", "Na2O", "Al", "SO2"], c: [0, 4] },
+        { id: 6, type: "multi", q: "Сходство бора, углерода и азота проявляется в том, что...", a: ["Одинаковое число протонов", "Одинаковое число слоев", "Они являются неметаллами", "Только положит. С.О.", "Высшие оксиды - основные"], c: [1, 2] },
+        { id: 7, type: "single", q: "Кислоте HNO2 соответствует оксид:", a: ["N2O", "NO", "N2O3", "N2O5"], c: 2 },
+        { id: 8, type: "multi", q: "Выберите две пары веществ, которые реагируют с раствором NaOH:", a: ["MgO и NO", "NO2 и CuO", "FeO и ZnO", "CO2 и Al2O3", "ZnO и P2O5"], c: [3, 4] },
+        { id: 9, type: "matrix", q: "Соответствие: А)Al+NaOH+H2O, Б)Al2O3+NaOH(сплав), В)Al(OH)3+HCl.", c: "342", labels: ["А", "Б", "В"] },
+        { id: 10, type: "matrix", q: "Соответствие: А)Al, Б)O2, В)S. Реагенты: 1)SO2,CH4; 2)AgNO3,NaCl; 3)HCl,KOH; 4)Fe,Cl2.", c: "314", labels: ["А", "Б", "В"] },
+        { id: 11, type: "single", q: "Какое уравнение соответствует реакции разложения?", a: ["Zn + H2SO4", "HNO3 + Fe(OH)2", "H2SO4 + C", "Pb(NO3)2 -> PbO + NO2 + O2"], c: 3 },
+        { id: 12, type: "matrix", q: "Признак реакции: А)CuSO4+BaCl2, Б)CuSO4+NaOH, В)FeSO4+NaOH.", c: "134", labels: ["А", "Б", "В"] },
+        { id: 13, type: "multi", q: "Выберите два неэлектролита.", a: ["CH4", "CO2", "HNO3", "KClO", "CuSO4"], c: [0, 1] },
+        { id: 14, type: "multi", q: "Выберите два ряда ионов, способных находиться в растворе одновременно.", a: ["Ca2+, Ba2+, NO3-, Cl-", "Mg2+, Fe3+, Cl-, SO42-", "K+, Al3+, Cl-, OH-", "Cu2+, S2-...", "H+, OH-...", "Ca2+, OH-..."], c: [0, 1] },
+        { id: 15, type: "matrix", q: "Процесс: А)Si(+4)->Si(0), Б)I(+5)->I(+7), В)N2(0)->2N(-3). (1-окисление, 2-восстановление).", c: "212", labels: ["А", "Б", "В"] },
+        { id: 16, type: "multi", q: "Выберите верные суждения о безопасности.", a: ["Органику хранить вдали от огня", "Щелочные Ме без защиты", "Ацетон только в холодильнике", "Калий под слоем керосина"], c: [0, 3] },
+        { id: 17, type: "matrix", q: "Различить: А)CuSO4/CuCl2, Б)Na2SO4/BaSO4, В)NH3/NH4Cl. Реактив: 1)H2O, 2)ф/фталеин, 3)Ba(NO3)2, 4)Cu.", c: "312", labels: ["А", "Б", "В"] },
+        { id: 18, type: "input", q: "Вычислите массовую долю магния в лактате MgC6H10O6 (в %). Целое число.", c: ["12"], labels: ["%"] },
+        { id: 19, type: "input", q: "Сколько грамм лактата нужно для 3000 мг магния? (Используйте ответ из №18). Целое число.", c: ["25"], labels: ["г"] }
+    ];
 
-    let curSet = [], curIdx = 0, pts = 0;
+    let currentQ = 0, score = 0, selectedOpts = [];
+
+    const menu = document.getElementById('exam-menu');
+    db.forEach((item, i) => {
+        let b = document.createElement('div'); b.className = 'topic-btn';
+        b.innerHTML = `<h3>Задание №${item.id}</h3><p>${item.q.substring(0, 50)}...</p>`;
+        b.onclick = () => startQuestion(i);
+        menu.appendChild(b);
+    });
 
     function openMod(id) { document.getElementById(id).style.display = 'flex'; }
 
-    function runQuiz(t) {
-        curSet = db[t]; curIdx = 0; pts = 0;
+    function startQuestion(idx) {
+        currentQ = idx; selectedOpts = [];
         document.getElementById('exam-menu').style.display = 'none';
         document.getElementById('quiz-zone').style.display = 'flex';
-        showQ();
+        renderTask();
     }
 
-    function showQ() {
-        const d = curSet[curIdx];
-        document.getElementById('q-txt').innerText = d.q;
-        const g = document.getElementById('opt-grid'); g.innerHTML = '';
-        d.a.forEach((o, i) => {
-            const b = document.createElement('button'); b.className = 'opt-btn'; b.innerText = o;
-            b.onclick = () => {
-                const btns = document.querySelectorAll('.opt-btn');
-                btns.forEach(x => x.disabled = true);
-                if(i === d.c) { b.classList.add('correct'); pts++; document.getElementById('score-box').innerText = 'БАЛЛЫ: '+pts; }
-                else { b.classList.add('wrong'); btns[d.c].classList.add('correct'); }
-                setTimeout(() => {
-                    curIdx++;
-                    if(curIdx < curSet.length) showQ();
-                    else { alert("Баллы: " + pts); location.reload(); }
-                }, 1200);
-            };
-            g.appendChild(b);
-        });
-        document.getElementById('progress-fill').style.width = (curIdx / curSet.length * 100) + '%';
+    function renderTask() {
+        const t = db[currentQ];
+        document.getElementById('q-text').innerText = t.q;
+        document.getElementById('atom-view').style.display = t.id === 2 ? 'block' : 'none';
+        const box = document.getElementById('options-box'); box.innerHTML = '';
+        const inp = document.getElementById('input-zone'); inp.innerHTML = ''; inp.style.display = 'none';
+        document.getElementById('confirm-btn').style.display = 'none';
+
+        if (t.type === "single" || t.type === "multi") {
+            t.a.forEach((opt, i) => {
+                let btn = document.createElement('button'); btn.className = 'opt-btn'; btn.innerText = opt;
+                btn.onclick = () => handleSelect(i, btn, t.type);
+                box.appendChild(btn);
+            });
+            if(t.type === "multi") document.getElementById('confirm-btn').style.display = 'block';
+        } else if (t.type === "input" || t.type === "matrix" || t.type === "order") {
+            inp.style.display = 'flex';
+            let count = t.type === "input" ? t.c.length : t.c.length;
+            for(let i=0; i<count; i++) {
+                let label = t.labels ? t.labels[i] : (i+1);
+                inp.innerHTML += `<div>${label} <input type="text" class="num-input" id="val${i}"></div>`;
+            }
+            document.getElementById('confirm-btn').style.display = 'block';
+        }
+    }
+
+    function handleSelect(i, btn, type) {
+        if(type === "single") {
+            checkSimple(i, btn);
+        } else {
+            btn.classList.toggle('selected');
+            if(selectedOpts.includes(i)) selectedOpts = selectedOpts.filter(item => item !== i);
+            else selectedOpts.push(i);
+        }
+    }
+
+    function checkSimple(i, btn) {
+        if(i === db[currentQ].c) { btn.classList.add('correct'); score++; }
+        else { btn.classList.add('wrong'); }
+        finish();
+    }
+
+    function checkComplexAnswer() {
+        const t = db[currentQ]; let isCorrect = false;
+        if(t.type === "multi") {
+            isCorrect = t.c.every(val => selectedOpts.includes(val)) && t.c.length === selectedOpts.length;
+        } else {
+            let userAns = "";
+            for(let i=0; i<t.c.length; i++) userAns += document.getElementById('val'+i).value;
+            isCorrect = userAns === (Array.isArray(t.c) ? t.c.join('') : t.c);
+        }
+        
+        if(isCorrect) { score++; alert("ВЕРНО!"); } else { alert("ОШИБКА!"); }
+        finish();
+    }
+
+    function finish() {
+        document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + score;
+        document.getElementById('progress-fill').style.width = ((currentQ + 1) / db.length * 100) + '%';
+        setTimeout(() => location.reload(), 1500);
     }
 </script>
 </body>
