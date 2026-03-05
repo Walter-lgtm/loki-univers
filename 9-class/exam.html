@@ -75,11 +75,14 @@
     <div id="m-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="mendeleev.jpg"></div>
     <div id="s-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="solubility.jpg"></div>
 <script>
-    let totalScore = parseInt(localStorage.getItem('LokiScore')) || 0;
+    // СЕССИОННАЯ ПАМЯТЬ: Сбрасывается при закрытии вкладки или новом входе
+    let totalScore = parseInt(sessionStorage.getItem('LokiSessionScore')) || 0;
     document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore;
 
     const db = [
-        { id: 1, type: "multi", q: "Выберите два утверждения о хлоре как о простом веществе.", a: ["1) Газ желтовато-зеленого цвета", "2) Запасы в воде морей", "3) Легко сжижается", "4) Содержится в тканях человека", "5) Поступает с пищей"], c: [0, 2], pts: 1 },
+        
+
+{ id: 1, type: "multi", q: "Выберите два утверждения о хлоре как о простом веществе.", a: ["1) Газ желтовато-зеленого цвета", "2) Запасы в воде морей", "3) Легко сжижается", "4) Содержится в тканях человека", "5) Поступает с пищей"], c: [0, 2], pts: 1 },
         { id: 2, type: "input", q: "Модель ядра (+3). Запишите период (X) и заряд (Y).", c: ["2", "3"], labels: ["X", "Y"], pts: 1 },
         { id: 3, type: "input", q: "Расположите элементы: 1)Li, 2)K, 3)Na в порядке увеличения основных свойств оксидов.", c: ["1", "3", "2"], labels: ["1-й", "2-й", "3-й"], pts: 1 },
         { id: 4, type: "matrix", q: "Установите соответствие между формулой и степенью окисления марганца:", 
@@ -87,7 +90,7 @@
           right: ["1) +2", "2) +7", "3) +4", "4) +6"], 
           c: ["1", "4", "3"], pts: 2 },
         { id: 5, type: "multi", q: "Выберите два вещества с ковалентной полярной связью.", a: ["1) PCl3", "2) Ca3N2", "3) Na2O", "4) Al", "5) SO2"], c: [0, 4], pts: 1 },
-        { id: 6, type: "multi", q: "Сходство бора, углерода и азота проявляется в том, что...", a: ["1) одинаковое число протонов", "2) одинаковое число слоев", "3) неметаллы", "4) только + С.О.", "5) высшие оксиды — основные"], c: [1, 2], pts: 1 },
+        { id: 6, type: "multi", q: "Сходство бора, углерода и азота проявляется в том, что...", a: ["1) одинаковое число протонов", "2) одинаковое число слоев", "3) неметаллы", "4) только + С.О.", "5) оксиды — основные"], c: [1, 2], pts: 1 },
         { id: 7, type: "single", q: "Кислоте HNO2 соответствует оксид:", a: ["1) N2O", "2) NO", "3) N2O3", "4) N2O5"], c: 2, pts: 1 },
         { id: 8, type: "multi", q: "Две пары веществ, которые реагируют с раствором гидроксида натрия:", a: ["1) MgO и NO", "2) NO2 и CuO", "3) FeO и ZnO", "4) CO2 и Al2O3", "5) ZnO и P2O5"], c: [3, 4], pts: 1 },
         { id: 9, type: "matrix", q: "Установите соответствие между реагентами и продуктами:", 
@@ -153,15 +156,11 @@
             inp.style.display = 'flex'; inp.style.flexDirection = 'column';
             let html = '<table class="matrix-table" style="width:100%; border-spacing: 0 10px;">';
             t.left.forEach((label, i) => {
-                html += `<tr>
-                    <td style="text-align:left; padding:10px; background:rgba(255,255,255,0.05); border-radius:8px 0 0 8px;">${label}</td>
+                html += `<tr><td style="text-align:left; padding:10px; background:rgba(255,255,255,0.05); border-radius:8px 0 0 8px;">${label}</td>
                     <td style="padding:10px; background:rgba(255,255,255,0.05); border-radius:0 8px 8px 0;">
-                        <select id="val${i}" class="num-input" style="width:100%;">
-                            <option value="">выбрать ответ</option>
-                            ${t.right.map((r, idx) => `<option value="${idx+1}">${r}</option>`).join('')}
-                        </select>
-                    </td>
-                </tr>`;
+                        <select id="val${i}" class="num-input" style="width:100%;"><option value="">выбрать ответ</option>
+                        ${t.right.map((r, idx) => `<option value="${idx+1}">${r}</option>`).join('')}</select>
+                    </td></tr>`;
             });
             html += '</table>';
             inp.innerHTML = html;
@@ -199,8 +198,15 @@
         upd(pts); alert(pts > 0 ? "Начислено баллов: " + pts : "0 баллов"); fin();
     }
 
-    function upd(p) { totalScore += p; localStorage.setItem('LokiScore', totalScore); document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore; }
-    function fin() { document.getElementById('progress-fill').style.width = ((currentIdx+1)/db.length*100) + '%'; setTimeout(() => location.reload(), 1500); }
+    function upd(p) { 
+        totalScore += p; 
+        sessionStorage.setItem('LokiSessionScore', totalScore); 
+        document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore; 
+    }
+    function fin() { 
+        document.getElementById('progress-fill').style.width = ((currentIdx+1)/db.length*100) + '%'; 
+        setTimeout(() => location.reload(), 1200); 
+    }
     function openMod(id) { document.getElementById(id).style.display = 'flex'; }
 </script>
 </body>
