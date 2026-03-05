@@ -3,201 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIVERS | ТРЕНАЖЕР ОГЭ 2026</title>
+    <title>UNIVERS | ТРЕНАЖЕР ОГЭ</title>
     <style>
         :root { --accent: #00d4ff; --bg: #0a0f1d; --card: #111827; --success: #10b981; --error: #ef4444; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        
         header { background: #111827; width: 100%; text-align: center; padding: 15px; border-bottom: 2px solid var(--accent); position: sticky; top: 0; z-index: 100; }
-        .nav-top { width: 100%; display: flex; justify-content: space-between; padding: 10px 20px; box-sizing: border-box; background: #000; width: 100%; }
+        .nav-top { width: 100%; display: flex; justify-content: space-between; padding: 10px 20px; box-sizing: border-box; background: #000; }
         .btn-root { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid var(--accent); padding: 5px 10px; border-radius: 5px; }
-
         .container { width: 95%; max-width: 800px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        
-        /* ИНСТРУМЕНТЫ (ТАБЛИЦЫ) */
         .tools { display: flex; gap: 10px; margin-bottom: 20px; width: 100%; }
         .tool-btn { flex: 1; background: #1f2937; border: 1px solid var(--accent); color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
-
-        /* МЕНЮ ТЕМ */
         #exam-menu { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; }
         .topic-btn { background: var(--card); border: 1px solid #374151; padding: 20px; border-radius: 12px; cursor: pointer; text-align: left; transition: 0.3s; }
-        .topic-btn:hover { border-color: var(--accent); background: rgba(0,212,255,0.05); transform: translateY(-3px); }
-        .topic-btn h3 { margin: 0; color: var(--accent); font-size: 1.1rem; }
-        .topic-btn p { margin: 5px 0 0; font-size: 0.8rem; opacity: 0.6; }
-
-        /* ЗОНА ТЕСТИРОВАНИЯ */
-        #quiz-zone { display: none; width: 100%; flex-direction: column; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .q-card { background: var(--card); padding: 25px; border-radius: 15px; border-left: 6px solid var(--accent); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .options { display: grid; gap: 12px; }
-        .opt-btn { background: #1f2937; border: 1px solid #374151; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; font-size: 1rem; }
-        .opt-btn:hover { background: #374151; border-color: var(--accent); }
-        .opt-btn.correct { background: var(--success) !important; color: #000; font-weight: bold; border-color: #fff; }
-        .opt-btn.wrong { background: var(--error) !important; color: #fff; border-color: #fff; }
-
-        /* МОДАЛЬНЫЕ ОКНА */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; cursor: zoom-out; }
-        .modal-content { position: relative; width: 95%; max-width: 1000px; display: flex; flex-direction: column; align-items: center; }
-        .modal-img { width: 100%; height: auto; border: 2px solid var(--accent); border-radius: 10px; background: #fff; }
-
-        #progress-container { width: 100%; height: 6px; background: #1f2937; margin-bottom: 20px; border-radius: 10px; overflow: hidden; }
-        #progress-bar { width: 0%; height: 100%; background: var(--accent); transition: 0.4s; box-shadow: 0 0 10px var(--accent); }
-        
-        .score-box { background: #000; padding: 5px 15px; border-radius: 20px; border: 1px solid var(--accent); color: var(--accent); font-weight: bold; font-size: 0.9rem; }
+        .topic-btn:hover { border-color: var(--accent); background: rgba(0,212,255,0.05); }
+        #quiz-zone { display: none; width: 100%; flex-direction: column; }
+        .q-card { background: var(--card); padding: 25px; border-radius: 15px; border-left: 6px solid var(--accent); margin-bottom: 20px; }
+        .opt-btn { background: #1f2937; border: 1px solid #374151; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; font-size: 1rem; margin-bottom: 10px; width: 100%; }
+        .opt-btn.correct { background: var(--success) !important; color: #000; font-weight: bold; }
+        .opt-btn.wrong { background: var(--error) !important; color: #fff; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; cursor: pointer; }
+        .modal-img { max-width: 95%; max-height: 90%; border: 2px solid var(--accent); border-radius: 10px; box-shadow: 0 0 30px var(--accent); }
+        #progress-bar { width: 100%; height: 6px; background: #1f2937; margin-bottom: 20px; border-radius: 10px; overflow: hidden; }
+        #progress-fill { width: 0%; height: 100%; background: var(--accent); transition: 0.4s; }
     </style>
 </head>
 <body>
 
     <div class="nav-top">
         <a href="../index.html" class="btn-root">← ВЫХОД</a>
-        <div class="score-box" id="score-val">БАЛЛЫ: 0</div>
+        <div id="score-box" style="color:var(--accent); font-weight:bold;">БАЛЛЫ: 0</div>
     </div>
 
     <header><h1>ТРЕНАЖЕР ОГЭ • UNIVERS</h1></header>
 
     <div class="container">
-        <!-- ТАБЛИЦЫ -->
         <div class="tools">
-            <button class="tool-btn" onclick="openModal('mendeleev-modal')">⚛️ Таблица Менделеева</button>
-            <button class="tool-btn" onclick="openModal('sol-modal')">💧 Растворимость / Ряд Me</button>
+            <button class="tool-btn" onclick="openMod('m-modal')">⚛️ Таблица Менделеева</button>
+            <button class="tool-btn" onclick="openMod('s-modal')">💧 Растворимость</button>
         </div>
 
-        <div id="progress-container"><div id="progress-bar"></div></div>
+        <div id="progress-bar"><div id="progress-fill"></div></div>
 
-        <!-- ГЛАВНОЕ МЕНЮ ТРЕНАЖЕРА -->
         <div id="exam-menu">
-            <div class="topic-btn" onclick="initQuiz('atom')">
-                <h3>01. Строение атома и слои</h3>
-                <p>Протоны, нейтроны, электроны. Распределение по уровням.</p>
-            </div>
-            <div class="topic-btn" onclick="initQuiz('periodic')">
-                <h3>02. Периодический закон</h3>
-                <p>Изменение свойств элементов в группах и периодах.</p>
-            </div>
-            <div class="topic-btn" onclick="initQuiz('valency')">
-                <h3>03. Степень окисления</h3>
-                <p>Определение С.О. в бинарных и сложных соединениях.</p>
-            </div>
-            <div class="topic-btn" onclick="initQuiz('mass')">
-                <h3>04. Расчетные задачи (№18)</h3>
-                <p>Вычисление массовой доли элемента в веществе.</p>
-            </div>
+            <div class="topic-btn" onclick="runQuiz('atom')"><h3>01. Строение атома</h3><p>Ядро, электроны, уровни</p></div>
+            <div class="topic-btn" onclick="runQuiz('periodic')"><h3>02. Периодический закон</h3><p>Изменение свойств элементов</p></div>
+            <div class="topic-btn" onclick="runQuiz('valency')"><h3>03. Степень окисления</h3><p>Определение зарядов ионов</p></div>
         </div>
 
-        <!-- ЭКРАН ВОПРОСА -->
         <div id="quiz-zone">
-            <div class="q-card">
-                <p id="question-text"></p>
-            </div>
-            <div class="options" id="options-grid"></div>
-            <button class="tool-btn" style="margin-top:30px; background:none; border-color:#374151;" onclick="location.reload()">← Назад к темам</button>
+            <div class="q-card"><p id="q-txt" style="font-size:1.1rem;"></p></div>
+            <div id="opt-grid"></div>
+            <button class="tool-btn" style="margin-top:20px; border:none; opacity:0.5;" onclick="location.reload()">← Назад к темам</button>
         </div>
     </div>
 
-    <!-- ОКНА С ТАБЛИЦАМИ (МОДАЛКИ) -->
-    <div id="mendeleev-modal" class="modal" onclick="this.style.display='none'">
-        <div class="modal-content">
-            <p style="color:var(--accent); margin-bottom:10px; font-weight:bold;">ТАБЛИЦА Д.И. МЕНДЕЛЕЕВА (ОГЭ)</p>
-            <img class="modal-img" src="https://thepresentation.ru">
-        </div>
+    <!-- МОДАЛКИ С ЛОКАЛЬНЫМИ ФАЙЛАМИ -->
+    <div id="m-modal" class="modal" onclick="this.style.display='none'">
+        <img class="modal-img" src="mendeleev.jpg" onerror="this.src='https://thepresentation.ru'">
     </div>
-
-    <div id="sol-modal" class="modal" onclick="this.style.display='none'">
-        <div class="modal-content">
-            <p style="color:var(--accent); margin-bottom:10px; font-weight:bold;">РАСТВОРИМОСТЬ И РЯД АКТИВНОСТИ</p>
-            <img class="modal-img" src="https://himya.ru">
-            <div style="background:#fff; padding:10px; border-radius:8px; margin-top:10px; width:100%; box-sizing:border-box;">
-                <img src="https://chemequations.com" style="width:100%;">
-            </div>
-        </div>
+    <div id="s-modal" class="modal" onclick="this.style.display='none'">
+        <img class="modal-img" src="solubility.jpg" onerror="this.src='https://himya.ru'">
     </div>
 
 <script>
-    const quizDB = {
+    const db = {
         atom: [
-            { q: "Число протонов в ядре атома алюминия равно:", a: ["13", "27", "14", "3"], c: 0 },
-            { q: "Три электронных слоя и 6 валентных электронов имеет атом:", a: ["Кислорода", "Серы", "Селена", "Хлора"], c: 1 },
-            { q: "Ядро атома 24Mg содержит:", a: ["12 протонов, 12 нейтронов", "12 протонов, 24 нейтрона", "24 протона, 12 нейтронов", "12 протонов, 12 электронов"], c: 0 }
+            { q: "Число электронов во внешнем слое атома фосфора:", a: ["5", "3", "15", "31"], c: 0 },
+            { q: "Атом какого элемента имеет 3 электронных слоя?", a: ["Li", "Al", "Be", "O"], c: 1 }
         ],
         periodic: [
-            { q: "В ряду элементов Li -> Be -> B металлические свойства:", a: ["Усиливаются", "Ослабевают", "Не изменяются", "Сначала ослабевают, потом усиливаются"], c: 1 },
-            { q: "Наибольший радиус атома имеет:", a: ["Натрий", "Магний", "Алюминий", "Кремний"], c: 0 },
-            { q: "Наивысшую электроотрицательность имеет:", a: ["Фтор", "Хлор", "Кислород", "Азот"], c: 0 }
+            { q: "Наибольшей электроотрицательностью обладает:", a: ["Si", "P", "S", "Cl"], c: 3 },
+            { q: "Радиус атома в ряду F -> O -> N -> C:", a: ["Увеличивается", "Уменьшается", "Не меняется"], c: 0 }
         ],
         valency: [
-            { q: "Степень окисления фосфора в PH3 равна:", a: ["+3", "-3", "+5", "0"], c: 1 },
-            { q: "В каком соединении сера имеет степень окисления +4?", a: ["H2S", "SO2", "SO3", "H2SO4"], c: 1 },
-            { q: "Степень окисления азота в ионе аммония NH4+ равна:", a: ["+3", "-3", "+5", "-4"], c: 1 }
-        ],
-        mass: [
-            { q: "Вычислите массовую долю кислорода в CaCO3 (в %):", a: ["16", "48", "60", "40"], c: 1 },
-            { q: "Массовая доля железа в оксиде Fe2O3 составляет примерно:", a: ["70%", "30%", "50%", "80%"], c: 0 },
-            { q: "В каком веществе массовая доля водорода наибольшая?", a: ["H2O", "CH4", "NH3", "HCl"], c: 1 }
+            { q: "Степень окисления азота в HNO3:", a: ["+3", "+5", "-3", "+4"], c: 1 },
+            { q: "В соединении SO2 степень окисления серы:", a: ["-2", "+2", "+4", "+6"], c: 2 }
         ]
     };
 
-    let activeSet = [];
-    let currentIdx = 0;
-    let points = 0;
+    let curSet = [], curIdx = 0, pts = 0;
 
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function openMod(id) { document.getElementById(id).style.display = 'flex'; }
 
-    function initQuiz(theme) {
-        activeSet = quizDB[theme];
-        currentIdx = 0;
-        points = 0;
+    function runQuiz(t) {
+        curSet = db[t]; curIdx = 0; pts = 0;
         document.getElementById('exam-menu').style.display = 'none';
         document.getElementById('quiz-zone').style.display = 'flex';
-        renderQuestion();
+        showQ();
     }
 
-    function renderQuestion() {
-        const data = activeSet[currentIdx];
-        document.getElementById('question-text').innerText = data.q;
-        const grid = document.getElementById('options-grid');
-        grid.innerHTML = '';
-        
-        data.a.forEach((option, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'opt-btn';
-            btn.innerText = option;
-            btn.onclick = () => handleAnswer(i, btn);
-            grid.appendChild(btn);
+    function showQ() {
+        const d = curSet[curIdx];
+        document.getElementById('q-txt').innerText = d.q;
+        const g = document.getElementById('opt-grid'); g.innerHTML = '';
+        d.a.forEach((o, i) => {
+            const b = document.createElement('button'); b.className = 'opt-btn'; b.innerText = o;
+            b.onclick = () => {
+                const btns = document.querySelectorAll('.opt-btn');
+                btns.forEach(x => x.disabled = true);
+                if(i === d.c) { b.classList.add('correct'); pts++; document.getElementById('score-box').innerText = 'БАЛЛЫ: '+pts; }
+                else { b.classList.add('wrong'); btns[d.c].classList.add('correct'); }
+                setTimeout(() => {
+                    curIdx++;
+                    if(curIdx < curSet.length) showQ();
+                    else { alert("Баллы: " + pts); location.reload(); }
+                }, 1200);
+            };
+            g.appendChild(b);
         });
-        updateBar();
-    }
-
-    function handleAnswer(choice, element) {
-        const correctIdx = activeSet[currentIdx].c;
-        const buttons = document.querySelectorAll('.opt-btn');
-        buttons.forEach(b => b.disabled = true);
-
-        if(choice === correctIdx) {
-            element.classList.add('correct');
-            points++;
-            document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + points;
-        } else {
-            element.classList.add('wrong');
-            buttons[correctIdx].classList.add('correct');
-        }
-
-        setTimeout(() => {
-            currentIdx++;
-            if(currentIdx < activeSet.length) {
-                renderQuestion();
-            } else {
-                alert(
-
-"Раздел пройден! Набрано баллов: " + points + " из " + activeSet.length);
-                location.reload();
-            }
-        }, 1200);
-    }
-
-    function updateBar() {
-        const w = (currentIdx / activeSet.length) * 100;
-        document.getElementById('progress-bar').style.width = w + '%';
+        document.getElementById('progress-fill').style.width = (curIdx / curSet.length * 100) + '%';
     }
 </script>
 </body>
