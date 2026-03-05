@@ -5,164 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIVERS | ОГЭ ТИП 23</title>
     <style>
-        /* ГЛОБАЛЬНЫЙ ТЕМНЫЙ СТИЛЬ */
+        /* Жесткая блокировка белого фона */
         html, body { 
-            background: #
+            background-color: #
 
 0a0f1d !important; 
+            background: #0a0f1d !important;
             color: #ffffff !important; 
             margin: 0; padding: 0; 
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh;
         }
+        header { text-align: center; padding: 20px; width: 100%; background: #111827; border-bottom: 2px solid #00d4ff; }
+        h1 { color: #00d4ff; margin: 0; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        header { text-align: center; padding: 25px 10px; }
-        h1 { color: #00d4ff; letter-spacing: 2px; font-size: 1.5rem; text-transform: uppercase; }
+        #task-menu { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px; }
+        .btn-task { background: #1f2937; border: 2px solid #00d4ff; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 140px; }
 
-        /* МЕНЮ ВЫБОРА */
-        #task-menu { 
-            display: flex; flex-wrap: wrap; justify-content: center; 
-            gap: 12px; padding: 20px; width: 100%; max-width: 800px; 
-        }
-        
-        .btn-task { 
-            background: #16203a; border: 2px solid #00d4ff; color: #fff; 
-            padding: 18px; border-radius: 12px; cursor: pointer; 
-            font-weight: bold; width: 160px; transition: 0.3s;
-        }
-        .btn-task:hover { background: #00d4ff; color: #000; transform: scale(1.05); }
+        #lab-view { display: none; width: 90%; max-width: 400px; flex-direction: column; align-items: center; margin-top: 20px; }
+        .card { background: #111827; padding: 15px; border-radius: 10px; width: 100%; border-left: 5px solid #00d4ff; margin-bottom: 15px; }
 
-        /* ИНТЕРФЕЙС ЛАБОРАТОРИИ */
-        #lab-view { display: none; width: 90%; max-width: 450px; flex-direction: column; align-items: center; margin-top: 10px; }
-
-        .card { 
-            background: #16203a; padding: 20px; border-radius: 15px; 
-            width: 100%; border-left: 5px solid #00d4ff; margin-bottom: 20px;
-            box-sizing: border-box;
-        }
-
-        /* ПРОБИРКА - КОНТРАСТНАЯ */
+        /* ПРОБИРКА - МАКСИМАЛЬНАЯ ВИДИМОСТЬ */
         .vessel { 
-            width: 75px; height: 190px; border: 4px solid #ffffff; 
-            border-radius: 0 0 40px 40px; position: relative; 
-            background: rgba(255,255,255,0.1); overflow: hidden; margin: 20px;
-            box-shadow: 0 0 25px rgba(0,212,255,0.2);
+            width: 70px; height: 180px; 
+            border: 4px solid #ffffff !important; /* Яркий белый контур */
+            border-radius: 0 0 35px 35px; position: relative; 
+            background: rgba(255,255,255,0.15) !important; 
+            overflow: hidden; margin: 20px;
+            box-shadow: 0 0 15px rgba(0,212,255,0.4);
         }
-        .liq { position: absolute; bottom: 0; width: 100%; height: 0; transition: 0.6s; background: rgba(0, 212, 255, 0.5); }
-        .pre { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1.2s; z-index: 10; border-radius: 0 0 35px 35px; }
+        .liq { position: absolute; bottom: 0; width: 100%; height: 0; transition: 0.5s; background: rgba(0, 212, 255, 0.7); }
+        .pre { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; z-index: 10; }
 
-        /* СЕТКА РЕАКТИВОВ */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
-        .btn-reagent { 
-            background: #1e293b; border: 1px solid rgba(0,212,255,0.5); 
-            color: #fff; padding: 12px 5px; border-radius: 8px; cursor: pointer; font-size: 0.9rem;
-        }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        .btn-reagent { background: #374151; border: 1px solid #00d4ff; color: #fff; padding: 12px 2px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
         
-        .btn-mix { 
-            background: #2ed573; color: #000; border: none; padding: 18px; 
-            width: 100%; border-radius: 12px; font-weight: bold; 
-            margin-top: 25px; display: none; cursor: pointer; text-transform: uppercase;
-        }
-        
-        .btn-nav { 
-            margin-top: 30px; background: #374151; color: white; border: none; 
-            padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;
-        }
+        .btn-mix { background: #10b981; color: #000; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; margin-top: 20px; display: none; cursor: pointer; }
+        .btn-nav { margin-top: 20px; background: none; color: #9ca3af; border: 1px solid #4b5563; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
     </style>
 </head>
-<body>
+<body style="background-color: #0a0f1d !important;"> <!-- Дублируем фон прямо в тег -->
 
     <header>
         <h1>ЗАДАНИЯ ОГЭ ТИП 23</h1>
     </header>
 
-    <!-- ГЛАВНОЕ МЕНЮ -->
     <div id="task-menu">
-        <button class="btn-task" onclick="initTask(0)">ЗАДАЧА 1</button>
-        <button class="btn-task" onclick="initTask(1)">ЗАДАЧА 2</button>
-        <button class="btn-task" onclick="initTask(2)">ЗАДАЧА 3</button>
-        <button class="btn-task" onclick="initTask(3)">ЗАДАЧА 4</button>
+        <button class="btn-task" onclick="init(0)">ЗАДАЧА 1</button>
+        <button class="btn-task" onclick="init(1)">ЗАДАЧА 2</button>
+        <button class="btn-task" onclick="init(2)">ЗАДАЧА 3</button>
+        <button class="btn-task" onclick="init(3)">ЗАДАЧА 4</button>
     </div>
 
-    <!-- ОКНО ЛАБОРАТОРИИ -->
     <div id="lab-view">
         <div class="card" id="info"></div>
-        
         <div class="vessel">
             <div id="liq" class="liq"></div>
             <div id="pre" class="pre"></div>
         </div>
-
-        <div id="msg" style="margin-bottom:15px; font-weight:bold; color:#00d4ff; text-align:center; min-height:40px;">Выберите два реактива</div>
-        
+        <div id="msg" style="color:#00d4ff; font-weight:bold; text-align:center; margin-bottom:10px;">Выберите 2 реактива</div>
         <div id="grid" class="grid"></div>
-        
-        <button id="mix" class="btn-mix" onclick="runCheck()">ПРОВЕСТИ ОПЫТ</button>
-        
-        <button class="btn-nav" onclick="backToMenu()">← В МЕНЮ ВЫБОРА</button>
+        <button id="mix" class="btn-mix" onclick="check()">СМЕШАТЬ РЕАКТИВЫ</button>
+        <button class="btn-nav" onclick="location.reload()">В МЕНЮ ВЫБОРА</button>
     </div>
 
 <script>
-    const database = [
-        { name: "MgSO4", title: "Сульфат магния", target: "BaCl2", res: "белый осадок BaSO4↓", color: "#ffffff", list: ["MgSO4", "BaCl2", "NaOH", "HCl", "AgNO3", "Zn"] },
-        { name: "HCl", title: "Соляная кислота", target: "AgNO3", res: "белый творожистый осадок AgCl↓", color: "#f5f5f5", list: ["HCl", "AgNO3", "BaCl2", "NaOH", "Mg", "Cu"] },
-        { name: "CuSO4", title: "Сульфат меди (II)", target: "NaOH", res: "синий студенистый осадок Cu(OH)2↓", color: "#0077ff", list: ["CuSO4", "NaOH", "BaCl2", "HCl", "Zn", "AgNO3"] },
-        { name: "FeCl3", title: "Хлорид железа (III)", target: "NaOH", res: "бурый осадок Fe(OH)3↓", color: "#8b4513", list: ["FeCl3", "NaOH", "AgNO3", "HCl", "Mg", "K2SO4"] }
+    // Принудительная установка фона через JS для гарантии
+    document.body.style.backgroundColor = "#0a0f1d";
+
+    const data = [
+        { n: "MgSO4", t: "BaCl2", res: "БЕЛЫЙ ОСАДОК BaSO4↓", c: "#ffffff", list: ["MgSO4", "BaCl2", "NaOH", "HCl", "AgNO3", "Zn"] },
+        { n: "HCl", t: "AgNO3", res: "БЕЛЫЙ ТВОРОЖИСТЫЙ AgCl↓", c: "#f0f0f0", list: ["HCl", "AgNO3", "BaCl2", "NaOH", "Mg", "Cu"] },
+        { n: "CuSO4", t: "NaOH", res: "СИНИЙ ОСАДОК Cu(OH)2↓", c: "#0077ff", list: ["CuSO4", "NaOH", "BaCl2", "HCl", "Zn", "AgNO3"] },
+        { n: "FeCl3", t: "NaOH", res: "БУРЫЙ ОСАДОК Fe(OH)3↓", c: "#8b4513", list: ["FeCl3", "NaOH", "AgNO3", "HCl", "Mg", "K2SO4"] }
     ];
 
-    let current = null, picked = [];
+    let active = null, sel = [];
 
-    function initTask(idx) {
-        current = database[idx];
-        picked = [];
+    function init(idx) {
+        active = data[idx]; sel = [];
         document.getElementById('task-menu').style.display = 'none';
         document.getElementById('lab-view').style.display = 'flex';
-        document.getElementById('info').innerHTML = "ЗАДАНИЕ: Докажите состав раствора <br><b>" + current.title + " (" + current.name + ")</b>";
-        resetUI();
+        document.getElementById('info').innerHTML = "Докажите наличие ионов в <br><b>" + active.n + "</b>";
         
         const g = document.getElementById('grid');
         g.innerHTML = '';
-        current.list.forEach(reagent => {
+        active.list.forEach(r => {
             let b = document.createElement('button');
-            b.className = 'btn-reagent';
-            b.innerText = reagent;
+            b.className = 'btn-reagent'; b.innerText = r;
             b.onclick = () => {
-                if(picked.length < 2 && !picked.includes(reagent)) {
-                    picked.push(reagent);
+                if(sel.length < 2 && !sel.includes(r)) {
+                    sel.push(r);
                     b.style.background = "#00d4ff"; b.style.color = "#000";
-                    document.getElementById('liq').style.height = (picked.length * 40) + '%';
-                    if(picked.length === 2) document.getElementById('mix').style.display = 'block';
+                    document.getElementById('liq').style.height = (sel.length * 40) + '%';
+                    if(sel.length === 2) document.getElementById('mix').style.display = 'block';
                 }
             };
             g.appendChild(b);
         });
     }
 
-    function runCheck() {
-        const isSuccess = (picked.includes(current.name) && picked.includes(current.target));
-        const msgBox = document.getElementById('msg');
-        
-        if(isSuccess) {
+    function check() {
+        if(sel.includes(active.n) && sel.includes(active.t)) {
             document.getElementById('pre').style.height = '30%';
-            document.getElementById('pre').style.background = current.color;
-            msgBox.innerHTML = "<span style='color:#2ed573'>УСПЕХ! " + current.res + "</span>";
+            document.getElementById('pre').style.background = active.c;
+            document.getElementById('msg').innerHTML = "<span style='color:#10b981'>" + active.res + "</span>";
         } else {
-            msgBox.innerHTML = "<span style='color:#ff4757'>ПРИЗНАКОВ РЕАКЦИИ НЕТ!</span>";
+            document.getElementById('msg').innerHTML = "<span style='color:#ef4444'>РЕАКЦИЯ НЕ ИДЕТ</span>";
         }
-        document.getElementById('mix').style.display = 'none';
-    }
-
-    function backToMenu() {
-        document.getElementById('task-menu').style.display = 'flex';
-        document.getElementById('lab-view').style.display = 'none';
-        resetUI();
-    }
-
-    function resetUI() {
-        document.getElementById('liq').style.height = '0';
-        document.getElementById('pre').style.height = '0';
-        document.getElementById('msg').innerHTML = "Выберите два реактива";
         document.getElementById('mix').style.display = 'none';
     }
 </script>
