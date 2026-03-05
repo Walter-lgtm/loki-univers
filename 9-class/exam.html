@@ -76,47 +76,45 @@
     <div id="s-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="solubility.jpg"></div>
 <script>
     const db = [
-        { id: 1, type: "multi", q: "Выберите два утверждения, в которых говорится о хлоре как о простом веществе.", a: ["Хлор при нормальных условиях — ядовитый газ.", "Запасы хлора содержатся в воде морей.", "Газообразный хлор легко сжижается.", "Ткани человека содержат 0,2% хлора.", "С пищей человек получает 3–6 г хлора."], c: [0, 2] },
-        { id: 2, type: "input", q: "На модели изображено ядро атома (+3). Запишите номер периода (X) и заряд ядра (Y).", c: ["2", "3"], labels: ["X:", "Y:"] },
-        { id: 3, type: "order", q: "Расположите элементы (1-Li, 2-K, 3-Na) в порядке увеличения основных свойств их высших оксидов.", a: ["1", "2", "3"], c: "132" },
-        { id: 4, type: "matrix", q: "Установите соответствие (А-MnSO4, Б-K2MnO4, В-MnO2) и С.О. (1-+2, 2-+7, 3-+4, 4-+6).", c: "143", labels: ["А", "Б", "В"] },
-        { id: 5, type: "multi", q: "Выберите два вещества с ковалентной полярной связью.", a: ["PCl3", "Ca3N2", "Na2O", "Al", "SO2"], c: [0, 4] },
-        { id: 6, type: "multi", q: "Сходство бора, углерода и азота проявляется в том, что...", a: ["Одинаковое число протонов", "Одинаковое число слоев", "Они являются неметаллами", "Только положит. С.О.", "Высшие оксиды - основные"], c: [1, 2] },
-        { id: 7, type: "single", q: "Кислоте HNO2 соответствует оксид:", a: ["N2O", "NO", "N2O3", "N2O5"], c: 2 },
-        { id: 8, type: "multi", q: "Выберите две пары веществ, которые реагируют с раствором NaOH:", a: ["MgO и NO", "NO2 и CuO", "FeO и ZnO", "CO2 и Al2O3", "ZnO и P2O5"], c: [3, 4] },
-        { id: 9, type: "matrix", q: "Соответствие: А)Al+NaOH+H2O, Б)Al2O3+NaOH(сплав), В)Al(OH)3+HCl.", c: "342", labels: ["А", "Б", "В"] },
-        { id: 10, type: "matrix", q: "Соответствие: А)Al, Б)O2, В)S. Реагенты: 1)SO2,CH4; 2)AgNO3,NaCl; 3)HCl,KOH; 4)Fe,Cl2.", c: "314", labels: ["А", "Б", "В"] },
-        { id: 11, type: "single", q: "Какое уравнение соответствует реакции разложения?", a: ["Zn + H2SO4", "HNO3 + Fe(OH)2", "H2SO4 + C", "Pb(NO3)2 -> PbO + NO2 + O2"], c: 3 },
-        { id: 12, type: "matrix", q: "Признак реакции: А)CuSO4+BaCl2, Б)CuSO4+NaOH, В)FeSO4+NaOH.", c: "134", labels: ["А", "Б", "В"] },
-        { id: 13, type: "multi", q: "Выберите два неэлектролита.", a: ["CH4", "CO2", "HNO3", "KClO", "CuSO4"], c: [0, 1] },
-        { id: 14, type: "multi", q: "Выберите два ряда ионов, способных находиться в растворе одновременно.", a: ["Ca2+, Ba2+, NO3-, Cl-", "Mg2+, Fe3+, Cl-, SO42-", "K+, Al3+, Cl-, OH-", "Cu2+, S2-...", "H+, OH-...", "Ca2+, OH-..."], c: [0, 1] },
-        { id: 15, type: "matrix", q: "Процесс: А)Si(+4)->Si(0), Б)I(+5)->I(+7), В)N2(0)->2N(-3). (1-окисление, 2-восстановление).", c: "212", labels: ["А", "Б", "В"] },
-        { id: 16, type: "multi", q: "Выберите верные суждения о безопасности.", a: ["Органику хранить вдали от огня", "Щелочные Ме без защиты", "Ацетон только в холодильнике", "Калий под слоем керосина"], c: [0, 3] },
-        { id: 17, type: "matrix", q: "Различить: А)CuSO4/CuCl2, Б)Na2SO4/BaSO4, В)NH3/NH4Cl. Реактив: 1)H2O, 2)ф/фталеин, 3)Ba(NO3)2, 4)Cu.", c: "312", labels: ["А", "Б", "В"] },
-        { id: 18, type: "input", q: "Вычислите массовую долю магния в лактате MgC6H10O6 (в %). Целое число.", c: ["12"], labels: ["%"] },
-        { id: 19, type: "input", q: "Сколько грамм лактата нужно для 3000 мг магния? (Используйте ответ из №18). Целое число.", c: ["25"], labels: ["г"] }
+        { id: 1, type: "multi", q: "Выберите два утверждения о хлоре как о простом веществе.", a: ["Ядовитый газ желтовато-зеленого цвета", "Запасы в воде морей и океанов", "Легко сжижается", "Ткани человека содержат 0,2%", "С пищей человек получает 3–6 г"], c: [0, 2], pts: 1 },
+        { id: 2, type: "input", q: "На модели ядро (+3). Запишите номер периода (X) и заряд ядра (Y).", c: ["2", "3"], labels: ["X", "Y"], pts: 1 },
+        { id: 3, type: "input", q: "Порядок увеличения основных свойств: 1)Li, 2)K, 3)Na.", c: ["1", "3", "2"], labels: ["1", "2", "3"], pts: 1 },
+        { id: 4, type: "matrix", q: "Соответствие: А)MnSO4, Б)K2MnO4, В)MnO2. Степень окисления: 1)+2, 2)+7, 3)+4, 4)+6.", c: ["1", "4", "3"], labels: ["А", "Б", "В"], pts: 2 },
+        { id: 5, type: "multi", q: "Выберите два вещества с ковалентной полярной связью.", a: ["PCl3", "Ca3N2", "Na2O", "Al", "SO2"], c: [0, 4], pts: 1 },
+        { id: 6, type: "multi", q: "Сходство B, C и N проявляется в том, что...", a: ["Одинаковое число протонов", "Одинаковое число слоев", "Неметаллы", "Только + С.О.", "Высшие оксиды - основные"], c: [1, 2], pts: 1 },
+        { id: 7, type: "single", q: "Кислоте HNO2 соответствует оксид:", a: ["N2O", "NO", "N2O3", "N2O5"], c: 2, pts: 1 },
+        { id: 8, type: "multi", q: "Две пары веществ, реагирующие с NaOH:", a: ["MgO и NO", "NO2 и CuO", "FeO и ZnO", "CO2 и Al2O3", "ZnO и P2O5"], c: [3, 4], pts: 1 },
+        { id: 9, type: "matrix", q: "Продукты: А)Al+NaOH+H2O, Б)Al2O3+NaOH(спл), В)Al(OH)3+HCl.", c: ["3", "4", "2"], labels: ["А", "Б", "В"], pts: 2 },
+        { id: 10, type: "matrix", q: "Реагенты: А)Al, Б)O2, В)S. (1-SO2,CH4; 2-AgNO3,NaCl; 3-HCl,KOH; 4-Fe,Cl2).", c: ["3", "1", "4"], labels: ["А", "Б", "В"], pts: 2 },
+        { id: 11, type: "single", q: "Уравнение реакции разложения:", a: ["Zn + H2SO4", "HNO3 + Fe(OH)2", "H2SO4 + C", "Pb(NO3)2 -> PbO + NO2 + O2"], c: 3, pts: 1 },
+        { id: 12, type: "matrix", q: "Признак: А)CuSO4+BaCl2, Б)CuSO4+NaOH, В)FeSO4+NaOH. (1-белый, 3-голубой, 4-серо-зеленый).", c: ["1", "3", "4"], labels: ["А", "Б", "В"], pts: 2 },
+        { id: 13, type: "multi", q: "Выберите два неэлектролита.", a: ["CH4", "CO2", "HNO3", "KClO", "CuSO4"], c: [0, 1], pts: 1 },
+        { id: 14, type: "multi", q: "Ионы, способные находиться в растворе одновременно:", a: ["Ca2+, Ba2+, NO3-, Cl-", "Mg2+, Fe3+, Cl-, SO42-", "K+, Al3+, Cl-, OH-", "Cu2+, S2-", "H+, OH-", "Ca2+, OH-"], c: [0, 1], pts: 1 },
+        { id: 15, type: "matrix", q: "Процесс (1-ок., 2-вос.): А)Si+4->Si0, Б)I+5->I+7, В)N20->2N-3.", c: ["2", "1", "2"], labels: ["А", "Б", "В"], pts: 1 },
+        { id: 16, type: "multi", q: "Верные суждения о безопасности:", a: ["Органику вдали от огня", "Щелочные Ме без защиты", "Ацетон в холодильнике", "Калий под керосином"], c: [0, 3], pts: 1 },
+        { id: 17, type: "matrix", q: "Различить: А)CuSO4/CuCl2, Б)Na2SO4/BaSO4, В)NH3/NH4Cl. (1-H2O, 2-ф/ф, 3-Ba(NO3)2, 4-Cu).", c: ["3", "1", "2"], labels: ["А", "Б", "В"], pts: 2 },
+        { id: 18, type: "input", q: "Массовая доля магния в MgC6H10O6 (%). Целое число.", c: ["12"], labels: ["%"], pts: 1 },
+        { id: 19, type: "input", q: "Масса лактата для 3000 мг магния (г). Целое число.", c: ["25"], labels: ["г"], pts: 1 }
     ];
 
-    let currentQ = 0, score = 0, selectedOpts = [];
+    let currentQ = 0, totalScore = 0, selectedMulti = [];
 
     const menu = document.getElementById('exam-menu');
-    db.forEach((item, i) => {
-        let b = document.createElement('div'); b.className = 'topic-btn';
-        b.innerHTML = `<h3>Задание №${item.id}</h3><p>${item.q.substring(0, 50)}...</p>`;
-        b.onclick = () => startQuestion(i);
-        menu.appendChild(b);
+    db.forEach((t, i) => {
+        let div = document.createElement('div'); div.className = 'topic-btn';
+        div.innerHTML = `<h3>№${t.id}. ${t.q.split(':')[0]}</h3><p>Макс. балл: ${t.pts}</p>`;
+        div.onclick = () => startQuiz(i);
+        menu.appendChild(div);
     });
 
-    function openMod(id) { document.getElementById(id).style.display = 'flex'; }
-
-    function startQuestion(idx) {
-        currentQ = idx; selectedOpts = [];
+    function startQuiz(idx) {
+        currentQ = idx; selectedMulti = [];
         document.getElementById('exam-menu').style.display = 'none';
         document.getElementById('quiz-zone').style.display = 'flex';
-        renderTask();
+        renderQuestion();
     }
 
-    function renderTask() {
+    function renderQuestion() {
         const t = db[currentQ];
         document.getElementById('q-text').innerText = t.q;
         document.getElementById('atom-view').style.display = t.id === 2 ? 'block' : 'none';
@@ -127,56 +125,59 @@
         if (t.type === "single" || t.type === "multi") {
             t.a.forEach((opt, i) => {
                 let btn = document.createElement('button'); btn.className = 'opt-btn'; btn.innerText = opt;
-                btn.onclick = () => handleSelect(i, btn, t.type);
+                btn.onclick = () => {
+                    if(t.type === "single") checkSingle(i, btn);
+                    else { btn.classList.toggle('selected'); toggleMulti(i); }
+                };
                 box.appendChild(btn);
             });
             if(t.type === "multi") document.getElementById('confirm-btn').style.display = 'block';
-        } else if (t.type === "input" || t.type === "matrix" || t.type === "order") {
+        } else {
             inp.style.display = 'flex';
-            let count = t.type === "input" ? t.c.length : t.c.length;
-            for(let i=0; i<count; i++) {
-                let label = t.labels ? t.labels[i] : (i+1);
-                inp.innerHTML += `<div>${label} <input type="text" class="num-input" id="val${i}"></div>`;
-            }
+            t.c.forEach((_, i) => {
+                inp.innerHTML += `<div>${t.labels[i]}: <input type="text" class="num-input" id="val${i}"></div>`;
+            });
             document.getElementById('confirm-btn').style.display = 'block';
         }
     }
 
-    function handleSelect(i, btn, type) {
-        if(type === "single") {
-            checkSimple(i, btn);
-        } else {
-            btn.classList.toggle('selected');
-            if(selectedOpts.includes(i)) selectedOpts = selectedOpts.filter(item => item !== i);
-            else selectedOpts.push(i);
-        }
+    function toggleMulti(i) {
+        if(selectedMulti.includes(i)) selectedMulti = selectedMulti.filter(x => x !== i);
+        else selectedMulti.push(i);
     }
 
-    function checkSimple(i, btn) {
-        if(i === db[currentQ].c) { btn.classList.add('correct'); score++; }
-        else { btn.classList.add('wrong'); }
-        finish();
+    function checkSingle(i, btn) {
+        if(i === db[currentQ].c) { btn.classList.add('correct'); totalScore += db[currentQ].pts; }
+        else btn.classList.add('wrong');
+        updateUI();
     }
 
     function checkComplexAnswer() {
-        const t = db[currentQ]; let isCorrect = false;
+        const t = db[currentQ]; let earned = 0;
         if(t.type === "multi") {
-            isCorrect = t.c.every(val => selectedOpts.includes(val)) && t.c.length === selectedOpts.length;
+            const isFull = t.c.every(x => selectedMulti.includes(x)) && t.c.length === selectedMulti.length;
+            if(isFull) earned = t.pts;
         } else {
-            let userAns = "";
-            for(let i=0; i<t.c.length; i++) userAns += document.getElementById('val'+i).value;
-            isCorrect = userAns === (Array.isArray(t.c) ? t.c.join('') : t.c);
+            let userStr = ""; t.c.forEach((_, i) => userStr += document.getElementById('val'+i).value);
+            if(userStr === t.c.join('')) earned = t.pts;
+            else if(t.pts === 2) { /* Логика частичного балла для матриц */
+                let correctCount = 0; 
+                t.c.forEach((val, i) => { if(document.getElementById('val'+i).value === val) correctCount++; });
+                if(correctCount === 2) earned = 1;
+            }
         }
-        
-        if(isCorrect) { score++; alert("ВЕРНО!"); } else { alert("ОШИБКА!"); }
-        finish();
+        totalScore += earned;
+        alert(earned > 0 ? "Получено баллов: " + earned : "Неверно (0 баллов)");
+        updateUI();
     }
 
-    function finish() {
-        document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + score;
-        document.getElementById('progress-fill').style.width = ((currentQ + 1) / db.length * 100) + '%';
+    function updateUI() {
+        document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore;
+        document.getElementById('progress-fill').style.width = ((currentQ+1)/db.length*100) + '%';
         setTimeout(() => location.reload(), 1500);
     }
+
+    function openMod(id) { document.getElementById(id).style.display = 'flex'; }
 </script>
 </body>
 </html>
