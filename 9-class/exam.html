@@ -8,125 +8,97 @@
         :root { --accent: #00d4ff; --bg: #0a0f1d; --card: #111827; --success: #10b981; --error: #ef4444; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         header { background: #111827; width: 100%; text-align: center; padding: 15px; border-bottom: 2px solid var(--accent); position: sticky; top: 0; z-index: 100; }
-        .nav-top { width: 100%; display: flex; justify-content: space-between; padding: 10px 20px; box-sizing: border-box; background: #000; }
+        .nav-top { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; box-sizing: border-box; background: #000; }
         .btn-root { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid var(--accent); padding: 5px 10px; border-radius: 5px; }
+        .btn-reset-session { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; cursor: pointer; margin-left: 10px; }
         .container { width: 95%; max-width: 800px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        
-        /* ТАБЛИЦЫ */
         .tools { display: flex; gap: 10px; margin-bottom: 20px; width: 100%; }
-        .tool-btn { flex: 1; background: #1f2937; border: 1px solid var(--accent); color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
-
-        /* МЕНЮ */
-        #exam-menu { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; }
-        .topic-btn { background: var(--card); border: 1px solid #374151; padding: 15px; border-radius: 12px; cursor: pointer; text-align: left; transition: 0.3s; }
+        .tool-btn { flex: 1; background: #1f2937; border: 1px solid var(--accent); color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        #exam-menu { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; }
+        .topic-btn { background: var(--card); border: 1px solid #374151; padding: 20px; border-radius: 12px; cursor: pointer; text-align: left; transition: 0.3s; }
         .topic-btn:hover { border-color: var(--accent); background: rgba(0,212,255,0.05); }
-
-        /* ЭКРАН ТЕСТА */
-        #quiz-zone { display: none; width: 100%; flex-direction: column; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .q-card { background: var(--card); padding: 20px; border-radius: 15px; border-left: 6px solid var(--accent); margin-bottom: 20px; }
-        
-        /* ВАРИАНТЫ ОТВЕТОВ */
-        .options-grid { display: grid; gap: 10px; width: 100%; }
-        .opt-btn { background: #1f2937; border: 1px solid #374151; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; font-size: 0.95rem; }
-        .opt-btn:hover { background: #374151; border-color: var(--accent); }
-        .opt-btn.selected { border-color: var(--accent); background: rgba(0,212,255,0.1); }
+        #quiz-zone { display: none; width: 100%; flex-direction: column; }
+        .q-card { background: var(--card); padding: 25px; border-radius: 15px; border-left: 6px solid var(--accent); margin-bottom: 20px; }
+        .opt-btn { background: #1f2937; border: 1px solid #374151; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; font-size: 1rem; margin-bottom: 10px; width: 100%; }
         .opt-btn.correct { background: var(--success) !important; color: #000; font-weight: bold; }
         .opt-btn.wrong { background: var(--error) !important; color: #fff; }
-
-        /* ВВОД ЧИСЛА / МАТРИЦА */
-        .input-area { display: flex; gap: 10px; margin-top: 15px; }
-        .num-input { background: #000; border: 2px solid var(--accent); color: var(--accent); padding: 10px; width: 80px; text-align: center; font-size: 1.2rem; border-radius: 8px; }
-        .matrix-table td { padding: 5px; text-align: center; }
-
-        /* МОДЕЛЬ АТОМА */
-        #atom-model { width: 150px; height: 150px; margin: 10px auto; background: radial-gradient(circle, #333 0%, #000 70%); border-radius: 50%; border: 2px solid var(--accent); display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 2rem; color: var(--accent); }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-img { max-width: 95%; max-height: 90%; border: 2px solid var(--accent); }
-        
+        .opt-btn.selected { border-color: var(--accent); background: rgba(0, 212, 255, 0.1); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; cursor: pointer; }
+        .modal-img { max-width: 95%; max-height: 90%; border: 2px solid var(--accent); border-radius: 10px; }
         #progress-bar { width: 100%; height: 6px; background: #1f2937; margin-bottom: 20px; border-radius: 10px; overflow: hidden; }
         #progress-fill { width: 0%; height: 100%; background: var(--accent); transition: 0.4s; }
-        .btn-confirm { background: var(--success); color: #000; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer; display: none; }
+        .btn-confirm { background: var(--success); color: #000; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer; }
+        .num-input { background: #000; border: 1px solid var(--accent); color: #fff; padding: 5px; border-radius: 5px; text-align: center; }
     </style>
 </head>
 <body>
+
     <div class="nav-top">
         <a href="../index.html" class="btn-root">← ВЫХОД</a>
-        <div id="score-val" style="color:var(--accent); font-weight:bold;">БАЛЛЫ: 0</div>
+        <div style="display:flex; align-items:center;">
+            <div id="score-val" style="color:var(--accent); font-weight:bold; font-size:0.9rem;">БАЛЛЫ: 0</div>
+            <button class="btn-reset-session" onclick="resetAll()">СБРОС</button>
+        </div>
     </div>
-    <header><h1>ТРЕНАЖЕР ОГЭ 2026</h1></header>
+
+    <header><h1>ТРЕНАЖЕР ОГЭ • UNIVERS</h1></header>
+
     <div class="container">
         <div class="tools">
-            <button class="tool-btn" onclick="openMod('m-modal')">⚛️ МЕНДЕЛЕЕВ</button>
-            <button class="tool-btn" onclick="openMod('s-modal')">💧 РАСТВОРИМОСТЬ</button>
+            <button class="tool-btn" onclick="openMod('m-modal')">⚛️ Таблица Менделеева</button>
+            <button class="tool-btn" onclick="openMod('s-modal')">💧 Растворимость / Ряд Me</button>
         </div>
+
         <div id="progress-bar"><div id="progress-fill"></div></div>
+
         <div id="exam-menu"></div>
+
         <div id="quiz-zone">
-            <div id="atom-view" style="display:none;"><div id="atom-model">+3</div></div>
-            <div class="q-card"><p id="q-text"></p></div>
-            <div id="options-box" class="options-grid"></div>
-            <div id="input-zone" class="input-area" style="display:none;"></div>
-            <button id="confirm-btn" class="btn-confirm" onclick="checkComplexAnswer()">ОТПРАВИТЬ ОТВЕТ</button>
-            <button class="tool-btn" style="margin-top:20px; border:none; opacity:0.5;" onclick="location.reload()">← Назад к темам</button>
+            <div id="atom-view" style="display:none; text-align:center; margin-bottom:15px;">
+                <div style="width:80px; height:80px; background:radial-gradient(circle, #00d4ff, #0a0f1d); border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:2rem; font-weight:bold; border:3px solid #fff;">+3</div>
+            </div>
+            <div class="q-card"><p id="q-text" style="font-size:1.1rem;"></p></div>
+            <div id="options-box"></div>
+            <div id="input-zone" style="display:none; margin-top:15px; width:100%;"></div>
+            <button id="confirm-btn" class="btn-confirm" style="display:none;" onclick="checkComplexAnswer()">ОТПРАВИТЬ ОТВЕТ</button>
+            <button class="tool-btn" style="margin-top:20px; border:none; opacity:0.5;" onclick="location.reload()">← К темам</button>
         </div>
     </div>
+
     <div id="m-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="mendeleev.jpg"></div>
     <div id="s-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="solubility.jpg"></div>
+
 <script>
-    // СЕССИОННАЯ ПАМЯТЬ: Сбрасывается при закрытии вкладки или новом входе
     let totalScore = parseInt(sessionStorage.getItem('LokiSessionScore')) || 0;
     document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore;
 
     const db = [
-        
-
-{ id: 1, type: "multi", q: "Выберите два утверждения о хлоре как о простом веществе.", a: ["1) Газ желтовато-зеленого цвета", "2) Запасы в воде морей", "3) Легко сжижается", "4) Содержится в тканях человека", "5) Поступает с пищей"], c: [0, 2], pts: 1 },
-        { id: 2, type: "input", q: "Модель ядра (+3). Запишите период (X) и заряд (Y).", c: ["2", "3"], labels: ["X", "Y"], pts: 1 },
+        { id: 1, type: "multi", q: "Выберите два утверждения о хлоре как о простом веществе.", a: ["1) Газ желтовато-зеленого цвета", "2) Запасы в воде морей", "3) Легко сжижается", "4) Содержится в тканях человека", "5) Поступает с пищей"], c:, pts: 1 },
+        { id: 2, type: "input", q: "На модели ядро (+3). Запишите период (X) и заряд (Y).", c: ["2", "3"], labels: ["X", "Y"], pts: 1 },
         { id: 3, type: "input", q: "Расположите элементы: 1)Li, 2)K, 3)Na в порядке увеличения основных свойств оксидов.", c: ["1", "3", "2"], labels: ["1-й", "2-й", "3-й"], pts: 1 },
-        { id: 4, type: "matrix", q: "Установите соответствие между формулой и степенью окисления марганца:", 
-          left: ["А) MnSO4", "Б) K2MnO4", "В) MnO2"], 
-          right: ["1) +2", "2) +7", "3) +4", "4) +6"], 
-          c: ["1", "4", "3"], pts: 2 },
-        { id: 5, type: "multi", q: "Выберите два вещества с ковалентной полярной связью.", a: ["1) PCl3", "2) Ca3N2", "3) Na2O", "4) Al", "5) SO2"], c: [0, 4], pts: 1 },
-        { id: 6, type: "multi", q: "Сходство бора, углерода и азота проявляется в том, что...", a: ["1) одинаковое число протонов", "2) одинаковое число слоев", "3) неметаллы", "4) только + С.О.", "5) оксиды — основные"], c: [1, 2], pts: 1 },
+        { id: 4, type: "matrix", q: "Соответствие между формулой и С.О. марганца:", left: ["А) MnSO4", "Б) K2MnO4", "В) MnO2"], right: ["1) +2", "2) +7", "3) +4", "4) +6"], c: ["1", "4", "3"], pts: 2 },
+        { id: 5, type: "multi", q: "Выберите два вещества с ковалентной полярной связью.", a: ["1) PCl3", "2) Ca3N2", "3) Na2O", "4) Al", "5) SO2"], c:, pts: 1 },
+        { id: 6, type: "multi", q: "Сходство бора, углерода и азота проявляется в том, что...", a: ["1) одинаковое число протонов", "2) одинаковое число слоев", "3) неметаллы", "4) только + С.О.", "5) высшие оксиды — основные"], c:, pts: 1 },
         { id: 7, type: "single", q: "Кислоте HNO2 соответствует оксид:", a: ["1) N2O", "2) NO", "3) N2O3", "4) N2O5"], c: 2, pts: 1 },
-        { id: 8, type: "multi", q: "Две пары веществ, которые реагируют с раствором гидроксида натрия:", a: ["1) MgO и NO", "2) NO2 и CuO", "3) FeO и ZnO", "4) CO2 и Al2O3", "5) ZnO и P2O5"], c: [3, 4], pts: 1 },
-        { id: 9, type: "matrix", q: "Установите соответствие между реагентами и продуктами:", 
-          left: ["А) Al + NaOH + H2O", "Б) Al2O3 + NaOH (сплав)", "В) Al(OH)3 + HCl"], 
-          right: ["1) AlCl3 + H2", "2) AlCl3 + H2O", "3) Na[Al(OH)4] + H2", "4) NaAlO2 + H2O"], 
-          c: ["3", "4", "2"], pts: 2 },
-        { id: 10, type: "matrix", q: "Установите соответствие между веществом и реагентами:", 
-          left: ["А) Al", "Б) O2", "В) S"], 
-          right: ["1) SO2, CH4", "2) AgNO3, NaCl", "3) HCl, KOH", "4) Fe, Cl2"], 
-          c: ["3", "1", "4"], pts: 2 },
-        { id: 11, type: "single", q: "Какое уравнение соответствует реакции разложения?", a: ["1) Zn + H2SO4", "2) 2HNO3 + Fe(OH)2", "3) 2H2SO4 + C", "4) 2Pb(NO3)2 = 2PbO + 4NO2 + O2"], c: 3, pts: 1 },
-        { id: 12, type: "matrix", q: "Установите соответствие между веществами и признаком реакции:", 
-          left: ["А) CuSO4 и BaCl2", "Б) CuSO4 и NaOH", "В) FeSO4 и NaOH"], 
-          right: ["1) белый осадок", "2) желтый осадок", "3) голубой осадок", "4) серо-зеленый осадок"], 
-          c: ["1", "3", "4"], pts: 2 },
-        { id: 13, type: "multi", q: "Выберите два неэлектролита:", a: ["1) CH4", "2) CO2", "3) HNO3", "4) KClO", "5) CuSO4"], c: [0, 1], pts: 1 },
-        { id: 14, type: "multi", q: "Выберите два ряда ионов, способных находиться в растворе одновременно:", a: ["1) Ca2+, Ba2+, NO3-, Cl-", "2) Mg2+, Fe3+, Cl-, SO42-", "3) K+, Al3+, Cl-, OH-", "4) Cu2+, S2-", "5) H+, OH-", "6) Ca2+, OH-"], c: [0, 1], pts: 1 },
-        { id: 15, type: "matrix", q: "Установите соответствие между схемой и процессом:", 
-          left: ["А) Si+4 → Si0", "Б) I+5 → I+7", "В) N20 → 2N-3"], 
-          right: ["1) окисление", "2) восстановление"], 
-          c: ["2", "1", "2"], pts: 1 },
-        { id: 16, type: "multi", q: "Выберите верные суждения о безопасности:", a: ["1) Органику вдали от огня", "2) Щелочные металлы без защиты", "3) Ацетон в холодильнике", "4) Калий под слоем керосина"], c: [0, 3], pts: 1 },
-        { id: 17, type: "matrix", q: "Различить вещества с помощью реактива:", 
-          left: ["А) CuSO4 и CuCl2 (р-ры)", "Б) Na2SO4 и BaSO4 (тв.)", "В) NH3 и NH4Cl (р-ры)"], 
-          right: ["1) H2O", "2) фенолфталеин", "3) Ba(NO3)2", "4) Cu"], 
-          c: ["3", "1", "2"], pts: 2 },
-        { id: 18, type: "input", q: "Вычислите массовую долю магния в лактате MgC6H10O6 (в %). Целое число.", c: ["12"], labels: ["%"], pts: 1 },
+        { id: 8, type: "multi", q: "Две пары веществ, которые реагируют с раствором гидроксида натрия:", a: ["1) MgO и NO", "2) NO2 и CuO", "3) FeO и ZnO", "4) CO2 и Al2O3", "5) ZnO и P2O5"], c:, pts: 1 },
+        { id: 9, type: "matrix", q: "Соответствие между реагентами и продуктами:", left: ["А) Al+NaOH+H2O", "Б) Al2O3+NaOH (спл)", "В) Al(OH)3+HCl"], right: ["1) AlCl3+H2", "2) AlCl3+H2O", "3) Na[Al(OH)4]+H2", "4) NaAlO2+H2O"], c: ["3", "4", "2"], pts: 2 },
+        { id: 10, type: "matrix", q: "Соответствие между веществом и реагентами:", left: ["А) Al", "Б) O2", "В) S"], right: ["1) SO2, CH4", "2) AgNO3, NaCl", "3) HCl, KOH", "4) Fe, Cl2"], c: ["3", "1", "4"], pts: 2 },
+        { id: 11, type: "single", q: "Какое уравнение соответствует реакции разложения?", a: ["1) Zn+H2SO4", "2) HNO3+Fe(OH)2", "3) H2SO4+C", "4) 2Pb(NO3)2 = 2PbO+4NO2+O2"], c: 3, pts: 1 },
+        { id: 12, type: "matrix", q: "Соответствие между веществами и признаком реакции:", left: ["А) CuSO4 и BaCl2", "Б) CuSO4 и NaOH", "В) FeSO4 и NaOH"], right: ["1) белый осадок", "2) желтый осадок", "3) голубой осадок", "4) серо-зеленый осадок"], c: ["1", "3", "4"], pts: 2 },
+        { id: 13, type: "multi", q: "Выберите два неэлектролита:", a: ["1) CH4", "2) CO2", "3) HNO3", "4) KClO", "5) CuSO4"], c:, pts: 1 },
+        { id: 14, type: "multi", q: "Ионы, способные находиться в растворе одновременно:", a: ["1) Ca2+, Ba2+, NO3-, Cl-", "2) Mg2+, Fe3+, Cl-, SO42-", "3) K+, Al3+, Cl-, OH-", "4) Cu2+, S2-", "5) H+, OH-", "6) Ca2+, OH-"], c:, pts: 1 },
+        { id: 15, type: "matrix", q: "Соответствие между схемой и процессом (1-ок., 2-вос.):", left: ["А) Si+4 → Si0", "Б) I+5 → I+7", "В) N20 → 2N-3"], right: ["1) окисление", "2) восстановление"], c: ["2", "1", "2"], pts: 1 },
+        { id: 16, type: "multi", q: "Выберите верные суждения о безопасности:", a: ["1) Органику вдали от огня", "2) Щелочные Ме без защиты", "3) Ацетон в холодильнике", "4) Калий под керосином"], c:, pts: 1 },
+        { id: 17, type: "matrix", q: "Различить вещества с помощью реактива:", left: ["А) CuSO4 и CuCl2", "Б) Na2SO4 и BaSO4", "В) NH3 и NH4Cl"], right: ["1) H2O", "2) ф/ф", "3) Ba(NO3)2", "4) Cu"], c: ["3", "1", "2"], pts: 2 },
+        { id: 18, type: "input", q: "Массовая доля магния в MgC6H10O6 (%). Целое число.", c: ["12"], labels: ["%"], pts: 1 },
         { id: 19, type: "input", q: "Масса лактата для 3000 мг магния (г). Используйте ответ №18. Целое число.", c: ["25"], labels: ["г"], pts: 1 }
     ];
 
     let currentIdx = 0, selMulti = [];
-
     const menu = document.getElementById('exam-menu');
     db.forEach((t, i) => {
         let d = document.createElement('div'); d.className = 'topic-btn';
-        d.innerHTML = `<h3>Задание №${t.id}</h3><p>${t.q.substring(0, 50)}...</p>`;
+        d.innerHTML = `<h3>Задание №${t.id}</h3><p>${t.q.substring(0, 55)}...</p>`;
         d.onclick = () => { currentIdx = i; startQuiz(); };
         menu.appendChild(d);
     });
@@ -141,6 +113,7 @@
     function renderTask() {
         const t = db[currentIdx];
         document.getElementById('q-text').innerHTML = t.q;
+        document.getElementById('atom-view').style.display = t.id === 2 ? 'block' : 'none';
         const box = document.getElementById('options-box'); box.innerHTML = '';
         const inp = document.getElementById('input-zone'); inp.innerHTML = ''; inp.style.display = 'none';
         document.getElementById('confirm-btn').style.display = 'none';
@@ -154,20 +127,19 @@
             if(t.type === "multi") document.getElementById('confirm-btn').style.display = 'block';
         } else if (t.type === "matrix") {
             inp.style.display = 'flex'; inp.style.flexDirection = 'column';
-            let html = '<table class="matrix-table" style="width:100%; border-spacing: 0 10px;">';
+            let html = '<table style="width:100%; border-spacing: 0 10px;">';
             t.left.forEach((label, i) => {
                 html += `<tr><td style="text-align:left; padding:10px; background:rgba(255,255,255,0.05); border-radius:8px 0 0 8px;">${label}</td>
-                    <td style="padding:10px; background:rgba(255,255,255,0.05); border-radius:0 8px 8px 0;">
-                        <select id="val${i}" class="num-input" style="width:100%;"><option value="">выбрать ответ</option>
-                        ${t.right.map((r, idx) => `<option value="${idx+1}">${r}</option>`).join('')}</select>
-                    </td></tr>`;
+                <td style="padding:10px; background:rgba(255,255,255,0.05); border-radius:0 8px 8px 0;">
+                <select id="val${i}" class="num-input" style="width:100%;"><option value="">выбрать</option>
+                ${t.right.map((r, idx) => `<option value="${idx+1}">${r}</option>`).join('')}</select></td></tr>`;
             });
             html += '</table>';
             inp.innerHTML = html;
             document.getElementById('confirm-btn').style.display = 'block';
         } else {
             inp.style.display = 'flex';
-            t.c.forEach((_, i) => { inp.innerHTML += `<div><b>${t.labels[i]}:</b> <input type="text" class="num-input" id="val${i}" style="width:70px; margin-left:10px;"></div>`; });
+            t.c.forEach((_, i) => { inp.innerHTML += `<div style="margin-bottom:10px;"><b>${t.labels[i]}:</b> <input type="text" class="num-input" id="val${i}" style="width:80px; margin-left:10px;"></div>`; });
             document.getElementById('confirm-btn').style.display = 'block';
         }
     }
@@ -195,19 +167,13 @@
                 if(hits === 2) pts = 1;
             }
         }
-        upd(pts); alert(pts > 0 ? "Начислено баллов: " + pts : "0 баллов"); fin();
+        upd(pts); alert(pts > 0 ? "Начислено: " + pts : "0 баллов"); fin();
     }
 
-    function upd(p) { 
-        totalScore += p; 
-        sessionStorage.setItem('LokiSessionScore', totalScore); 
-        document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore; 
-    }
-    function fin() { 
-        document.getElementById('progress-fill').style.width = ((currentIdx+1)/db.length*100) + '%'; 
-        setTimeout(() => location.reload(), 1200); 
-    }
+    function upd(p) { totalScore += p; sessionStorage.setItem('LokiSessionScore', totalScore); document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore; }
+    function fin() { document.getElementById('progress-fill').style.width = ((currentIdx+1)/db.length*100) + '%'; setTimeout(() => location.reload(), 1200); }
     function openMod(id) { document.getElementById(id).style.display = 'flex'; }
+    function resetAll() { if(confirm("Сбросить все баллы и начать заново?")) { sessionStorage.removeItem('LokiSessionScore'); location.reload(); } }
 </script>
 </body>
 </html>
