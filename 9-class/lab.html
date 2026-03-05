@@ -3,119 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIVERS | ОГЭ ТИП 23</title>
+    <title>UNIVERS | ФИПИ КЕЙС 23</title>
     <style>
-        /* Жесткая блокировка белого фона */
-        html, body { 
-            background-color: #
+        html, body { background: #0a0f1d !important; color: #fff !important; margin: 
 
-0a0f1d !important; 
-            background: #0a0f1d !important;
-            color: #ffffff !important; 
-            margin: 0; padding: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh;
-        }
-        header { text-align: center; padding: 20px; width: 100%; background: #111827; border-bottom: 2px solid #00d4ff; }
-        h1 { color: #00d4ff; margin: 0; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
-
-        #task-menu { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px; }
-        .btn-task { background: #1f2937; border: 2px solid #00d4ff; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 140px; }
-
-        #lab-view { display: none; width: 90%; max-width: 400px; flex-direction: column; align-items: center; margin-top: 20px; }
-        .card { background: #111827; padding: 15px; border-radius: 10px; width: 100%; border-left: 5px solid #00d4ff; margin-bottom: 15px; }
-
-        /* ПРОБИРКА - МАКСИМАЛЬНАЯ ВИДИМОСТЬ */
-        .vessel { 
-            width: 70px; height: 180px; 
-            border: 4px solid #ffffff !important; /* Яркий белый контур */
-            border-radius: 0 0 35px 35px; position: relative; 
-            background: rgba(255,255,255,0.15) !important; 
-            overflow: hidden; margin: 20px;
-            box-shadow: 0 0 15px rgba(0,212,255,0.4);
-        }
-        .liq { position: absolute; bottom: 0; width: 100%; height: 0; transition: 0.5s; background: rgba(0, 212, 255, 0.7); }
-        .pre { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; z-index: 10; }
-
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
-        .btn-reagent { background: #374151; border: 1px solid #00d4ff; color: #fff; padding: 12px 2px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+0; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        header { background: #111827; width: 100%; text-align: center; padding: 15px; border-bottom: 2px solid #00d4ff; }
+        .task-card { background: #16203a; padding: 20px; margin: 15px; border-radius: 12px; border-left: 5px solid #00d4ff; max-width: 600px; font-size: 0.9rem; line-height: 1.4; }
         
-        .btn-mix { background: #10b981; color: #000; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; margin-top: 20px; display: none; cursor: pointer; }
-        .btn-nav { margin-top: 20px; background: none; color: #9ca3af; border: 1px solid #4b5563; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+        /* СКЛЯНКИ */
+        .lab-area { display: flex; gap: 30px; margin: 20px; justify-content: center; width: 100%; }
+        .flask-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .flask { width: 60px; height: 140px; border: 3px solid #fff; border-radius: 0 0 30px 30px; position: relative; background: rgba(255,255,255,0.1); overflow: hidden; }
+        .liq { position: absolute; bottom: 0; width: 100%; height: 30%; background: rgba(0,212,255,0.3); transition: 0.5s; }
+        .eff { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; z-index: 5; }
+
+        .reagents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 90%; max-width: 500px; }
+        button { background: #1f2937; border: 1px solid #00d4ff; color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        button:disabled { opacity: 0.3; }
+        .btn-check { background: #10b981; color: #000; width: 90%; max-width: 500px; margin: 20px; padding: 15px; border-radius: 10px; border: none; font-weight: bold; display: none; }
+        
+        #log { width: 90%; max-width: 500px; background: #111827; padding: 15px; border-radius: 10px; text-align: center; color: #00d4ff; min-height: 50px; }
     </style>
 </head>
-<body style="background-color: #0a0f1d !important;"> <!-- Дублируем фон прямо в тег -->
+<body>
 
-    <header>
-        <h1>ЗАДАНИЯ ОГЭ ТИП 23</h1>
-    </header>
+<header><h1>ПРАКТИКУМ ФИПИ (Задание 23)</h1></header>
 
-    <div id="task-menu">
-        <button class="btn-task" onclick="init(0)">ЗАДАЧА 1</button>
-        <button class="btn-task" onclick="init(1)">ЗАДАЧА 2</button>
-        <button class="btn-task" onclick="init(2)">ЗАДАЧА 3</button>
-        <button class="btn-task" onclick="init(3)">ЗАДАЧА 4</button>
+<div class="task-card" id="task-text">
+    <b>КЕЙС №1:</b> В склянках №1 и №2 находятся <b>KOH</b> и <b>ZnSO4</b>. <br>
+    Используя реактивы: <b>Fe, K3PO4, AlCl3</b>, определите содержимое каждой склянки.
+</div>
+
+<div class="lab-area">
+    <div class="flask-wrap">
+        <span>Склянка №1</span>
+        <div class="flask"><div id="liq1" class="liq"></div><div id="eff1" class="eff"></div></div>
     </div>
-
-    <div id="lab-view">
-        <div class="card" id="info"></div>
-        <div class="vessel">
-            <div id="liq" class="liq"></div>
-            <div id="pre" class="pre"></div>
-        </div>
-        <div id="msg" style="color:#00d4ff; font-weight:bold; text-align:center; margin-bottom:10px;">Выберите 2 реактива</div>
-        <div id="grid" class="grid"></div>
-        <button id="mix" class="btn-mix" onclick="check()">СМЕШАТЬ РЕАКТИВЫ</button>
-        <button class="btn-nav" onclick="location.reload()">В МЕНЮ ВЫБОРА</button>
+    <div class="flask-wrap">
+        <span>Склянка №2</span>
+        <div class="flask"><div id="liq2" class="liq"></div><div id="eff2" class="eff"></div></div>
     </div>
+</div>
+
+<div id="log">Выберите реактив для проведения опытов</div>
+
+<div class="reagents" id="reagents-box">
+    <button onclick="conduct('Fe')">Железо (Fe)</button>
+    <button onclick="conduct('K3PO4')">K3PO4</button>
+    <button onclick="conduct('AlCl3')">AlCl3</button>
+</div>
+
+<button class="btn-check" id="final-btn" onclick="showResult()">СДЕЛАТЬ ВЫВОД</button>
 
 <script>
-    // Принудительная установка фона через JS для гарантии
-    document.body.style.backgroundColor = "#0a0f1d";
+    let step = 0;
+    // Скрытая истина (Склянка 1 - KOH, Склянка 2 - ZnSO4)
+    const hidden = { s1: 'KOH', s2: 'ZnSO4' };
 
-    const data = [
-        { n: "MgSO4", t: "BaCl2", res: "БЕЛЫЙ ОСАДОК BaSO4↓", c: "#ffffff", list: ["MgSO4", "BaCl2", "NaOH", "HCl", "AgNO3", "Zn"] },
-        { n: "HCl", t: "AgNO3", res: "БЕЛЫЙ ТВОРОЖИСТЫЙ AgCl↓", c: "#f0f0f0", list: ["HCl", "AgNO3", "BaCl2", "NaOH", "Mg", "Cu"] },
-        { n: "CuSO4", t: "NaOH", res: "СИНИЙ ОСАДОК Cu(OH)2↓", c: "#0077ff", list: ["CuSO4", "NaOH", "BaCl2", "HCl", "Zn", "AgNO3"] },
-        { n: "FeCl3", t: "NaOH", res: "БУРЫЙ ОСАДОК Fe(OH)3↓", c: "#8b4513", list: ["FeCl3", "NaOH", "AgNO3", "HCl", "Mg", "K2SO4"] }
-    ];
+    function conduct(reagent) {
+        const log = document.getElementById('log');
+        const e1 = document.getElementById('eff1');
+        const e2 = document.getElementById('eff2');
 
-    let active = null, sel = [];
-
-    function init(idx) {
-        active = data[idx]; sel = [];
-        document.getElementById('task-menu').style.display = 'none';
-        document.getElementById('lab-view').style.display = 'flex';
-        document.getElementById('info').innerHTML = "Докажите наличие ионов в <br><b>" + active.n + "</b>";
+        if (reagent === 'AlCl3') {
+            // Реакция с KOH (Склянка 1) - белый амфотерный осадок
+            e1.style.height = "30%"; e1.style.background = "#fff";
+            // Реакция с ZnSO4 (Склянка 2) - нет признаков (в рамках ОГЭ)
+            log.innerHTML = "<b>Результат AlCl3:</b><br>Склянка №1: Белый осадок Al(OH)3↓<br>Склянка №2: Без видимых признаков";
+        } 
+        else if (reagent === 'K3PO4') {
+            // Реакция с ZnSO4 (Склянка 2) - белый осадок фосфата цинка
+            e2.style.height = "30%"; e2.style.background = "#f0f0f0";
+            log.innerHTML = "<b>Результат K3PO4:</b><br>Склянка №1: Без видимых признаков<br>Склянка №2: Белый осадок Zn3(PO4)2↓";
+        }
+        else {
+            log.innerHTML = "<b>Результат Fe:</b><br>В обеих склянках признаки реакции отсутствуют.";
+        }
         
-        const g = document.getElementById('grid');
-        g.innerHTML = '';
-        active.list.forEach(r => {
-            let b = document.createElement('button');
-            b.className = 'btn-reagent'; b.innerText = r;
-            b.onclick = () => {
-                if(sel.length < 2 && !sel.includes(r)) {
-                    sel.push(r);
-                    b.style.background = "#00d4ff"; b.style.color = "#000";
-                    document.getElementById('liq').style.height = (sel.length * 40) + '%';
-                    if(sel.length === 2) document.getElementById('mix').style.display = 'block';
-                }
-            };
-            g.appendChild(b);
-        });
+        document.getElementById('final-btn').style.display = 'block';
     }
 
-    function check() {
-        if(sel.includes(active.n) && sel.includes(active.t)) {
-            document.getElementById('pre').style.height = '30%';
-            document.getElementById('pre').style.background = active.c;
-            document.getElementById('msg').innerHTML = "<span style='color:#10b981'>" + active.res + "</span>";
-        } else {
-            document.getElementById('msg').innerHTML = "<span style='color:#ef4444'>РЕАКЦИЯ НЕ ИДЕТ</span>";
-        }
-        document.getElementById('mix').style.display = 'none';
+    function showResult() {
+        alert("ВЫВОД (Задание 23):\nСклянка №1 содержит Гидроксид калия (KOH),\nСклянка №2 содержит Сульфат цинка (ZnSO4).\n\nУравнение для №1: 3KOH + AlCl3 = Al(OH)3↓ + 3KCl");
+        location.reload();
     }
 </script>
+
 </body>
 </html>
