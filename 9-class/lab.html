@@ -3,154 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIVERS | ФИПИ ЭКЗАМЕН</title>
+    <title>UNIVERS | КОМПЛЕКТЫ ОГЭ</title>
     <style>
         :root { --accent: #00d4ff; --bg: #0a0f1d; --card: #111827; --success: #10b981; }
         html, body { background: var(--bg) !important; color: #fff !important; margin: 0; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        
         header { background: #111827; width: 100%; text-align: center; padding: 15px; border-bottom: 2px solid var(--accent); }
-        .container { width: 95%; max-width: 700px; display: flex; flex-direction: column; align-items: center; padding-bottom: 50px; }
-
-        /* МЕНЮ */
-        #task-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; padding: 20px; }
-        .btn-task { background: #1f2937; border: 2px solid var(--accent); color: #fff; padding: 20px; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-task:hover { background: var(--accent); color: #000; }
-
-        /* ЛАБОРАТОРИЯ */
-        #lab-view { display: none; width: 100%; flex-direction: column; align-items: center; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .task-card { background: var(--card); padding: 20px; margin: 15px 0; border-radius: 12px; border-left: 5px solid var(--accent); font-size: 0.95rem; line-height: 1.5; }
-
-        .flask-bench { display: flex; gap: 40px; margin: 20px 0; justify-content: center; }
-        .flask { width: 60px; height: 150px; border: 3px solid #fff; border-radius: 0 0 30px 30px; position: relative; background: rgba(255,255,255,0.1); overflow: hidden; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
-        .liq { position: absolute; bottom: 0; width: 100%; height: 30%; background: rgba(0,212,255,0.3); transition: 0.8s; }
-        .eff { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1.2s; z-index: 5; }
-
-        /* ТАБЛИЦА ФИПИ */
-        .fipi-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--card); border-radius: 10px; overflow: hidden; font-size: 0.8rem; }
-        .fipi-table th, .fipi-table td { border: 1px solid #374151; padding: 10px; text-align: center; }
-        .fipi-table th { background: #1f2937; color: var(--accent); }
         
-        select { background: #0a0f1d; color: #fff; border: 1px solid var(--accent); padding: 5px; border-radius: 5px; width: 100%; font-size: 0.75rem; }
+        .menu-container { width: 90%; max-width: 800px; display: flex; flex-direction: column; gap: 20px; padding: 20px; }
+        .set-box { background: var(--card); border: 1px solid #374151; padding: 15px; border-radius: 15px; }
+        .set-title { color: var(--accent); font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #374151; padding-bottom: 5px; }
+        .case-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        
+        .btn-case { background: #1f2937; border: 1px solid var(--accent); color: #fff; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+        .btn-case:hover { background: var(--accent); color: #000; }
 
-        .reagents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; width: 100%; }
-        .btn-r { background: #1f2937; border: 1px solid var(--accent); color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; }
-        .btn-r:active { background: var(--accent); color: #000; }
+        #lab-view { display: none; width: 95%; max-width: 650px; flex-direction: column; align-items: center; padding: 20px; }
+        .task-card { background: var(--card); padding: 20px; border-left: 5px solid var(--accent); margin-bottom: 20px; font-size: 0.9rem; width: 100%; }
 
-        .btn-nav { background: #374151; color: #fff; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; margin-top: 10px; }
-        .btn-check { background: var(--success); color: #000; width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; margin-top: 10px; cursor: pointer; display: none; }
+        .flask-bench { display: flex; gap: 40px; margin: 20px 0; }
+        .flask { width: 55px; height: 140px; border: 3px solid #fff; border-radius: 0 0 30px 30px; position: relative; background: rgba(255,255,255,0.1); overflow: hidden; }
+        .liq { position: absolute; bottom: 0; width: 100%; height: 30%; background: rgba(0,212,255,0.3); transition: 0.8s; }
+        .eff { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; z-index: 5; }
+
+        table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 0.8rem; margin-top: 20px; }
+        th, td { border: 1px solid #374151; padding: 8px; text-align: center; }
+        select { background: #0a0f1d; color: #fff; border: 1px solid var(--accent); width: 100%; padding: 5px; font-size: 0.7rem; }
+
+        .reagents { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; }
+        .btn-r { background: #1f2937; border: 1px solid var(--accent); color: white; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+        .btn-check { background: var(--success); color: #000; width: 100%; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 15px; cursor: pointer; display: none; }
+        .btn-back { margin-top: 20px; background: #374151; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<header><h1>ОГЭ ХИМИЯ • ЗАДАНИЕ 23</h1></header>
+<header><h1>L&L UNIVERS | ТРЕНАЖЕР ОГЭ</h1></header>
 
-<div class="container">
-    <!-- МЕНЮ -->
-    <div id="task-menu">
-        <button class="btn-task" onclick="openLab(0)">КЕЙС №1 (ФИПИ)</button>
-        <button class="btn-task" onclick="openLab(1)">КЕЙС №2 (ФИПИ)</button>
+<div class="menu-container" id="main-menu">
+    <!-- Сюда скрипт вставит комплекты -->
+</div>
+
+<div id="lab-view">
+    <div class="task-card" id="task-text"></div>
+    <div class="flask-bench">
+        <div class="flask"><div class="liq"></div><div id="eff1" class="eff"></div><div style="text-align:center; margin-top:150px">№1</div></div>
+        <div class="flask"><div class="liq"></div><div id="eff2" class="eff"></div><div style="text-align:center; margin-top:150px">№2</div></div>
     </div>
-
-    <!-- ЛАБ -->
-    <div id="lab-view">
-        <div class="task-card" id="task-text"></div>
-
-        <div class="flask-bench">
-            <div><span>Склянка №1</span><div class="flask"><div class="liq"></div><div id="eff1" class="eff"></div></div></div>
-            <div><span>Склянка №2</span><div class="flask"><div class="liq"></div><div id="eff2" class="eff"></div></div></div>
-        </div>
-
-        <div class="reagents" id="reagent-btns"></div>
-
-        <table class="fipi-table">
-            <tr><th>Склянка</th><th>Признак реакции</th><th>Вывод (Вещество)</th></tr>
-            <tr>
-                <td>№ 1</td>
-                <td><select id="res1">
-                    <option value="">-- выберите --</option>
-                    <option value="white">Белый осадок</option>
-                    <option value="blue">Синий осадок</option>
-                    <option value="gas">Выделение газа</option>
-                    <option value="none">Нет признаков</option>
-                </select></td>
-                <td><select id="sub1"><option value="">-- выберите --</option></select></td>
-            </tr>
-            <tr>
-                <td>№ 2</td>
-                <td><select id="res2">
-                    <option value="">-- выберите --</option>
-                    <option value="white">Белый осадок</option>
-                    <option value="gas">Выделение газа</option>
-                    <option value="none">Нет признаков</option>
-                </select></td>
-                <td><select id="sub2"><option value="">-- выберите --</option></select></td>
-            </tr>
-        </table>
-
-        <button class="btn-check" id="check-btn" onclick="verifyFinal()">ПРОВЕРИТЬ РЕЗУЛЬТАТ</button>
-        <button class="btn-nav" onclick="location.reload()">← В МЕНЮ ВЫБОРА</button>
-    </div>
+    <div class="reagents" id="reagent-btns"></div>
+    <table>
+        <tr><th>Склянка</th><th>Наблюдение</th><th>Вещество</th></tr>
+        <tr><td>№1</td><td><select id="res1"><option value="">-- выбрать --</option><option value="white">Осадок белый</option><option value="gas">Газ</option></select></td><td><select id="sub1"><option value="">-- выбрать --</option></select></td></tr>
+        <tr><td>№2</td><td><select id="res2"><option value="">-- выбрать --</option><option value="white">Осадок белый</option><option value="blue">Осадок синий</option></select></td><td><select id="sub2"><option value="">-- выбрать --</option></select></td></tr>
+    </table>
+    <button class="btn-check" id="check-btn" onclick="verify()">ПРОВЕРИТЬ</button>
+    <button class="btn-back" onclick="location.reload()">← В МЕНЮ КОМПЛЕКТОВ</button>
 </div>
 
 <script>
-    const cases = [
+    const sets = [
         {
-            text: "<b>ЗАДАЧА 1:</b> В склянках №1 и №2 растворы <b>KOH</b> и <b>ZnSO4</b>. Используя реактивы: <b>Fe, K3PO4, AlCl3</b>, распознайте вещества.",
-            s1: 'KOH', s2: 'ZnSO4', 
-            r: ["Fe", "K3PO4", "AlCl3"],
-            options: ["KOH", "ZnSO4", "AlCl3", "Fe"],
-            correct: { r1: "white", r2: "white", s1: "KOH", s2: "ZnSO4" }
+            id: "Комплект №1",
+            cases: [
+                { id: 1, title: "Кейс 1.1", text: "В склянках KOH и ZnSO4. Реактивы: Fe, K3PO4, AlCl3.", s1: "KOH", s2: "ZnSO4", target1: "AlCl3", target2: "K3PO4", list: ["Fe", "K3PO4", "AlCl3"], options: ["KOH", "ZnSO4", "Fe"] },
+                { id: 2, title: "Кейс 1.2", text: "В склянках BaCl2 и HCl. Реактивы: H2SO4, AgNO3, Mg.", s1: "BaCl2", s2: "HCl", target1: "H2SO4", target2: "AgNO3", list: ["H2SO4", "AgNO3", "Mg"], options: ["BaCl2", "HCl", "Mg"] }
+            ]
+        },
+        {
+            id: "Комплект №2",
+            cases: [
+                { id: 3, title: "Кейс 2.1", text: "В склянках CuSO4 и NaOH. Реактивы: BaCl2, HCl, FeCl3.", s1: "CuSO4", s2: "NaOH", target1: "BaCl2", target2: "FeCl3", list: ["BaCl2", "HCl", "FeCl3"], options: ["CuSO4", "NaOH", "HCl"] }
+            ]
         }
     ];
 
+    const menu = document.getElementById('main-menu');
+    sets.forEach(s => {
+        let div = document.createElement('div'); div.className = 'set-box';
+        div.innerHTML = `<div class="set-title">${s.id}</div><div class="case-grid"></div>`;
+        s.cases.forEach(c => {
+            let b = document.createElement('button'); b.className = 'btn-case'; b.innerText = c.title;
+            b.onclick = () => startCase(c);
+            div.querySelector('.case-grid').appendChild(b);
+        });
+        menu.appendChild(div);
+    });
+
     let current = null;
-
-    function openLab(idx) {
-        current = cases[idx];
-        document.getElementById('task-menu').style.display = 'none';
+    function startCase(c) {
+        current = c;
+        document.getElementById('main-menu').style.display = 'none';
         document.getElementById('lab-view').style.display = 'flex';
-        document.getElementById('task-text').innerHTML = current.text;
+        document.getElementById('task-text').innerHTML = c.text;
         
-        // Наполняем селекторы веществ
-        const s1 = document.getElementById('sub1');
-        const s2 = document.getElementById('sub2');
-        current.options.forEach(opt => {
-            s1.innerHTML += `<option value="${opt}">${opt}</option>`;
-            s2.innerHTML += `<option value="${opt}">${opt}</option>`;
+        const rBtns = document.getElementById('reagent-btns'); rBtns.innerHTML = '';
+        c.list.forEach(re => {
+            rBtns.innerHTML += `<button class="btn-r" onclick="mix('${re}')">${re}</button>`;
         });
 
-        // Кнопки реактивов
-        const rBox = document.getElementById(
-
-'reagent-btns');
-        current.r.forEach(re => {
-            rBox.innerHTML += `<button class="btn-r" onclick="mix('${re}')">Добавить ${re}</button>`;
-        });
+        const s1 = document.getElementById('sub1'); const s2 = document.getElementById('sub2');
+        s1.innerHTML = s2.innerHTML = '<option value="">-- выбрать --</option>';
+        c.options.forEach(o => { s1.innerHTML += `<option value="${o}">${o}</option>`; s2.innerHTML += `<option value="${o}">${o}</option>`; });
     }
 
     function mix(re) {
-        const e1 = document.getElementById('eff1');
-        const e2 = document.getElementById('eff2');
-        
-        if (re === 'AlCl3') { e1.style.height = "40%"; e1.style.background = "#fff"; }
-        if (re === 'K3PO4') { e2.style.height = "40%"; e2.style.background = "#f0f0f0"; }
-        
+        if(re === current.target1) { document.getElementById('eff1').style.height = '40%'; document.getElementById('eff1').style.background = '#fff'; }
+        if(re === current.target2) { document.getElementById('eff2').style.height = '40%'; document.getElementById('eff2').style.background = (current.id === 3 ? '#0077ff' : '#f0f0f0'); }
         document.getElementById('check-btn').style.display = 'block';
     }
 
-    function verifyFinal() {
-        const r1 = document.getElementById('res1').value;
-        const r2 = document.getElementById('res2').value;
-        const s1 = document.getElementById('sub1').value;
-        const s2 = document.getElementById('sub2').value;
-
-        if(r1 === current.correct.r1 && r2 === current.correct.r2 && s1 === current.correct.s1 && s2 === current.correct.s2) {
-            alert("ПОЗДРАВЛЯЮ! Эксперимент проведен верно, таблица заполнена без ошибок. 5 баллов!");
-        } else {
-            alert("Ошибка в выводах или наблюдениях. Проверьте таблицу еще раз!");
-        }
+    function verify() {
+        const ok = (document.getElementById('sub1').value === current.s1 && document.getElementById('sub2').value === current.s2);
+        alert(ok ? "ВЕРНО! Навык распознавания подтвержден." : "ОШИБКА в выводах!");
     }
 </script>
 </body>
