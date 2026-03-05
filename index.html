@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L&L UNIVERS | Образовательная Экосистема</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --accent: #38bdf8;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        header h1 { font-size: 2.5rem; letter-spacing: 5px; margin-bottom: 10px; color: var(--accent); }
+        header p { opacity: 0.7; font-weight: 300; }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .class-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .class-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
+        }
+
+        .class-card h2 { font-size: 1.5rem; margin: 0; }
+
+        /* Модальное окно / Подменю */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 100;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-content { text-align: center; }
+        .menu-title { font-size: 2rem; margin-bottom: 30px; color: var(--accent); }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--text);
+            padding: 15px 40px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            min-width: 250px;
+        }
+
+        .menu-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .close-btn {
+            margin-top: 40px;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>LOKI-UNIVERS</h1>
+    <p>ЦИФРОВАЯ ЛАБОРАТОРИЯ ГИМНАЗИИ №1</p>
+</header>
+
+<div class="container">
+    <div class="class-card" onclick="openMenu('8 класс', 'ВПР')">
+        <h2>Химия 8 класс</h2>
+    </div>
+    <div class="class-card" onclick="openMenu('9 класс', 'ОГЭ')">
+        <h2>Химия 9 класс</h2>
+    </div>
+    <div class="class-card" onclick="openMenu('10 класс', 'ВПР')">
+        <h2>Химия 10 класс</h2>
+    </div>
+    <div class="class-card" onclick="openMenu('11 класс', 'ЕГЭ')">
+        <h2>Химия 11 класс</h2>
+    </div>
+</div>
+
+<div id="overlay">
+    <div class="menu-content">
+        <div class="menu-title" id="menu-title">Класс</div>
+        <div class="btn-group">
+            <a href="#" class="menu-btn" id="btn-lab">ЛАБОРАТОРИЯ АЛХИМИКА</a>
+            <a href="#" class="menu-btn" id="btn-exam">ТРЕНАЖЕР</a>
+            <a href="#" class="menu-btn" id="btn-quest">ТЕСТЫ-КВЕСТЫ</a>
+        </div>
+        <div class="close-btn" onclick="closeMenu()">← ВЕРНУТЬСЯ НАЗАД</div>
+    </div>
+</div>
+
+<script>
+    function openMenu(className, examType) {
+        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('menu-title').innerText = className;
+        document.getElementById('btn-exam').innerText = 'ТРЕНАЖЕР ' + examType;
+        
+        // Логика путей будет здесь (пример: 8-class/lab.html)
+        let slug = className.split(' ')[0];
+        document.getElementById('btn-lab').href = slug + "/lab.html";
+        document.getElementById('btn-exam').href = slug + "/exam.html";
+        document.getElementById('btn-quest').href = slug + "/quest.html";
+    }
+
+    function closeMenu() {
+        document.getElementById('overlay').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
