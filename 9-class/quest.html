@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L&L | ХИМИЧЕСКИЙ КВЕСТ</title>
+    <style>
+        :root { --gold: #ffd700; --accent: #00d4ff; --bg: #0a0f1d; --card: #111827; --success: #10b981; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        
+        .quest-container { width: 90%; max-width: 
+
+600px; padding: 40px 20px; text-align: center; }
+        header h1 { color: var(--gold); letter-spacing: 5px; text-shadow: 0 0 15px var(--gold); margin-bottom: 30px; }
+
+        /* ЭКРАНЫ */
+        .screen { display: none; animation: slideIn 0.5s ease-out; }
+        .active { display: block; }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .block-card { background: var(--card); border: 2px solid var(--accent); padding: 30px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,212,255,0.1); }
+        
+        /* КНОПКИ-СУНДУКИ */
+        .chest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px; }
+        .chest { background: linear-gradient(45deg, #1e2937, #111827); border: 2px solid var(--gold); padding: 20px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 2rem; }
+        .chest:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--gold); }
+
+        .btn-action { background: var(--accent); color: #000; padding: 15px 30px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; }
+        .code-input { background: #000; border: 1px solid var(--accent); color: var(--accent); padding: 12px; border-radius: 10px; text-align: center; width: 100%; margin: 10px 0; font-family: monospace; letter-spacing: 3px; }
+        
+        .q-text { font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1px solid #374151; padding-bottom: 10px; }
+        .opt { background: #1f2937; border: 1px solid #374151; padding: 12px; margin: 10px 0; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .opt:hover { border-color: var(--accent); background: rgba(0,212,255,0.05); }
+    </style>
+</head>
+<body>
+    <div class="quest-container">
+        <header><h1>КВЕСТ-УНИВЕРС</h1></header>
+
+        <!-- ЭКРАН 1: ВХОД -->
+        <div id="screen-start" class="screen active">
+            <div class="block-card">
+                <p>Добро пожаловать, Алхимик. Чтобы получить Дары Фригг, пройди три Зала Знаний.</p>
+                <button class="btn-action" onclick="showScreen('screen-hall1')">НАЧАТЬ ПУТЬ</button>
+            </div>
+        </div>
+
+        <!-- ЗАЛ 1: ЭЛЕМЕНТЫ -->
+        <div id="screen-hall1" class="screen">
+            <div class="block-card">
+                <h3>ЗАЛ ЭЛЕМЕНТОВ</h3>
+                <p class="q-text">Какой элемент самый электроотрицательный?</p>
+                <div class="opt" onclick="correctHall(1, 'AURUM')">Фтор (F)</div>
+                <div class="opt" onclick="alert('Ловушка! Попробуй снова.')">Кислород (O)</div>
+            </div>
+        </div>
+
+        <!-- БЛОКИРОВКА 2 -->
+        <div id="screen-lock2" class="screen">
+            <div class="block-card">
+                <h3>ЗАЛ РЕАКЦИЙ ЗАПЕРТ</h3>
+                <p>Введите секретный код из первого зала:</p>
+                <input type="text" id="input-code2" class="code-input" placeholder="КОД">
+                <button class="btn-action" onclick="unlock(2, 'AURUM', 'screen-hall2')">ОТКРЫТЬ ПЕЧАТЬ</button>
+            </div>
+        </div>
+
+        <!-- ЗАЛ 2: РЕАКЦИИ -->
+        <div id="screen-hall2" class="screen">
+            <div class="block-card">
+                <h3>ЗАЛ РЕАКЦИЙ</h3>
+                <p class="q-text">Какое вещество выпадает в осадок при реакции BaCl₂ + H₂SO₄?</p>
+                <div class="opt" onclick="correctHall(2, 'ETHER')">Сульфат бария</div>
+                <div class="opt" onclick="alert('Реакция не идет. Ищи истину.')">Хлорид бария</div>
+            </div>
+        </div>
+
+        <!-- БЛОКИРОВКА 3 -->
+        <div id="screen-lock3" class="screen">
+            <div class="block-card">
+                <h3>ЗАЛ РАСЧЕТОВ ЗАПЕРТ</h3>
+                <p>Введите секретный код из второго зала:</p>
+                <input type="text" id="input-code3" class="code-input" placeholder="КОД">
+                <button class="btn-action" onclick="unlock(3, 'ETHER', 'screen-hall3')">ОТКРЫТЬ ПЕЧАТЬ</button>
+            </div>
+        </div>
+
+        <!-- ЗАЛ 3: РАСЧЕТЫ -->
+        <div id="screen-hall3" class="screen">
+            <div class="block-card">
+                <h3>ЗАЛ РАСЧЕТОВ</h3>
+                <p class="q-text">M(NaOH) = ? г/моль</p>
+                <div class="opt" onclick="showScreen('screen-final')">40</div>
+                <div class="opt" onclick="alert('Математика — язык химии. Ошибка!')">39</div>
+            </div>
+        </div>
+
+        <!-- ФИНАЛ: ДАРЫ -->
+        <div id="screen-final" class="screen">
+            <h3>ДАРЫ ФРИГГ</h3>
+            <p>Выбери свой трофей, Мастер:</p>
+            <div class="chest-grid">
+                <div class="chest" onclick="getPrize('ОЦЕНКА «5» ЗА УРОК!')">🎁</div>
+                <div class="chest" onclick="getPrize('«Наука — это истина, освещенная любовью» (Д.И. Менделеев)')">📜</div>
+                <div class="chest" onclick="getPrize('+1 БАЛЛ К КОНТРОЛЬНОЙ!')">💎</div>
+            </div>
+            <p id="prize-text" style="margin-top:30px; color:var(--gold); font-weight:bold;"></p>
+            <button class="btn-action" onclick="location.reload()">ВЕРНУТЬСЯ В НАЧАЛО</button>
+        </div>
+    </div>
+    <script>
+    // История и загадки Алхимика
+    const lore = {
+        hall1: "«Приветствую тебя, путник! Ты стоишь у врат Зала Элементов. Говорят, что всё сущее состоит из атомов, но лишь один из них обладает такой жаждой чужих электронов, что его называют Королём Окисления. Найди его, и он укажет путь...»",
+        hall2: "«Код принят. Ты в Зале Реакций. Видишь этот туман? Это результат великой битвы ионов. Один из них — Барий, ищет свою вечную спутницу — Серную Группу, чтобы навсегда застыть в белоснежном покое. Узнай их плод, и получишь второй ключ...»",
+        hall3: "«Последний рубеж, Алхимик! Зал Расчётов. Здесь магия цифр правит материей. Знаешь ли ты вес самой сильной щёлочи, созданной из Едкого Натра? Число — это твой пропуск к Дарам Фригг...»"
+    };
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        // Автоматически выводим лор, если заходим в зал
+        if(id === 'screen-hall1') alert(lore.hall1);
+        if(id === 'screen-hall2') alert(lore.hall2);
+        if(id === 'screen-hall3') alert(lore.hall3);
+    }
+
+    function correctHall(hallNum, code) {
+        alert("ВЕРНО! Запиши или запомни КЛЮЧ: " + code);
+        showScreen('screen-lock' + (hallNum + 1));
+    }
+
+    function unlock(hallNum, correctCode, nextId) {
+        const input = document.getElementById('input-code' + hallNum).value.trim().toUpperCase();
+        if(input === correctCode) {
+            alert("ПЕЧАТЬ СЛОМАНА! Входи...");
+            showScreen(nextId);
+        } else {
+            alert("МАГИЯ НЕ СРАБОТАЛА! Код неверен. Вернись и перечитай свитки.");
+        }
+    }
+
+    function getPrize(text) {
+        const display = document.getElementById('prize-text');
+        display.style.opacity = 0;
+        setTimeout(() => {
+            display.innerText = "ТВОЙ ДАР: " + text;
+            display.style.opacity = 1;
+            alert("Фригг одобряет твой путь! Дар получен.");
+        }, 300);
+        
+        // Эффект конфетти или мерцания
+        document.querySelectorAll('.chest').forEach(c => c.style.pointerEvents = 'none');
+    }
+
+    // Инициализация при загрузке
+    window.onload = () => {
+        console.log("L&L UNIVERS QUEST: ONLINE");
+    };
+</script>
+</body>
+</html>
