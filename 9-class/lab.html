@@ -65,12 +65,14 @@ px solid #374151; padding: 8px; text-align: center; }
         <button class="btn-check" onclick="verify()">ПРОВЕРИТЬ РЕЗУЛЬТАТ</button>
         <button class="btn-back-menu" onclick="location.reload()">← К ВЫБОРУ КЕЙСА</button>
     </div>
-   <script>
+  <script>
     // Инициализация меню комплектов
     const menu = document.getElementById('main-menu');
     sets.forEach(s => {
         let div = document.createElement('div'); div.className = 'set-box';
-        div.innerHTML = `<div class="set-title">${s.id}</div><div class="case-grid"></div>`;
+        div.innerHTML = `<div class="set-title">${
+
+s.id}</div><div class="case-grid"></div>`;
         s.cases.forEach(c => {
             let b = document.createElement('button'); b.className = 'btn-case'; b.innerText = c.title;
             b.onclick = () => startLab(c);
