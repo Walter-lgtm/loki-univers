@@ -3,69 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIVERS | ТРЕНАЖЕР ЗАДАНИЯ 23</title>
+    <title>UNIVERS | ЛАБОРАТОРИЯ ОГЭ 2026</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
-        :root { --accent: #00d4ff; --bg: #0a0f1d; --card: #16203a; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        
-        /* Меню выбора задач */
-        #task-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; width: 100%; max-width: 800px; padding: 20px; }
-        .task-btn { background: var(--card); border: 1px solid var(--accent); color: white; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        .task-btn:hover { background: var(--accent); color: #000; font-weight: bold; }
+        :root { --accent: #00d4ff; --bg: #
 
-        /* Экран лаборатории */
-        #lab-screen { display: none; width: 100%; max-width: 600px; flex-direction: column; align-items: center; }
-        .task-text { background: var(--card); padding: 20px; border-radius: 15px; border-left: 5px solid var(--accent); margin-bottom: 20px; }
+0a0f1d; --card: #16203a; --success: #2ed573; --error: #ff4757; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
-        .vessel { width: 60px; height: 160px; border: 3px solid #fff; border-radius: 0 0 30px 30px; position: relative; background: rgba(255,255,255,0.05); margin: 20px; }
-        .liquid { position: absolute; bottom: 0; width: 100%; height: 0; transition: 0.5s; border-radius: 0 0 25px 25px; }
-        .precipitate { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; border-radius: 0 0 25px 25px; }
+        #task-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; width: 100%; max-width: 900px; padding: 20px; box-sizing: border-box; }
+        .task-btn { background: var(--card); border: 1px solid var(--accent); color: white; padding: 20px; border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 0.85rem; font-weight: bold; }
+        .task-btn:hover { background: var(--accent); color: #000; transform: translateY(-3px); }
 
-        .reagents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
-        .reagent-btn { background: transparent; border: 1px solid rgba(0,212,255,0.4); color: white; padding: 12px 5px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; }
-        .reagent-btn:disabled { opacity: 0.2; }
+        #lab-screen { display: none; width: 100%; max-width: 600px; flex-direction: column; align-items: center; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .task-text { background: var(--card); padding: 25px; border-radius: 15px; border-left: 6px solid var(--accent); margin-bottom: 20px; width: 100%; box-sizing: border-box; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        .controls { display: flex; gap: 10px; margin-top: 20px; width: 100%; }
-        .btn { flex: 1; padding: 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
-        .btn-back { background: #4b5563; color: white; }
-        .btn-mix { background: var(--accent); color: #000; }
+        /* Визуализация пробирки */
+        .vessel-area { position: relative; margin: 30px 0; }
+        .vessel { width: 70px; height: 180px; border: 4px solid rgba(255,255,255,0.8); border-radius: 0 0 35px 35px; position: relative; background: rgba(255,255,255,0.05); overflow: hidden; box-shadow: inset 0 0 20px rgba(0,212,255,0.1); }
+        .liquid { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(0,212,255,0.2); }
+        .precipitate { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1.5s ease-out; border-radius: 0 0 30px 30px; }
+
+        /* Эффект пузырьков */
+        .bubbles { position: absolute; bottom: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com'); display: none; animation: bubbleUp 1s infinite linear; }
+        @keyframes bubbleUp { from { background-position: 0 0; } to { background-position: 0 -100px; } }
+
+        .reagents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; margin-top: 20px; }
+        .reagent-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(0,212,255,0.3); color: white; padding: 15px 5px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-family: monospace; font-size: 1rem; }
+        .reagent-btn:disabled { opacity: 0.1; cursor: not-allowed; }
         
-        #result-msg { margin-top: 15px; text-align: center; font-weight: bold; min-height: 40px; }
+        .controls { display: flex; gap: 15px; margin-top: 30px; width: 100%; }
+        .btn { flex: 1; padding: 18px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-back { background: #374151; color: white; }
+        .btn-mix { background: var(--accent); color: #000; display: none; }
+        .btn-mix:hover { background: #fff; box-shadow: 0 0 20px var(--accent); }
+        
+        #result-msg { margin-top: 20px; text-align: center; font-size: 1rem; line-height: 1.5; min-height: 60px; }
     </style>
 </head>
 <body>
 
-<h2 id="main-title">ВЫБОР ЗАДАНИЯ №23</h2>
+<h1 id="main-title" style="letter-spacing: 3px; text-align:center; color: var(--accent);">ВЫБОР ЗАДАНИЯ №23</h1>
 
-<!-- МЕНЮ ЗАДАЧ -->
-<div id="task-menu">
-    <!-- Кнопки генерируются скриптом -->
-</div>
+<div id="task-menu"></div>
 
-<!-- ЭКРАН ЛАБОРАТОРИИ -->
 <div id="lab-screen">
     <div class="task-text" id="task-desc"></div>
     
-    <div class="vessel">
-        <div id="liquid" class="liquid" style="background: rgba(0,212,255,0.2);"></div>
-        <div id="precipitate" class="precipitate"></div>
+    <div class="vessel-area">
+        <div class="vessel">
+            <div id="liquid" class="liquid"></div>
+            <div id="precipitate" class="precipitate"></div>
+            <div id="bubbles" class="bubbles"></div>
+        </div>
     </div>
 
-    <div id="result-msg">Выберите реактивы</div>
-
+    <div id="result-msg">Сначала добавьте исследуемое вещество...</div>
     <div class="reagents-grid" id="reagents-container"></div>
 
     <div class="controls">
         <button class="btn btn-back" onclick="showMenu()">← В МЕНЮ</button>
-        <button class="btn btn-mix" id="mix-btn" style="display:none;" onclick="runExperiment()">СМЕШАТЬ</button>
+        <button class="btn btn-mix" id="mix-btn" onclick="runExperiment()">ПРОВЕСТИ ОПЫТ</button>
     </div>
 </div>
 
 <script>
     const database = [
-        { id: 1, title: "Задача 1: Сульфаты", base: "MgSO4", baseName: "сульфата магния", target: "BaCl2", effect: "#ffffff", msg: "Верно! Белый кристаллический осадок BaSO4.", eq: "MgSO4 + BaCl2 → BaSO4↓ + MgCl2", list: ["MgSO4", "BaCl2", "NaOH", "HCl", "AgNO3", "Cu"] },
-        { id: 2, title: "Задача 2: Хлориды", base: "HCl", baseName: "соляной кислоты", target: "AgNO3", effect: "#f0f0f0", msg: "Верно! Белый творожистый осадок AgCl.", eq: "HCl + AgNO3 → AgCl↓ + HNO3", list: ["HCl", "AgNO3", "BaCl2", "KOH", "Zn", "H2SO4"] },
-        { id: 3, title: "Задача 3: Карбонаты", base: "Na2CO3", baseName: "карбоната натрия", target: "HCl", effect: "bubbles", msg: "Верно! Бурное выделение углекислого газа CO2↑.", eq: "Na2CO3 + 2HCl → 2NaCl + H2O + CO2↑", list: ["Na2CO3", "HCl", "CaCl2", "NaOH", "Fe", "K2SO4"] }
+        { id: 1, title: "Задание 1: Сульфаты", base: "MgSO4", baseName: "сульфата магния (MgSO4)", target: "BaCl2", effect: "#ffffff", msg: "ВЕРНО! Выпал белый кристаллический осадок BaSO4↓", eq: "MgSO4 + BaCl2 → BaSO4↓ + MgCl2", list: ["MgSO4", "BaCl2", "NaOH", "HCl", "AgNO3", "Cu"] },
+        { id: 2, title: "Задание 2: Хлориды", base: "HCl", baseName: "соляной кислоты (HCl)", target: "AgNO3", effect: "#f0f0f0", msg: "ВЕРНО! Выпал белый творожистый осадок AgCl↓", eq: "HCl + AgNO3 → AgCl↓ + HNO3", list: ["HCl", "AgNO3", "BaCl2", "KOH", "Zn", "H2SO4"] },
+        { id: 3, title: "Задание 3: Карбонаты", base: "Na2CO3", baseName: "карбоната натрия (Na2CO3)", target: "HCl", effect: "bubbles", msg: "ВЕРНО! Наблюдается бурное выделение газа CO2↑", eq: "Na2CO3 + 2HCl → 2NaCl + H2O + CO2↑", list: ["Na2CO3", "HCl", "CaCl2", "NaOH", "Fe", "K2SO4"] },
+        { id: 4, title: "Задание 4: Медь (II)", base: "CuSO4", baseName: "сульфата меди(II) (CuSO4)", target: "NaOH", effect: "#0077ff", msg: "ВЕРНО! Образовался синий студенистый осадок Cu(OH)2↓", eq: "CuSO4 + 2NaOH → Cu(OH)2↓ + Na2SO4", list: ["CuSO4", "NaOH", "BaCl2", "Zn", "HNO3", "NH3"] },
+        { id: 5, title: "Задание 5: Железо (III)", base: "FeCl3", baseName: "хлорида железа(III) (FeCl3)", target: "NaOH", effect: "#8b4513", msg: "ВЕРНО! Выпал бурый осадок Fe(OH)3↓", eq: "FeCl3 + 3NaOH → Fe(OH)3↓ + 3NaCl", list: ["FeCl3", "NaOH", "AgNO3", "HCl", "Mg", "K2SO4"] },
+        { id: 6, title: "Задание 6: Аммоний", base: "NH4Cl", baseName: "хлорида аммония (NH4Cl)", target: "NaOH", effect: "bubbles", msg: "ВЕРНО! Запах аммиака. (В ОГЭ подтверждается влажной лакмусовой бумажкой)", eq: "NH4Cl + NaOH → NaCl + H2O + NH3↑", list: ["NH4Cl", "NaOH", "AgNO3", "BaCl2", "HCl", "Cu"] },
+        { id: 7, title: "Задание 7: Йодиды", base: "KI", baseName: "йодида калия (KI)", target: "AgNO3", effect: "#ffff00", msg: "ВЕРНО! Образовался ярко-желтый осадок AgI↓", eq: "KI + AgNO3 → AgI↓ + KNO3", list: ["KI", "AgNO3", "Pb(NO3)2", "HCl", "KOH", "Br2"] },
+        { id: 8, title: "Задание 8: Фосфаты", base: "Na3PO4", baseName: "фосфата натрия (Na3PO4)", target: "AgNO3", effect: "#ffd700", msg: "ВЕРНО! Выпал желтый фосфат серебра Ag3PO4↓", eq: "Na3PO4 + 3AgNO3 → Ag3PO4↓ + 3NaNO3", list: ["Na3PO4", "AgNO3", "BaCl2", "HNO3", "NaOH", "CaCl2"] },
+        { id: 9, title: "Задание 9: Магний", base: "MgCl2", baseName: "хлорида магния (MgCl2)", target: "NaOH", effect: "rgba(255,255,255,0.8)", msg: "ВЕРНО! Белый аморфный осадок Mg(OH)2↓", eq: "MgCl2 + 2NaOH → Mg(OH)2↓ + 2NaCl", list: ["MgCl2", "NaOH", "AgNO3", "HCl", "Zn", "BaCl2"] },
+        { id: 10, title: "Задание 10: Индикаторы", base: "NaOH", baseName: "щелочи (NaOH)", target: "phenolphthalein", effect: "#ff00ff", msg: "ВЕРНО! Раствор окрасился в малиновый цвет.", eq: "Индикатор фенолфталеин в щелочной среде", list: ["NaOH", "phenolphthalein", "HCl", "Zn", "CuSO4", "BaCl2"] }
     ];
 
     let currentTask = null;
@@ -74,13 +89,13 @@
     const menu = document.getElementById('task-menu');
     const lab = document.getElementById('lab-screen');
 
-    // Генерация меню
+    // Инициализация меню
     database.forEach(t => {
-        let b = document.createElement('button');
-        b.className = 'task-btn';
-        b.innerText = t.title;
-        b.onclick = () => startTask(t.id);
-        menu.appendChild(b);
+        let btn = document.createElement('button');
+        btn.className = 'task-btn';
+        btn.innerText = t.title;
+        btn.onclick = () => startTask(t.id);
+        menu.appendChild(btn);
     });
 
     function startTask(id) {
@@ -88,9 +103,9 @@
         selected = [];
         menu.style.display = 'none';
         lab.style.display = 'flex';
-        document.getElementById('main-title').innerText = currentTask.title;
-        document.getElementById('task-desc').innerHTML = `Дано вещество: <b>${currentTask.baseName}</b>. Подберите реактив для качественной реакции.`;
-        resetLab();
+        document.getElementById('main-title').innerText = "ЛАБОРАТОРИЯ";
+        document.getElementById('task-desc').innerHTML = `<b>КОНТЕКСТ:</b> В пробирке находится раствор <b>${currentTask.baseName}</b>. Выберите из списка реактив для качественной реакции.`;
+        resetLabUI();
         renderReagents();
     }
 
@@ -100,39 +115,46 @@
         currentTask.list.forEach(r => {
             let b = document.createElement('button');
             b.className = 'reagent-btn';
-            b.innerText = r;
-            b.onclick = () => selectR(r, b);
+            b.innerText = (r === 'phenolphthalein') ? 'ф/фталеин' : r;
+            b.onclick = () => selectReagent(r, b);
             container.appendChild(b);
         });
     }
 
-    function selectR(name, btn) {
+    function selectReagent(name, btn) {
         if (selected.length < 2 && !selected.includes(name)) {
             selected.push(name);
             btn.style.background = "var(--accent)";
             btn.style.color = "#000";
-            document.getElementById('liquid').style.height = (selected.length * 35) + '%';
+            document.getElementById('liquid').style.height = (selected.length * 40) + '%';
+            document.getElementById('result-msg').innerText = "Реактивы в пробирке. Можно смешивать!";
             if (selected.length === 2) document.getElementById('mix-btn').style.display = 'block';
         }
     }
 
     function runExperiment() {
         const p = document.getElementById('precipitate');
+        const bub = document.getElementById('bubbles');
         const msg = document.getElementById('result-msg');
+        const liq = document.getElementById('liquid');
         
         if (selected.includes(currentTask.base) && selected.includes(currentTask.target)) {
             if(currentTask.effect === 'bubbles') {
-                msg.innerHTML = `<span style="color:var(--accent)">${currentTask.msg}</span><br><small>${currentTask.eq}</small>`;
-                // Тут можно добавить анимацию пузырьков
+                bub.style.display = 'block';
+                msg.innerHTML = `<span style="color:var(--success)">${currentTask.msg}</span><br><small>${currentTask.eq}</small>`;
+            } else if(currentTask.id === 10 || currentTask.effect.startsWith('#ff00ff')) {
+                liq.style.background = currentTask.effect;
+                msg.innerHTML = `<span style="color:var(--success)">${currentTask.msg}</span><br><small>${currentTask.eq}</small>`;
             } else {
-                p.style.height = '25%';
+                p.style.height = '30%';
                 p.style.background = currentTask.effect;
-                msg.innerHTML = `<span style="color:var(--accent)">${currentTask.msg}</span><br><small>${currentTask.eq}</small>`;
+                msg.innerHTML = `<span style="color:var(--success)">${currentTask.msg}</span><br><small>${currentTask.eq}</small>`;
             }
         } else {
-            msg.innerHTML = "<span style='color:#ff4757'>Признаков реакции нет или реактив выбран неверно.</span>";
+            msg.innerHTML = "<span style='color:var(--error)'>РЕАКЦИЯ НЕ ИДЕТ: Вы выбрали неверную пару реактивов для этой задачи.</span>";
         }
         document.getElementById('mix-btn').style.display = 'none';
+        disableAllReagents();
     }
 
     function showMenu() {
@@ -141,11 +163,17 @@
         document.getElementById('main-title').innerText = "ВЫБОР ЗАДАНИЯ №23";
     }
 
-    function resetLab() {
+    function resetLabUI() {
         document.getElementById('liquid').style.height = '0';
+        document.getElementById('liquid').style.background = 'rgba(0,212,255,0.2)';
         document.getElementById('precipitate').style.height = '0';
-        document.getElementById('result-msg').innerText = "Выберите реактивы";
+        document.getElementById('bubbles').style.display = 'none';
+        document.getElementById('result-msg').innerText = "Сначала добавьте исследуемое вещество...";
         document.getElementById('mix-btn').style.display = 'none';
+    }
+
+    function disableAllReagents() {
+        document.querySelectorAll('.reagent-btn').forEach(b => b.disabled = true);
     }
 </script>
 
