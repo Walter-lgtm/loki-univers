@@ -3,40 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L&L | ОГЭ ЛАБОРАТОРИЯ (Комплект 1)</title>
+    <title>L&L | ОГЭ ЛАБОРАТОРИЯ</title>
     <style>
         :root { --accent: #00d4ff; --bg: #0a0f1d; --card: #111827; --success: #10b981; }
         html, body { background: var(--bg) !important; color: #fff !important; margin: 0; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        
-        header { background: #111827; width: 100%; text-align: center; padding: 15px; border-bottom: 2px solid var(--accent); position: sticky; top: 0; z-index: 100; }
+        header { background: #111827; width: 100%; text-align: center; padding: 15px; border-bottom: 2px solid var(--accent); }
         .nav-top { width: 100%; display: flex; justify-content: space-between; padding: 10px 20px; box-sizing: border-box; background: #000; }
         .btn-root { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid var(--accent); padding: 5px 10px; border-radius: 5px; }
-
         .menu-container { width: 90%; max-width: 800px; display: flex; flex-direction: column; gap: 15px; padding: 20px; }
-        .set-box { background: var(--card); border: 1px solid #374151; padding: 15px; border-radius: 12px; }
+        .set-box { background: var(--card); border: 1px solid #374151; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
         .set-title { color: var(--accent); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; border-bottom: 1px solid #374151; padding-bottom: 5px; }
         .case-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
-        
         .btn-case { background: #1f2937; border: 1px solid #4b5563; color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.75rem; transition: 0.2s; }
         .btn-case:hover { border-color: var(--accent); background: rgba(0,212,255,0.1); }
-
-        #lab-view { display: none; width: 95%; max-width: 650px; flex-direction: column; align-items: center; padding: 10px; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .task-card { background: var(--card); padding: 20px; border-left: 5px solid var(--accent); margin-bottom: 15px; font-size: 0.9rem; line-height: 1.4; width: 100%; box-sizing: border-box; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-
+        #lab-view { display: none; width: 95%; max-width: 650px; flex-direction: column; align-items: center; padding: 10px; }
+        .task-card { background: var(--card); padding: 20px; border-left: 5px solid var(--accent); margin-bottom: 15px; font-size: 0.9rem; width: 100%; box-sizing: border-box; }
         .flask-bench { display: flex; gap: 40px; margin: 20px 0; justify-content: center; }
-        .flask-wrap { display: flex; flex-direction: column; align-items: center; }
         .flask { width: 60px; height: 140px; border: 3px solid #fff; border-radius: 0 0 30px 30px; position: relative; background: rgba(255,255,255,0.05); overflow: hidden; }
         .liq { position: absolute; bottom: 0; width: 100%; height: 30%; background: rgba(0,212,255,0.3); transition: 0.6s; }
-        .eff { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; z-index: 5; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; }
-
+        .eff { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; z-index: 5; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: #fff; }
         table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 0.75rem; margin-top: 15px; }
-        th, td { border: 1
-
-px solid #374151; padding: 8px; text-align: center; }
+        th, td { border: 1px solid #374151; padding: 8px; text-align: center; }
         select { background: #0a0f1d; color: #fff; border: 1px solid var(--accent); width: 100%; padding: 4px; border-radius: 4px; }
-
         .reagents { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 15px 0; }
         .btn-r { background: #1f2937; border: 1px solid var(--accent); color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
         .btn-check { background: var(--success); color: #000; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; margin-top: 15px; cursor: pointer; border: none; font-size: 1rem; }
@@ -46,18 +34,18 @@ px solid #374151; padding: 8px; text-align: center; }
 <body>
     <div class="nav-top">
         <a href="../index.html" class="btn-root">← ГЛАВНОЕ МЕНЮ (L&L)</a>
-        <span style="font-size: 0.7rem; opacity: 0.5;">v1.2 Комплект №1 ОГЭ 2026</span>
+        <span style="font-size: 0.7rem; opacity: 0.5;">v1.5 Full Build</span>
     </div>
     <header><h1>ОГЭ ХИМИЯ • ЛАБОРАТОРИЯ</h1></header>
     <div class="menu-container" id="main-menu"></div>
     <div id="lab-view">
         <div class="task-card" id="task-text"></div>
         <div class="flask-bench">
-            <div class="flask-wrap"><div class="flask"><div class="liq"></div><div id="eff1" class="eff"></div></div><div style="margin-top:5px; font-size:0.8rem">Склянка №1</div></div>
-            <div class="flask-wrap"><div class="flask"><div class="liq"></div><div id="eff2" class="eff"></div></div><div style="margin-top:5px; font-size:0.8rem">Склянка №2</div></div>
+            <div><div class="flask"><div class="liq"></div><div id="eff1" class="eff"></div></div><div style="text-align:center;font-size:0.8rem;margin-top:5px;">№1</div></div>
+            <div><div class="flask"><div class="liq"></div><div id="eff2" class="eff"></div></div><div style="text-align:center;font-size:0.8rem;margin-top:5px;">№2</div></div>
         </div>
         <div class="reagents" id="reagent-btns"></div>
-        <table id="fipi-table">
+        <table>
             <tr><th>Склянка</th><th>Наблюдение</th><th>Вещество</th></tr>
             <tr><td>№1</td><td><select id="res1"></select></td><td><select id="sub1"></select></td></tr>
             <tr><td>№2</td><td><select id="res2"></select></td><td><select id="sub2"></select></td></tr>
@@ -65,14 +53,34 @@ px solid #374151; padding: 8px; text-align: center; }
         <button class="btn-check" onclick="verify()">ПРОВЕРИТЬ РЕЗУЛЬТАТ</button>
         <button class="btn-back-menu" onclick="location.reload()">← К ВЫБОРУ КЕЙСА</button>
     </div>
-  <script>
-    // Инициализация меню комплектов
+
+<script>
+    const obsOptions = [
+        {val: "white", text: "Белый осадок"},
+        {val: "bubbles", text: "Выделение газа"},
+        {val: "blue", text: "Синий осадок"},
+        {val: "brown", text: "Бурый осадок"},
+        {val: "none", text: "Нет признаков"}
+    ];
+
+    const sets = [
+        {
+            id: "Комплект №1",
+            cases: [
+                { id: 1.1, title: "Кейс 1.1", text: "В склянках №1 и №2 растворы KOH и ZnSO4. Реактивы: Fe, K3PO4, AlCl3.", s1: "KOH", s2: "ZnSO4", t1: "AlCl3", t2: "K3PO4", c1: "white", c2: "white", colorVal1: "#ffffff", colorVal2: "#ffffff", list: ["Fe", "K3PO4", "AlCl3"], options: ["KOH", "ZnSO4", "Fe", "K3PO4", "AlCl3"] },
+                { id: 1.2, title: "Кейс 1.2", text: "В склянках №1 и №2 растворы AlCl3 и K3PO4. Реактивы: Al, KOH, MgCl2.", s1: "AlCl3", s2: "K3PO4", t1: "KOH", t2: "MgCl2", c1: "white", c2: "white", colorVal1: "#ffffff", colorVal2: "#ffffff", list: ["Al", "KOH", "MgCl2"], options: ["AlCl3", "K3PO4", "Al", "KOH", "MgCl2"] },
+                { id: 1.3, title: "Кейс 1.3", text: "В склянках №1 и №2 растворы Al2(SO4)3 и HCl. Реактивы: Fe, MgCl2, KOH.", s1: "Al2(SO4)3", s2: "HCl", t1: "KOH", t2: "Fe", c1: "white", c2: "bubbles", colorVal1: "#ffffff", colorVal2: "transparent", list: ["Fe", "MgCl2", "KOH"], options: ["Al2(SO4)3", "HCl", "Fe", "MgCl2", "KOH"] },
+                { id: 1.4, title: "Кейс 1.4", text: "В склянках №1 и №2 растворы H2SO4 и NaOH. Реактивы: Fe, Al2(SO4)3, Na3PO4.", s1: "H2SO4", s2: "NaOH", t1: "Fe", t2: "Al2(SO4)3", c1: "bubbles", c2: "white", colorVal1: "transparent", colorVal2: "#ffffff", list: ["Fe", "Al2(SO4)3", "Na3PO4"], options: ["H2SO4", "NaOH", "Fe", "Al2(SO4)3"] },
+                { id: 1.5, title: "Кейс 1.5", text: "В склянках №1 и №2 растворы NaOH и H2SO4. Реактивы: Fe, NH4Cl, K3PO4.", s1: "NaOH", s2: "H2SO4", t1: "NH4Cl", t2: "Fe", c1: "bubbles", c2: "bubbles", colorVal1: "transparent", colorVal2: "transparent", list: ["Fe", "NH4Cl", "K3PO4"], options: ["NaOH", "H2SO4", "NH4Cl", "Fe"] },
+                { id: 1.6, title: "Кейс 1.6", text: "В склянках №1 и №2 растворы ZnSO4 и Na3PO4. Реактивы: Fe, NaOH, Al2(SO4)3.", s1: "ZnSO4", s2: "Na3PO4", t1: "NaOH", t2: "Al2(SO4)3", c1: "white", c2: "white", colorVal1: "#ffffff", colorVal2: "#ffffff", list: ["Fe", "NaOH", "Al2(SO4)3"], options: ["ZnSO4", "Na3PO4", "NaOH", "Al2(SO4)3"] }
+            ]
+        }
+    ];
+
     const menu = document.getElementById('main-menu');
     sets.forEach(s => {
         let div = document.createElement('div'); div.className = 'set-box';
-        div.innerHTML = `<div class="set-title">${
-
-s.id}</div><div class="case-grid"></div>`;
+        div.innerHTML = `<div class="set-title">${s.id}</div><div class="case-grid"></div>`;
         s.cases.forEach(c => {
             let b = document.createElement('button'); b.className = 'btn-case'; b.innerText = c.title;
             b.onclick = () => startLab(c);
@@ -82,19 +90,14 @@ s.id}</div><div class="case-grid"></div>`;
     });
 
     let current = null;
-
     function startLab(c) {
         current = c;
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('lab-view').style.display = 'flex';
         document.getElementById('task-text').innerHTML = c.text;
+        document.getElementById('eff1').style.height = document.getElementById('eff2').style.height = '0';
+        document.getElementById('eff1').innerHTML = document.getElementById('eff2').innerHTML = '';
         
-        // Сброс визуальных эффектов
-        const e1 = document.getElementById('eff1'); const e2 = document.getElementById('eff2');
-        e1.style.height = e2.style.height = '0';
-        e1.innerHTML = e2.innerHTML = '';
-        e1.style.background = e2.style.background = 'transparent';
-
         const rBtns = document.getElementById('reagent-btns'); rBtns.innerHTML = '';
         c.list.forEach(re => { rBtns.innerHTML += `<button class="btn-r" onclick="mix('${re}')">${re}</button>`; });
 
@@ -104,41 +107,35 @@ s.id}</div><div class="case-grid"></div>`;
     function fillSelects(c) {
         const res1 = document.getElementById('res1'); const res2 = document.getElementById('res2');
         const sub1 = document.getElementById('sub1'); const sub2 = document.getElementById('sub2');
-        
         const reset = '<option value="">-- выбрать --</option>';
         const obsHtml = obsOptions.map(o => `<option value="${o.val}">${o.text}</option>`).join('');
         res1.innerHTML = res2.innerHTML = reset + obsHtml;
-        
         const subHtml = c.options.map(o => `<option value="${o}">${o}</option>`).join('');
         sub1.innerHTML = sub2.innerHTML = reset + subHtml;
     }
 
     function mix(re) {
         const e1 = document.getElementById('eff1'); const e2 = document.getElementById('eff2');
-        
         if(re === current.t1) {
             e1.style.height = '60%';
             if(current.c1 === 'bubbles') { e1.innerHTML = '🫧🫧'; e1.style.background = 'transparent'; }
-            else { e1.style.background = current.c1; e1.innerHTML = ''; }
+            else { e1.style.background = current.colorVal1; e1.innerHTML = ''; }
         }
         if(re === current.t2) {
             e2.style.height = '60%';
             if(current.c2 === 'bubbles') { e2.innerHTML = '🫧🫧'; e2.style.background = 'transparent'; }
-            else { e2.style.background = current.c2; e2.innerHTML = ''; }
+            else { e2.style.background = current.colorVal2; e2.innerHTML = ''; }
         }
     }
 
     function verify() {
-        const r1 = document.getElementById('res1').value;
-        const r2 = document.getElementById('res2').value;
-        const s1 = document.getElementById('sub1').value;
-        const s2 = document.getElementById('sub2').value;
-
-        // Отладочная проверка: сверяем значения из таблицы с базой
-        if(r1 === current.c1 && r2 === current.c2 && s1 === current.s1 && s2 === current.s2) {
-            alert("ВЕРНО! Лабораторная работа выполнена успешно. Оценка: 5 баллов.");
+        if(document.getElementById('res1').value === current.c1 && 
+           document.getElementById('res2').value === current.c2 && 
+           document.getElementById('sub1').value === current.s1 && 
+           document.getElementById('sub2').value === current.s2) {
+            alert("ВЕРНО! 5 баллов!");
         } else {
-            alert("ОШИБКА! Внимательно изучите признаки реакций и сделайте верный вывод.\n\nПодсказка: Проверьте, правильно ли указаны вещества для каждой склянки.");
+            alert("ОШИБКА! Проверьте наблюдения и вещества.");
         }
     }
 </script>
