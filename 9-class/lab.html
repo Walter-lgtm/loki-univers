@@ -3,103 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ОГЭ ХИМИЯ 2026 | ЗАДАНИЕ 23</title>
+    <title>UNIVERS | ТРЕНАЖЕР ЗАДАНИЯ 23</title>
     <style>
-        :root { --accent: #00d4ff; --error: #ff4757; --success: #2ed573; }
-        body { font-family: 'Montserrat', sans-serif; background: #0a0f1d; color: #fff; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .task-box { background: #16203a; padding: 20px; border-radius: 15px; border: 1px solid var(--accent); max-width: 600px; margin-bottom: 20px; font-size: 0.9rem; }
-        .lab-bench { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        :root { --accent: #00d4ff; --bg: #0a0f1d; --card: #16203a; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        .tube-vessel { width: 50px; height: 150px; border: 3px solid #eee; border-radius: 0 0 25px 25px; position: relative; background: rgba(255,255,255,0.05); }
-        .content { position: absolute; bottom: 0; width: 100%; height: 0; transition: 0.5s; border-radius: 0 0 20px 20px; }
-        .precipitate { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; border-radius: 0 0 20px 20px; }
+        /* Меню выбора задач */
+        #task-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; width: 100%; max-width: 800px; padding: 20px; }
+        .task-btn { background: var(--card); border: 1px solid var(--accent); color: white; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .task-btn:hover { background: var(--accent); color: #000; font-weight: bold; }
 
-        .reagents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        button { background: none; border: 1px solid var(--accent); color: #fff; padding: 10px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
-        button:disabled { opacity: 0.3; cursor: default; }
-        .btn-check { background: var(--accent); color: #000; font-weight: bold; margin-top: 20px; padding: 10px 40px; border-radius: 20px; }
+        /* Экран лаборатории */
+        #lab-screen { display: none; width: 100%; max-width: 600px; flex-direction: column; align-items: center; }
+        .task-text { background: var(--card); padding: 20px; border-radius: 15px; border-left: 5px solid var(--accent); margin-bottom: 20px; }
         
-        #log { margin-top: 20px; text-align: center; min-height: 50px; font-weight: 300; }
-        .equation { color: var(--success); font-family: monospace; margin-top: 10px; display: none; }
+        .vessel { width: 60px; height: 160px; border: 3px solid #fff; border-radius: 0 0 30px 30px; position: relative; background: rgba(255,255,255,0.05); margin: 20px; }
+        .liquid { position: absolute; bottom: 0; width: 100%; height: 0; transition: 0.5s; border-radius: 0 0 25px 25px; }
+        .precipitate { position: absolute; bottom: 0; width: 100%; height: 0; transition: 1s; border-radius: 0 0 25px 25px; }
+
+        .reagents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        .reagent-btn { background: transparent; border: 1px solid rgba(0,212,255,0.4); color: white; padding: 12px 5px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; }
+        .reagent-btn:disabled { opacity: 0.2; }
+        
+        .controls { display: flex; gap: 10px; margin-top: 20px; width: 100%; }
+        .btn { flex: 1; padding: 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        .btn-back { background: #4b5563; color: white; }
+        .btn-mix { background: var(--accent); color: #000; }
+        
+        #result-msg { margin-top: 15px; text-align: center; font-weight: bold; min-height: 40px; }
     </style>
 </head>
 <body>
 
-<div class="task-box">
-    <b>ЗАДАНИЕ 23 (ОГЭ-2026):</b><br>
-    В пробирке находится раствор <b>сульфата магния (MgSO₄)</b>. Добавьте реактив, который позволит подтвердить наличие <b>сульфат-ионов</b> в растворе. Опишите визуальный признак.
+<h2 id="main-title">ВЫБОР ЗАДАНИЯ №23</h2>
+
+<!-- МЕНЮ ЗАДАЧ -->
+<div id="task-menu">
+    <!-- Кнопки генерируются скриптом -->
 </div>
 
-<div class="lab-bench">
-    <div class="tube-vessel">
-        <div id="liquid" class="content" style="background: rgba(0, 212, 255, 0.2);"></div>
+<!-- ЭКРАН ЛАБОРАТОРИИ -->
+<div id="lab-screen">
+    <div class="task-text" id="task-desc"></div>
+    
+    <div class="vessel">
+        <div id="liquid" class="liquid" style="background: rgba(0,212,255,0.2);"></div>
         <div id="precipitate" class="precipitate"></div>
     </div>
 
-    <div id="log">Добавьте исходное вещество (MgSO₄)</div>
+    <div id="result-msg">Выберите реактивы</div>
 
-    <div class="reagents">
-        <button id="btn-MgSO4" onclick="add('MgSO4')">MgSO₄</button>
-        <button id="btn-BaCl2" onclick="add('BaCl2')" disabled>BaCl₂</button>
-        <button id="btn-NaOH" onclick="add('NaOH')" disabled>NaOH</button>
-        <button id="btn-HCl" onclick="add('HCl')" disabled>HCl</button>
-        <button id="btn-AgNO3" onclick="add('AgNO3')" disabled>AgNO₃</button>
-        <button onclick="location.reload()">СБРОС</button>
+    <div class="reagents-grid" id="reagents-container"></div>
+
+    <div class="controls">
+        <button class="btn btn-back" onclick="showMenu()">← В МЕНЮ</button>
+        <button class="btn btn-mix" id="mix-btn" style="display:none;" onclick="runExperiment()">СМЕШАТЬ</button>
     </div>
-
-    <button id="check-btn" class="btn-check" style="display:none;" onclick="test()">ПРОВЕРИТЬ РЕАКЦИЮ</button>
-    <div id="equation" class="equation"></div>
 </div>
 
 <script>
-    let state = 0; // 0 - пусто, 1 - основа добавлена, 2 - реактив добавлен
-    let currentReagent = '';
+    const database = [
+        { id: 1, title: "Задача 1: Сульфаты", base: "MgSO4", baseName: "сульфата магния", target: "BaCl2", effect: "#ffffff", msg: "Верно! Белый кристаллический осадок BaSO4.", eq: "MgSO4 + BaCl2 → BaSO4↓ + MgCl2", list: ["MgSO4", "BaCl2", "NaOH", "HCl", "AgNO3", "Cu"] },
+        { id: 2, title: "Задача 2: Хлориды", base: "HCl", baseName: "соляной кислоты", target: "AgNO3", effect: "#f0f0f0", msg: "Верно! Белый творожистый осадок AgCl.", eq: "HCl + AgNO3 → AgCl↓ + HNO3", list: ["HCl", "AgNO3", "BaCl2", "KOH", "Zn", "H2SO4"] },
+        { id: 3, title: "Задача 3: Карбонаты", base: "Na2CO3", baseName: "карбоната натрия", target: "HCl", effect: "bubbles", msg: "Верно! Бурное выделение углекислого газа CO2↑.", eq: "Na2CO3 + 2HCl → 2NaCl + H2O + CO2↑", list: ["Na2CO3", "HCl", "CaCl2", "NaOH", "Fe", "K2SO4"] }
+    ];
 
-    function add(name) {
-        if (state === 0 && name === 'MgSO4') {
-            document.getElementById('liquid').style.height = '40%';
-            document.getElementById('log').innerText = "Основа добавлена. Теперь выберите реактив для определения сульфат-иона.";
-            state = 1;
-            disableButtons('MgSO4');
-            enableReagents();
-        } else if (state === 1) {
-            currentReagent = name;
-            document.getElementById('liquid').style.height = '70%';
-            document.getElementById('log').innerText = "Реактив добавлен. Нажмите для проведения опыта.";
-            document.getElementById('check-btn').style.display = 'block';
-            state = 2;
-            disableButtons();
+    let currentTask = null;
+    let selected = [];
+
+    const menu = document.getElementById('task-menu');
+    const lab = document.getElementById('lab-screen');
+
+    // Генерация меню
+    database.forEach(t => {
+        let b = document.createElement('button');
+        b.className = 'task-btn';
+        b.innerText = t.title;
+        b.onclick = () => startTask(t.id);
+        menu.appendChild(b);
+    });
+
+    function startTask(id) {
+        currentTask = database.find(x => x.id === id);
+        selected = [];
+        menu.style.display = 'none';
+        lab.style.display = 'flex';
+        document.getElementById('main-title').innerText = currentTask.title;
+        document.getElementById('task-desc').innerHTML = `Дано вещество: <b>${currentTask.baseName}</b>. Подберите реактив для качественной реакции.`;
+        resetLab();
+        renderReagents();
+    }
+
+    function renderReagents() {
+        const container = document.getElementById('reagents-container');
+        container.innerHTML = '';
+        currentTask.list.forEach(r => {
+            let b = document.createElement('button');
+            b.className = 'reagent-btn';
+            b.innerText = r;
+            b.onclick = () => selectR(r, b);
+            container.appendChild(b);
+        });
+    }
+
+    function selectR(name, btn) {
+        if (selected.length < 2 && !selected.includes(name)) {
+            selected.push(name);
+            btn.style.background = "var(--accent)";
+            btn.style.color = "#000";
+            document.getElementById('liquid').style.height = (selected.length * 35) + '%';
+            if (selected.length === 2) document.getElementById('mix-btn').style.display = 'block';
         }
     }
 
-    function test() {
+    function runExperiment() {
         const p = document.getElementById('precipitate');
-        const eq = document.getElementById('equation');
-        const log = document.getElementById('log');
-
-        if (currentReagent === 'BaCl2') {
-            p.style.height = '20%';
-            p.style.background = '#fff';
-            log.innerHTML = "<span style='color:var(--success)'>ВЕРНО! Выпал белый мелкокристаллический осадок.</span>";
-            eq.innerText = "MgSO₄ + BaCl₂ → BaSO₄↓ + MgCl₂";
-            eq.style.display = 'block';
-        } else if (currentReagent === 'NaOH') {
-            p.style.height = '25%';
-            p.style.background = 'rgba(255,255,255,0.7)';
-            log.innerHTML = "<span style='color:var(--error)'>ОШИБКА: Осадок есть, но он доказывает наличие иона Mg²⁺, а не SO₄²⁻!</span>";
+        const msg = document.getElementById('result-msg');
+        
+        if (selected.includes(currentTask.base) && selected.includes(currentTask.target)) {
+            if(currentTask.effect === 'bubbles') {
+                msg.innerHTML = `<span style="color:var(--accent)">${currentTask.msg}</span><br><small>${currentTask.eq}</small>`;
+                // Тут можно добавить анимацию пузырьков
+            } else {
+                p.style.height = '25%';
+                p.style.background = currentTask.effect;
+                msg.innerHTML = `<span style="color:var(--accent)">${currentTask.msg}</span><br><small>${currentTask.eq}</small>`;
+            }
         } else {
-            log.innerHTML = "<span style='color:var(--error)'>Признаков реакции не наблюдается. Цель не достигнута.</span>";
+            msg.innerHTML = "<span style='color:#ff4757'>Признаков реакции нет или реактив выбран неверно.</span>";
         }
-        document.getElementById('check-btn').style.display = 'none';
+        document.getElementById('mix-btn').style.display = 'none';
     }
 
-    function disableButtons(except) {
-        document.querySelectorAll('.reagents button').forEach(b => b.disabled = true);
+    function showMenu() {
+        menu.style.display = 'grid';
+        lab.style.display = 'none';
+        document.getElementById('main-title').innerText = "ВЫБОР ЗАДАНИЯ №23";
     }
 
-    function enableReagents() {
-        const list = ['BaCl2', 'NaOH', 'HCl', 'AgNO3'];
-        list.forEach(id => document.getElementById('btn-' + id).disabled = false);
+    function resetLab() {
+        document.getElementById('liquid').style.height = '0';
+        document.getElementById('precipitate').style.height = '0';
+        document.getElementById('result-msg').innerText = "Выберите реактивы";
+        document.getElementById('mix-btn').style.display = 'none';
     }
 </script>
 
