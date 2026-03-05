@@ -65,69 +65,14 @@ px solid #374151; padding: 8px; text-align: center; }
         <button class="btn-check" onclick="verify()">ПРОВЕРИТЬ РЕЗУЛЬТАТ</button>
         <button class="btn-back-menu" onclick="location.reload()">← К ВЫБОРУ КЕЙСА</button>
     </div>
-    <script>
-    // БАЗА ДАННЫХ КОМПЛЕКТА №1 (6 КЕЙСОВ)
-    const sets = [
-        {
-            id: "Комплект №1"
-
-,
-            cases: [
-                { 
-                    id: 1.1, title: "Кейс 1.1", 
-                    text: "В склянках №1 и №2 растворы гидроксида калия (KOH) и сульфата цинка (ZnSO4). Реактивы: Fe, K3PO4, AlCl3.", 
-                    s1: "KOH", s2: "ZnSO4", t1: "AlCl3", t2: "K3PO4", c1: "#ffffff", c2: "#f0f0f0", 
-                    list: ["Fe", "K3PO4", "AlCl3"], options: ["KOH", "ZnSO4", "AlCl3", "K3PO4"] 
-                },
-                { 
-                    id: 1.2, title: "Кейс 1.2", 
-                    text: "В склянках №1 и №2 растворы хлорида алюминия (AlCl3) и фосфата калия (K3PO4). Реактивы: Al, KOH, MgCl2.", 
-                    s1: "AlCl3", s2: "K3PO4", t1: "KOH", t2: "MgCl2", c1: "#ffffff", c2: "#ffffff", 
-                    list: ["Al", "KOH", "MgCl2"], options: ["AlCl3", "K3PO4", "KOH", "MgCl2"] 
-                },
-                { 
-                    id: 1.3, title: "Кейс 1.3", 
-                    text: "В склянках №1 и №2 растворы сульфата алюминия Al2(SO4)3 и соляной кислоты (HCl). Реактивы: Fe, MgCl2, KOH.", 
-                    s1: "Al2(SO4)3", s2: "HCl", t1: "KOH", t2: "Fe", c1: "#ffffff", c2: "bubbles", 
-                    list: ["Fe", "MgCl2", "KOH"], options: ["Al2(SO4)3", "HCl", "KOH", "Fe"] 
-                },
-                { 
-                    id: 1.4, title: "Кейс 1.4", 
-                    text: "В склянках №1 и №2 растворы серной кислоты (H2SO4) и гидроксида натрия (NaOH). Реактивы: Fe, Al2(SO4)3, Na3PO4.", 
-                    s1: "H2SO4", s2: "NaOH", t1: "Fe", t2: "Al2(SO4)3", c1: "bubbles", c2: "#ffffff", 
-                    list: ["Fe", "Al2(SO4)3", "Na3PO4"], options: ["H2SO4", "NaOH", "Fe", "Al2(SO4)3"] 
-                },
-                { 
-                    id: 1.5, title: "Кейс 1.5", 
-                    text: "В склянках №1 и №2 растворы гидроксида натрия (NaOH) и серной кислоты (H2SO4). Реактивы: Fe, NH4Cl, K3PO4.", 
-                    s1: "NaOH", s2: "H2SO4", t1: "NH4Cl", t2: "Fe", c1: "bubbles", c2: "bubbles", 
-                    list: ["Fe", "NH4Cl", "K3PO4"], options: ["NaOH", "H2SO4", "NH4Cl", "Fe"] 
-                },
-                { 
-                    id: 1.6, title: "Кейс 1.6", 
-                    text: "В склянках №1 и №2 растворы сульфата цинка (ZnSO4) и фосфата натрия (Na3PO4). Реактивы: Fe, NaOH, Al2(SO4)3.", 
-                    s1: "ZnSO4", s2: "Na3PO4", t1: "NaOH", t2: "Al2(SO4)3", c1: "#ffffff", c2: "#ffffff", 
-                    list: ["Fe", "NaOH", "Al2(SO4)3"], options: ["ZnSO4", "Na3PO4", "NaOH", "Al2(SO4)3"] 
-                }
-            ]
-        }
-    ];
-
-    const obsOptions = [
-        {val: "white", text: "Белый осадок"},
-        {val: "bubbles", text: "Выделение газа"},
-        {val: "blue", text: "Синий осадок"},
-        {val: "brown", text: "Бурый осадок"},
-        {val: "none", text: "Нет признаков"}
-    ];
-        const menu = document.getElementById('main-menu');
+   <script>
+    // Инициализация меню комплектов
+    const menu = document.getElementById('main-menu');
     sets.forEach(s => {
         let div = document.createElement('div'); div.className = 'set-box';
         div.innerHTML = `<div class="set-title">${s.id}</div><div class="case-grid"></div>`;
         s.cases.forEach(c => {
-            
-
-let b = document.createElement('button'); b.className = 'btn-case'; b.innerText = c.title;
+            let b = document.createElement('button'); b.className = 'btn-case'; b.innerText = c.title;
             b.onclick = () => startLab(c);
             div.querySelector('.case-grid').appendChild(b);
         });
@@ -135,12 +80,19 @@ let b = document.createElement('button'); b.className = 'btn-case'; b.innerText 
     });
 
     let current = null;
+
     function startLab(c) {
         current = c;
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('lab-view').style.display = 'flex';
         document.getElementById('task-text').innerHTML = c.text;
         
+        // Сброс визуальных эффектов
+        const e1 = document.getElementById('eff1'); const e2 = document.getElementById('eff2');
+        e1.style.height = e2.style.height = '0';
+        e1.innerHTML = e2.innerHTML = '';
+        e1.style.background = e2.style.background = 'transparent';
+
         const rBtns = document.getElementById('reagent-btns'); rBtns.innerHTML = '';
         c.list.forEach(re => { rBtns.innerHTML += `<button class="btn-r" onclick="mix('${re}')">${re}</button>`; });
 
@@ -152,35 +104,39 @@ let b = document.createElement('button'); b.className = 'btn-case'; b.innerText 
         const sub1 = document.getElementById('sub1'); const sub2 = document.getElementById('sub2');
         
         const reset = '<option value="">-- выбрать --</option>';
-        res1.innerHTML = res2.innerHTML = obsOptions.map(o => `<option value="${o.val}">${o.text}</option>`).join('');
-        res1.insertAdjacentHTML('afterbegin', reset); res2.insertAdjacentHTML('afterbegin', reset);
+        const obsHtml = obsOptions.map(o => `<option value="${o.val}">${o.text}</option>`).join('');
+        res1.innerHTML = res2.innerHTML = reset + obsHtml;
         
-        const subs = c.options.map(o => `<option value="${o}">${o}</option>`).join('');
-        sub1.innerHTML = sub2.innerHTML = reset + subs;
+        const subHtml = c.options.map(o => `<option value="${o}">${o}</option>`).join('');
+        sub1.innerHTML = sub2.innerHTML = reset + subHtml;
     }
 
     function mix(re) {
         const e1 = document.getElementById('eff1'); const e2 = document.getElementById('eff2');
+        
         if(re === current.t1) {
-            e1.style.height = '40%';
-            if(current.c1 === 'bubbles') { e1.innerHTML = '🫧'; e1.style.background = 'transparent'; }
+            e1.style.height = '60%';
+            if(current.c1 === 'bubbles') { e1.innerHTML = '🫧🫧'; e1.style.background = 'transparent'; }
             else { e1.style.background = current.c1; e1.innerHTML = ''; }
         }
         if(re === current.t2) {
-            e2.style.height = '40%';
-            if(current.c2 === 'bubbles') { e2.innerHTML = '🫧'; e2.style.background = 'transparent'; }
+            e2.style.height = '60%';
+            if(current.c2 === 'bubbles') { e2.innerHTML = '🫧🫧'; e2.style.background = 'transparent'; }
             else { e2.style.background = current.c2; e2.innerHTML = ''; }
         }
     }
 
     function verify() {
-        const r1 = document.getElementById('res1').value; const r2 = document.getElementById('res2').value;
-        const s1 = document.getElementById('sub1').value; const s2 = document.getElementById('sub2').value;
+        const r1 = document.getElementById('res1').value;
+        const r2 = document.getElementById('res2').value;
+        const s1 = document.getElementById('sub1').value;
+        const s2 = document.getElementById('sub2').value;
 
+        // Отладочная проверка: сверяем значения из таблицы с базой
         if(r1 === current.c1 && r2 === current.c2 && s1 === current.s1 && s2 === current.s2) {
             alert("ВЕРНО! Лабораторная работа выполнена успешно. Оценка: 5 баллов.");
         } else {
-            alert("ОШИБКА! Внимательно изучите признаки реакций и сделайте верный вывод.");
+            alert("ОШИБКА! Внимательно изучите признаки реакций и сделайте верный вывод.\n\nПодсказка: Проверьте, правильно ли указаны вещества для каждой склянки.");
         }
     }
 </script>
