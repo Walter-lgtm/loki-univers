@@ -75,6 +75,10 @@
     <div id="m-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="mendeleev.jpg"></div>
     <div id="s-modal" class="modal" onclick="this.style.display='none'"><img class="modal-img" src="solubility.jpg"></div>
 <script>
+    // Инициализация памяти (LocalStorage)
+    let totalScore = parseInt(localStorage.getItem('LokiScore')) || 0;
+    document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore;
+
     const db = [
         { id: 1, type: "multi", q: "Выберите два утверждения о хлоре как о простом веществе.", a: ["Ядовитый газ желтовато-зеленого цвета", "Запасы в воде морей и океанов", "Легко сжижается", "Ткани человека содержат 0,2%", "С пищей человек получает 3–6 г"], c: [0, 2], pts: 1 },
         { id: 2, type: "input", q: "На модели ядро (+3). Запишите номер периода (X) и заряд ядра (Y).", c: ["2", "3"], labels: ["X", "Y"], pts: 1 },
@@ -87,22 +91,22 @@
         { id: 9, type: "matrix", q: "Продукты: А)Al+NaOH+H2O, Б)Al2O3+NaOH(спл), В)Al(OH)3+HCl.", c: ["3", "4", "2"], labels: ["А", "Б", "В"], pts: 2 },
         { id: 10, type: "matrix", q: "Реагенты: А)Al, Б)O2, В)S. (1-SO2,CH4; 2-AgNO3,NaCl; 3-HCl,KOH; 4-Fe,Cl2).", c: ["3", "1", "4"], labels: ["А", "Б", "В"], pts: 2 },
         { id: 11, type: "single", q: "Уравнение реакции разложения:", a: ["Zn + H2SO4", "HNO3 + Fe(OH)2", "H2SO4 + C", "Pb(NO3)2 -> PbO + NO2 + O2"], c: 3, pts: 1 },
-        { id: 12, type: "matrix", q: "Признак: А)CuSO4+BaCl2, Б)CuSO4+NaOH, В)FeSO4+NaOH. (1-белый, 3-голубой, 4-серо-зеленый).", c: ["1", "3", "4"], labels: ["А", "Б", "В"], pts: 2 },
+        { id: 12, type: "matrix", q: "Признак: А)CuSO4+BaCl2, Б)CuSO4+NaOH, В)FeSO4+NaOH.", c: ["1", "3", "4"], labels: ["А", "Б", "В"], pts: 2 },
         { id: 13, type: "multi", q: "Выберите два неэлектролита.", a: ["CH4", "CO2", "HNO3", "KClO", "CuSO4"], c: [0, 1], pts: 1 },
         { id: 14, type: "multi", q: "Ионы, способные находиться в растворе одновременно:", a: ["Ca2+, Ba2+, NO3-, Cl-", "Mg2+, Fe3+, Cl-, SO42-", "K+, Al3+, Cl-, OH-", "Cu2+, S2-", "H+, OH-", "Ca2+, OH-"], c: [0, 1], pts: 1 },
         { id: 15, type: "matrix", q: "Процесс (1-ок., 2-вос.): А)Si+4->Si0, Б)I+5->I+7, В)N20->2N-3.", c: ["2", "1", "2"], labels: ["А", "Б", "В"], pts: 1 },
         { id: 16, type: "multi", q: "Верные суждения о безопасности:", a: ["Органику вдали от огня", "Щелочные Ме без защиты", "Ацетон в холодильнике", "Калий под керосином"], c: [0, 3], pts: 1 },
-        { id: 17, type: "matrix", q: "Различить: А)CuSO4/CuCl2, Б)Na2SO4/BaSO4, В)NH3/NH4Cl. (1-H2O, 2-ф/ф, 3-Ba(NO3)2, 4-Cu).", c: ["3", "1", "2"], labels: ["А", "Б", "В"], pts: 2 },
+        { id: 17, type: "matrix", q: "Различить: А)CuSO4/CuCl2, Б)Na2SO4/BaSO4, В)NH3/NH4Cl.", c: ["3", "1", "2"], labels: ["А", "Б", "В"], pts: 2 },
         { id: 18, type: "input", q: "Массовая доля магния в MgC6H10O6 (%). Целое число.", c: ["12"], labels: ["%"], pts: 1 },
         { id: 19, type: "input", q: "Масса лактата для 3000 мг магния (г). Целое число.", c: ["25"], labels: ["г"], pts: 1 }
     ];
 
-    let currentQ = 0, totalScore = 0, selectedMulti = [];
+    let currentQ = 0, selectedMulti = [];
 
     const menu = document.getElementById('exam-menu');
     db.forEach((t, i) => {
         let div = document.createElement('div'); div.className = 'topic-btn';
-        div.innerHTML = `<h3>№${t.id}. ${t.q.split(':')[0]}</h3><p>Макс. балл: ${t.pts}</p>`;
+        div.innerHTML = `<h3>Задание №${t.id}</h3><p>Макс. балл: ${t.pts}</p>`;
         div.onclick = () => startQuiz(i);
         menu.appendChild(div);
     });
@@ -147,7 +151,7 @@
     }
 
     function checkSingle(i, btn) {
-        if(i === db[currentQ].c) { btn.classList.add('correct'); totalScore += db[currentQ].pts; }
+        if(i === db[currentQ].c) { savePoints(db[currentQ].pts); btn.classList.add('correct'); }
         else btn.classList.add('wrong');
         updateUI();
     }
@@ -158,26 +162,33 @@
             const isFull = t.c.every(x => selectedMulti.includes(x)) && t.c.length === selectedMulti.length;
             if(isFull) earned = t.pts;
         } else {
-            let userStr = ""; t.c.forEach((_, i) => userStr += document.getElementById('val'+i).value);
+            let userStr = ""; t.c.forEach((_, i) => userStr += document.getElementById('val'+i).value.trim());
             if(userStr === t.c.join('')) earned = t.pts;
-            else if(t.pts === 2) { /* Логика частичного балла для матриц */
-                let correctCount = 0; 
-                t.c.forEach((val, i) => { if(document.getElementById('val'+i).value === val) correctCount++; });
-                if(correctCount === 2) earned = 1;
+            else if(t.pts === 2) {
+                let hits = 0; t.c.forEach((val, i) => { if(document.getElementById('val'+i).value.trim() === val) hits++; });
+                if(hits === 2) earned = 1;
             }
         }
-        totalScore += earned;
+        savePoints(earned);
         alert(earned > 0 ? "Получено баллов: " + earned : "Неверно (0 баллов)");
         updateUI();
     }
 
-    function updateUI() {
+    function savePoints(pts) {
+        totalScore += pts;
+        localStorage.setItem('LokiScore', totalScore);
         document.getElementById('score-val').innerText = 'БАЛЛЫ: ' + totalScore;
+    }
+
+    function updateUI() {
         document.getElementById('progress-fill').style.width = ((currentQ+1)/db.length*100) + '%';
-        setTimeout(() => location.reload(), 1500);
+        setTimeout(() => location.reload(), 1200);
     }
 
     function openMod(id) { document.getElementById(id).style.display = 'flex'; }
+    
+    // Очистка при выходе
+    window.onunload = () => { if(currentQ === db.length - 1) localStorage.removeItem('LokiScore'); };
 </script>
 </body>
 </html>
