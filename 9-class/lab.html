@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЛАБОРАТОРИЯ АЛХИМИКА | 9 КЛАСС</title>
+    <style>
+        body { font-family: sans-serif; background: #
 
+0a0f1d; color: #fff; text-align: center; margin: 0; overflow: hidden; }
+        .lab-bench { height: 100vh; display: flex; flex-direction: column; justify-content: space-around; align-items: center; }
+        
+        /* Колба */
+        .flask-container { position: relative; width: 150px; height: 200px; }
+        .flask { 
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            border: 4px solid #fff; border-radius: 0 0 50px 50px;
+            background: rgba(255,255,255,0.1); overflow: hidden;
+        }
+        .liquid { 
+            position: absolute; bottom: 0; width: 100%; height: 0%; 
+            background: rgba(0, 212, 255, 0.4); transition: all 1s; 
+        }
+        .sediment { 
+            position: absolute; bottom: 0; width: 100%; height: 0%; 
+            background: #fff; transition: all 1s; 
+        }
+
+        /* Полка с реактивами */
+        .shelf { display: flex; gap: 15px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 20px; }
+        .reagent { 
+            padding: 15px; border: 1px solid #00d4ff; border-radius: 10px; cursor: pointer;
+            transition: 0.3s; background: #161f33;
+        }
+        .reagent:hover { background: #00d4ff; color: #000; }
+
+        .formula-display { font-size: 1.5rem; height: 50px; color: #00d4ff; }
+        .back-btn { position: absolute; top: 20px; left: 20px; color: #fff; text-decoration: none; opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-btn">← ВЫХОД</a>
+
+<div class="lab-bench">
+    <h1>ЛАБОРАТОРИЯ АЛХИМИКА</h1>
+    
+    <div class="formula-display" id="formula">Выберите первый реактив...</div>
+
+    <div class="flask-container">
+        <div class="flask">
+            <div id="liquid" class="liquid"></div>
+            <div id="sediment" class="sediment"></div>
+        </div>
+    </div>
+
+    <div class="shelf">
+        <div class="reagent" onclick="addReagent('BaCl2', 'Хлорид бария')">BaCl₂</div>
+        <div class="reagent" onclick="addReagent('H2SO4', 'Серная кислота')">H₂SO₄</div>
+        <div class="reagent" onclick="resetLab()">СБРОС</div>
+    </div>
+</div>
+
+<script>
+    let mix = [];
+
+    function addReagent(id, name) {
+        if (mix.length < 2) {
+            mix.push(id);
+            document.getElementById('liquid').style.height = (mix.length * 40) + '%';
+            document.getElementById('formula').innerText = 'Добавлено: ' + name;
+            checkReaction();
+        }
+    }
+
+    function checkReaction() {
+        if (mix.includes('BaCl2') && mix.includes('H2SO4')) {
+            setTimeout(() => {
+                document.getElementById('sediment').style.height = '20%';
+                document.getElementById('formula').innerHTML = 'BaCl₂ + H₂SO₄ → <b>BaSO₄↓</b> + 2HCl';
+                alert('Внимание! Выпал белый мелкокристаллический осадок!');
+            }, 1000);
+        }
+    }
+
+    function resetLab() {
+        mix = [];
+        document.getElementById('liquid').style.height = '0%';
+        document.getElementById('sediment').style.height = '0%';
+        document.getElementById('formula').innerText = 'Выберите первый реактив...';
+    }
+</script>
+
+</body>
+</html>
