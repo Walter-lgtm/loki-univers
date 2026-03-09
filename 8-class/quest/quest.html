@@ -203,12 +203,14 @@ let leaderBoard = JSON.parse(localStorage.getItem('alchemist_rating')) || [];
 
 function setupPhenomena() {
     const stage = phenomena[Math.floor(Math.random() * phenomena.length)];
-    const lvl = document.getElementById('lvl-phenomena'); // Нужно добавить этот ID в HTML
+    const lvl = document.getElementById('lvl-phenomena');
     lvl.innerHTML = `
-        <h2>Зал Трансмутаций</h2>
+        <h2>ГОРНИЛО СТИХИЙ</h2>
         <p class="mystic-text">Перед тобой явление: <b>${stage.text}</b>. Какова его природа?</p>
-        <button class="btn" onclick="checkPhenom('${stage.type}', 'phys', '${stage.desc}')">Физическое</button>
-        <button class="btn" onclick="checkPhenom('${stage.type}', 'chem', '${stage.desc}')">Химическое</button>
+        <div style="display:flex; justify-content:center; gap:15px;">
+            <button class="btn" onclick="checkPhenom('${stage.type}', 'phys', '${stage.desc}')">Физическое</button>
+            <button class="btn" onclick="checkPhenom('${stage.type}', 'chem', '${stage.desc}')">Химическое</button>
+        </div>
     `;
 }
 
