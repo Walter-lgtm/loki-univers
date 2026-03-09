@@ -71,6 +71,16 @@
 </div>
 
 <script>
+    const rewards = {
+    'Мудрости (5)': "Философский Камень превратил Твои знания в золотую пятёрку! В журнале засияло золото.",
+    'Удачи (4)': "Ты почти познал Великое Делание. Твоя награда — крепкая четвёрка и благословение Алхимика.",
+    'Власти': "Ты обрел власть над стихиями! Твой авторитет в лаборатории непоколебим.",
+    'Иммунитета': "Древний эликсир защитит тебя: сегодня ты застрахован от любых проклятий (двоек).",
+    'Оракула': "Твой взор пронзает тайны: на следующем уроке ты будешь знать ответы до того, как их зададут."
+};
+
+// Проверяем наличие рейтинга в памяти
+let leaderBoard = JSON.parse(localStorage.getItem('alchemist_rating')) || [];
     const riddles = [
         { q: "Алхимик в стоге сена потерял железную иглу. Как найти её быстрее всего?", right: "Сжечь сено и собрать пепел магнитом", wrong: ["Просеять сено", "Залить водой"] },
         { q: "В чаше смешаны песок и соль. Как вернуть алхимику чистую соль?", right: "Растворить, отфильтровать и выпарить", wrong: ["Пинцетом", "Магнитом"] },
@@ -156,16 +166,35 @@ function checkIndicator(name, effect) {
     }
 
     function claim(btn, reward) {
-        document.querySelectorAll('.door-btn').forEach(d => {
-            if(d !== btn) d.classList.add('door-vanish');
-            else d.classList.add('door-selected');
-        });
-        document.getElementById('door-title').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('final-message').classList.remove('hidden');
-            alert("Награда " + reward + " твоя! Сделай скриншот для Магистра.");
-        }, 800);
-    }
+    // 1. Анимация выбора
+    document.querySelectorAll('.door-btn').forEach(d => {
+        if(d !== btn) d.classList.add('door-vanish');
+        else d.classList.add('door-selected');
+    });
+    
+    document.getElementById('door-title').style.opacity = '0';
+
+    // 2. Логика награды и рейтинга
+    setTimeout(() => {
+        const playerName = prompt("Путник, назови своё имя для летописи Магистратума:") || "Анонимный Алхимик";
+        
+        // Сохраняем в рейтинг
+        leaderBoard.push({ name: playerName, reward: reward, date: new Date().toLocaleDateString() });
+        localStorage.setItem('alchemist_rating', JSON.stringify(leaderBoard));
+
+        // Выводим финальное сообщение с цитатой
+        const msg = document.getElementById('final-message');
+        msg.innerHTML = `
+            <p style="font-size: 1.5em; color: #f6ad55;">${rewards[reward]}</p>
+            <hr style="border-color: #3d4b5c; margin: 20px 0;">
+            <h3>ЛЕГЕНДЫ МАГИСТРАТУМА:</h3>
+            <div id="leaderboard-list" style="text-align: left; max-height: 200px; overflow-y: auto; font-size: 0.9em;">
+                ${leaderBoard.slice(-5).reverse().map(entry => `<div>• ${entry.name} — ${entry.reward} (${entry.date})</div>`).join('')}
+            </div>
+        `;
+        msg.classList.remove('hidden');
+    }, 800);
+}
 
     function quitGame() {
         document.getElementById('screen-start').innerHTML = "<h2>ПУТЬ ЗАКРЫТ</h2><p class='mystic-text'>Возвращайся, когда проснется жажда Истины.</p>";
