@@ -8,123 +8,126 @@
         body { background: #05070a; color: #e0e0e0; font-family: 'Georgia', serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
         #game-container { width: 900px; height: 750px; background: radial-gradient(circle at center, #1a1f26 0%, #05070a 100%); border: 2px solid #3d4b5c; border-radius: 20px; box-shadow: 0 0 100px rgba(0,0,0,1); position: relative; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; }
         
-        .gem-crystal {
-            width: 160px; height: 160px; margin: 0 auto 20px;
-            clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
-            background: linear-gradient(145deg, var(--gem-color) 20%, #ffffff 50%, var(--gem-color) 80%);
-            animation: pulse-rotate 4s infinite ease-in-out;
-            filter: drop-shadow(0 0 30px var(--gem-color));
-            border: 2px solid rgba(255,255,255,0.4);
-        }
+        .gem-crystal { width: 160px; height: 160px; margin: 0 auto 20px; clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%); background: linear-gradient(145deg, var(--gem-color) 20%, #ffffff 50%, var(--gem-color) 80%); animation: pulse-rotate 4s infinite ease-in-out; filter: drop-shadow(0 0 30px var(--gem-color)); border: 2px solid rgba(255,255,255,0.4); }
+        @keyframes pulse-rotate { 0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); } 50% { transform: scale(1.1) rotate(10deg); filter: brightness(1.5); } }
 
-        @keyframes pulse-rotate {
-            0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 0 20px var(--gem-color)); }
-            50% { transform: scale(1.1) rotate(10deg); filter: brightness(1.5) drop-shadow(0 0 45px var(--gem-color)); }
-        }
-
-        .mystic-text { font-style: italic; color: #a0aec0; margin-bottom: 15px; font-size: 1.1em; line-height: 1.5; }
-        .quote { color: #f6ad55; font-weight: bold; border-bottom: 1px solid #f6ad55; }
+        sub { font-size: 0.6em; vertical-align: sub; }
+        .mystic-text { font-style: italic; color: #a0aec0; margin-bottom: 15px; font-size: 1.1em; }
+        .btn { background: #1c2533; border: 1px solid #4a5568; color: #cbd5e0; padding: 12px 24px; cursor: pointer; border-radius: 8px; font-size: 1em; transition: 0.4s; margin: 8px; text-transform: uppercase; }
+        .btn:hover { background: #2d3748; color: #f6ad55; border-color: #f6ad55; transform: scale(1.05); }
         
-        .btn { background: #1c2533; border: 1px solid #4a5568; color: #cbd5e0; padding: 12px 24px; cursor: pointer; border-radius: 8px; font-size: 1em; transition: 0.3s; margin: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .btn:hover:not(:disabled) { background: #2d3748; color: #f6ad55; border-color: #f6ad55; transform: scale(1.05); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #2d3748; }
-        
-        .door-btn { background: #1c2533; border: 2px solid #f6ad55; padding: 20px 10px; width: 140px; font-size: 0.8em; color: gold; }
+        .door-btn { background: #1c2533; border: 2px solid #f6ad55; padding: 20px 10px; width: 140px; font-size: 0.8em; color: gold; transition: all 0.8s ease; opacity: 1; }
+        .door-vanish { opacity: 0; transform: scale(0.5); pointer-events: none; }
+        .door-selected { border-color: #00ffcc; box-shadow: 0 0 20px #00ffcc; transform: scale(1.1); }
 
         .hidden { display: none; }
-        h1, h2 { color: #f6ad55; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 20px; }
-        #final-message { color: #00ffcc; font-weight: bold; margin-top: 20px; font-size: 1.2em; text-shadow: 0 0 10px #00ffcc; }
+        h1, h2 { color: #f6ad55; text-transform: uppercase; letter-spacing: 4px; }
+        #final-message { color: #00ffcc; font-weight: bold; margin-top: 30px; font-size: 1.2em; text-shadow: 0 0 10px #00ffcc; }
     </style>
 </head>
 <body>
 
 <div id="game-container">
-    <!-- СТАРТ -->
     <div id="screen-start">
         <h1>L & ⅂ — МАГИСТРАТУМ</h1>
-        <p class="mystic-text">Приветствую Тебя, путник! Помни: <span class="quote">«Нет Знаний, не дающих Силу»</span>, но Сила без Знаний — лишь пепел на ветру.</p>
-        <div style="display: flex; justify-content: center; gap: 20px;">
+        <p class="mystic-text">Приветствую Тебя, путник! Помни: <span style="color:#f6ad55; font-weight:bold;">«Нет Знаний, не дающих Силу»</span>.</p>
+        <div style="display:flex; justify-content:center; gap:20px;">
             <button class="btn" onclick="nextScreen('lvl1')">Отправиться в путешествие</button>
             <button class="btn" onclick="quitGame()">Покинуть лабораторию</button>
         </div>
     </div>
 
-    <!-- LVL 1: СМЕСИ -->
     <div id="lvl1" class="hidden">
         <h2>Зал Разделения</h2>
-        <p class="mystic-text">Алхимик рассыпал железные опилки в песок. Какой силой ты очистишь путь?</p>
-        <button class="btn" onclick="nextScreen('lvl2')">Сила Магнита</button>
-        <button class="btn" onclick="alert('Песок и железо остались вместе...')">Сила Воды</button>
+        <p class="mystic-text">Как отделить железные опилки от песка?</p>
+        <button class="btn" onclick="nextScreen('lvl2')">Магнит</button>
+        <button class="btn" onclick="alert('Песок не отпустил железо...')">Вода</button>
     </div>
 
-    <!-- LVL 2: ВАЛЕНТНОСТЬ -->
     <div id="lvl2" class="hidden">
         <h2>Кузня Валентности</h2>
-        <p class="mystic-text">Дверь заперта на формулу. Соедини Алюминий (III) и Кислород (II).</p>
-        <button class="btn" onclick="nextScreen('lvl3')">Al2O3</button>
-        <button class="btn" onclick="alert('Формула рассыпалась!')">Al3O2</button>
+        <p class="mystic-text">Собери верную формулу для элемента: <span id="target-element" style="color:#f6ad55;"></span></p>
+        <div id="formula-options"></div>
     </div>
 
-    <!-- LVL 3: ИНДИКАТОРЫ -->
     <div id="lvl3" class="hidden">
         <h2>Озеро Базы</h2>
-        <p class="mystic-text">Перед тобой Основание. Какой цвет примет эликсир под действием фенолфталеина?</p>
+        <p class="mystic-text">Какой цвет примет фенолфталеин в растворе гидроксида натрия?</p>
         <button class="btn" onclick="nextScreen('screen-final')">Малиновый</button>
-        <button class="btn" onclick="alert('Цвет остался прежним...')">Бесцветный</button>
+        <button class="btn" onclick="alert('Эликсир остался прозрачным...')">Синий</button>
     </div>
 
-    <!-- ФИНАЛ -->
     <div id="screen-final" class="hidden">
         <h2>Великое Делание</h2>
         <div id="gem-visual" class="gem-crystal"></div>
         <h3 id="gem-name"></h3>
         <p id="gem-desc" class="mystic-text"></p>
-        
-        <p id="door-title" style="color: gold; margin-top: 20px;">Камень открыл Пять Тайных Дверей. Выбирай только одну:</p>
-        <div id="doors-container" style="display: flex; justify-content: center; gap: 5px;">
-            <button class="btn door-btn" onclick="claimReward('Мудрости (Оценка 5)')">Дверь Мудрости</button>
-            <button class="btn door-btn" onclick="claimReward('Удачи (Оценка 4)')">Дверь Удачи</button>
-            <button class="btn door-btn" onclick="claimReward('Власти (Выбор темы)')">Дверь Власти</button>
-            <button class="btn door-btn" onclick="claimReward('Иммунитета (Щит)')">Дверь Иммунитета</button>
-            <button class="btn door-btn" onclick="claimReward('Оракула (Подсказка)')">Дверь Оракула</button>
+        <p id="door-title" style="color: gold;">Выбери свою Дверь Награды:</p>
+        <div id="doors-container" style="display: flex; justify-content: center; gap: 10px;">
+            <button class="btn door-btn" onclick="claim(this, 'Мудрости (5)')">Дверь Мудрости</button>
+            <button class="btn door-btn" onclick="claim(this, 'Удачи (4)')">Дверь Удачи</button>
+            <button class="btn door-btn" onclick="claim(this, 'Власти')">Дверь Власти</button>
+            <button class="btn door-btn" onclick="claim(this, 'Иммунитета')">Дверь Иммунитета</button>
+            <button class="btn door-btn" onclick="claim(this, 'Оракула')">Дверь Оракула</button>
         </div>
         <div id="final-message" class="hidden">Путник! Ты получил свою награду! Твоя Славная Миссия выполнена!</div>
     </div>
 </div>
 
 <script>
+    const oxides = [
+        {el: "Алюминий (III)", right: "Al<sub>2</sub>O<sub>3</sub>", wrong: ["Al<sub>3</sub>O<sub>2</sub>", "AlO"]},
+        {el: "Фосфор (V)", right: "P<sub>2</sub>O<sub>5</sub>", wrong: ["PO<sub>5</sub>", "P<sub>5</sub>O<sub>2</sub>"]},
+        {el: "Натрий (I)", right: "Na<sub>2</sub>O", wrong: ["NaO<sub>2</sub>", "NaO"]},
+        {el: "Сера (VI)", right: "SO<sub>3</sub>", wrong: ["S<sub>2</sub>O<sub>6</sub>", "SO<sub>2</sub>"]}
+    ];
+
     const gems = [
         {name: "Изумруд", color: "#2ecc71", desc: "Камень чистого знания. Твои навыки будут расти вечно."},
         {name: "Аметист", color: "#9b59b6", desc: "Камень ясности. Твой разум чист от сомнений."},
         {name: "Рубин", color: "#e74c3c", desc: "Пламя Жизни. Твоя энергия сокрушит любые преграды."},
-        {name: "Сапфир", color: "#3498db", desc: "Синева Небес. Ты обрел истинную Базу знаний."},
-        {name: "Яшма", color: "#d35400", desc: "Камень твердости. Твои знания прочны, как скала."},
-        {name: "Малахит", color: "#16a085", desc: "Зелень жизни. Великая трансформация свершилась!"},
-        {name: "Бирюза", color: "#1abc9c", desc: "Камень победы. Триумф знаний свершился!"}
+        {name: "Сапфир", color: "#3498db", desc: "Синева Небес. Ты обрел истинную Базу знаний."}
     ];
 
     function nextScreen(id) {
         document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
-        if(id === 'screen-final') {
-            const gem = gems[Math.floor(Math.random() * gems.length)];
-            const v = document.getElementById('gem-visual');
-            v.style.setProperty('--gem-color', gem.color);
-            document.getElementById('gem-name').innerText = gem.name;
-            document.getElementById('gem-name').style.color = gem.color;
-            document.getElementById('gem-desc').innerText = gem.desc;
-        }
+        if(id === 'lvl2') setupOxide();
+        if(id === 'screen-final') setupGem();
+    }
+
+    function setupOxide() {
+        const ox = oxides[Math.floor(Math.random() * oxides.length)];
+        document.getElementById('target-element').innerText = ox.el;
+        const opts = [...ox.wrong, ox.right].sort(() => Math.random() - 0.5);
+        document.getElementById('formula-options').innerHTML = opts.map(o => 
+            `<button class="btn" onclick="${o === ox.right ? "nextScreen('lvl3')" : "alert('Формула нестабильна!')"}">${o}</button>`
+        ).join('');
+    }
+
+    function setupGem() {
+        const gem = gems[Math.floor(Math.random() * gems.length)];
+        const v = document.getElementById('gem-visual');
+        v.style.setProperty('--gem-color', gem.color);
+        document.getElementById('gem-name').innerText = gem.name;
+        document.getElementById('gem-name').style.color = gem.color;
+        document.getElementById('gem-desc').innerText = gem.desc;
+    }
+
+    function claim(btn, reward) {
+        document.querySelectorAll('.door-btn').forEach(d => {
+            if(d !== btn) d.classList.add('door-vanish');
+            else d.classList.add('door-selected');
+        });
+        document.getElementById('door-title').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('final-message').classList.remove('hidden');
+            alert("Награда " + reward + " твоя! Сделай скриншот для Магистра.");
+        }, 800);
     }
 
     function quitGame() {
-        document.getElementById('screen-start').innerHTML = "<h1>ПУТЬ ЗАКРЫТ</h1><p class='mystic-text'>Ты выбрал путь обычного смертного. Возвращайся, когда в тебе проснется жажда Истины.</p>";
-    }
-
-    function claimReward(door) {
-        alert("Твой выбор сделан: Дверь " + door + "! Сделай скриншот этого экрана для Магистра.");
-        document.getElementById('doors-container').classList.add('hidden');
-        document.getElementById('door-title').classList.add('hidden');
-        document.getElementById('final-message').classList.remove('hidden');
+        document.getElementById('screen-start').innerHTML = "<h2>ПУТЬ ЗАКРЫТ</h2><p class='mystic-text'>Возвращайся, когда проснется жажда Истины.</p>";
     }
 </script>
 </body>
