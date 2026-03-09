@@ -192,9 +192,10 @@ let leaderBoard = JSON.parse(localStorage.getItem('alchemist_rating')) || [];
     function nextScreen(id) {
     document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
-    if(id === 'lvl-cipher') setupCipher(); // Новый уровень
+    if(id === 'lvl-cipher') setupCipher();
     if(id === 'lvl-phenomena') setupPhenomena();
     if(id === 'lvl1') setupRiddle();
+    if(id === 'lvl-weight') setupWeight(); // ПРОВЕРЬ ЭТУ СТРОКУ!
     if(id === 'lvl2') setupOxide();
     if(id === 'lvl3') setupLake();
     if(id === 'screen-final') setupGem();
