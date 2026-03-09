@@ -12,7 +12,7 @@
         @keyframes pulse-rotate { 0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); } 50% { transform: scale(1.1) rotate(10deg); filter: brightness(1.5); } }
 
         sub { font-size: 0.6em; vertical-align: sub; }
-        .mystic-text { font-style: italic; color: #a0aec0; margin-bottom: 15px; font-size: 1.1em; }
+        .mystic-text { font-style: italic; color: #a0aec0; margin-bottom: 15px; font-size: 1.1em; line-height: 1.5; }
         .btn { background: #1c2533; border: 1px solid #4a5568; color: #cbd5e0; padding: 12px 24px; cursor: pointer; border-radius: 8px; font-size: 1em; transition: 0.4s; margin: 8px; text-transform: uppercase; }
         .btn:hover { background: #2d3748; color: #f6ad55; border-color: #f6ad55; transform: scale(1.05); }
         
@@ -39,20 +39,19 @@
 
     <div id="lvl1" class="hidden">
         <h2>Зал Разделения</h2>
-        <p class="mystic-text">Как отделить железные опилки от песка?</p>
-        <button class="btn" onclick="nextScreen('lvl2')">Магнит</button>
-        <button class="btn" onclick="alert('Песок не отпустил железо...')">Вода</button>
+        <p class="mystic-text" id="riddle-text"></p>
+        <div id="riddle-options"></div>
     </div>
 
     <div id="lvl2" class="hidden">
         <h2>Кузня Валентности</h2>
-        <p class="mystic-text">Собери верную формулу для элемента: <span id="target-element" style="color:#f6ad55;"></span></p>
+        <p class="mystic-text">Собери верную формулу для оксида: <span id="target-element" style="color:#f6ad55;"></span></p>
         <div id="formula-options"></div>
     </div>
 
     <div id="lvl3" class="hidden">
         <h2>Озеро Базы</h2>
-        <p class="mystic-text">Какой цвет примет фенолфталеин в растворе гидроксида натрия?</p>
+        <p class="mystic-text">Какой цвет примет фенолфталеин в растворе гидроксида натрия (NaOH)?</p>
         <button class="btn" onclick="nextScreen('screen-final')">Малиновый</button>
         <button class="btn" onclick="alert('Эликсир остался прозрачным...')">Синий</button>
     </div>
@@ -75,6 +74,12 @@
 </div>
 
 <script>
+    const riddles = [
+        { q: "Алхимик в стоге сена потерял железную иглу. Как найти её быстрее всего?", right: "Сжечь сено и собрать пепел магнитом", wrong: ["Просеять сено", "Залить водой"] },
+        { q: "В чаше смешаны песок и соль. Как вернуть алхимику чистую соль?", right: "Растворить, отфильтровать и выпарить", wrong: ["Пинцетом", "Магнитом"] },
+        { q: "В кувшин с маслом попали тяжелые камни. Как очистить масло?", right: "Аккуратно слить масло (декантация)", wrong: ["Заморозить", "Выпарить"] }
+    ];
+
     const oxides = [
         {el: "Алюминий (III)", right: "Al<sub>2</sub>O<sub>3</sub>", wrong: ["Al<sub>3</sub>O<sub>2</sub>", "AlO"]},
         {el: "Фосфор (V)", right: "P<sub>2</sub>O<sub>5</sub>", wrong: ["PO<sub>5</sub>", "P<sub>5</sub>O<sub>2</sub>"]},
@@ -86,14 +91,26 @@
         {name: "Изумруд", color: "#2ecc71", desc: "Камень чистого знания. Твои навыки будут расти вечно."},
         {name: "Аметист", color: "#9b59b6", desc: "Камень ясности. Твой разум чист от сомнений."},
         {name: "Рубин", color: "#e74c3c", desc: "Пламя Жизни. Твоя энергия сокрушит любые преграды."},
-        {name: "Сапфир", color: "#3498db", desc: "Синева Небес. Ты обрел истинную Базу знаний."}
+        {name: "Сапфир", color: "#3498db", desc: "Синева Небес. Ты обрел истинную Базу знаний."},
+        {name: "Малахит", color: "#16a085", desc: "Зелень жизни. Великая трансформация свершилась!"},
+        {name: "Бирюза", color: "#1abc9c", desc: "Камень победы. Триумф знаний свершился!"}
     ];
 
     function nextScreen(id) {
         document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
+        if(id === 'lvl1') setupRiddle();
         if(id === 'lvl2') setupOxide();
         if(id === 'screen-final') setupGem();
+    }
+
+    function setupRiddle() {
+        const rid = riddles[Math.floor(Math.random() * riddles.length)];
+        document.getElementById('riddle-text').innerText = rid.q;
+        const opts = [...rid.wrong, rid.right].sort(() => Math.random() - 0.5);
+        document.getElementById('riddle-options').innerHTML = opts.map(o => 
+            `<button class="btn" onclick="${o === rid.right ? "nextScreen('lvl2')" : "alert('Путь заблокирован! Попробуй снова.')"}">${o}</button>`
+        ).join('');
     }
 
     function setupOxide() {
