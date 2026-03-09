@@ -4,15 +4,32 @@
     <meta charset="UTF-8">
     <title>L & ⅂ — МАГИСТРАТУМ: ПУТЬ АЛХИМИКА</title>
     <style>
-        body { background: #0b0e14; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
-        #game-container { width: 800px; height: 600px; background: #1a1f26; border: 2px solid #3d4b5c; border-radius: 15px; box-shadow: 0 0 50px rgba(0,0,0,0.7); position: relative; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; }
-        .mystic-text { font-style: italic; color: #a0aec0; margin-bottom: 20px; font-size: 1.1em; line-height: 1.6; }
-        .quote { color: #f6ad55; font-weight: bold; }
-        .btn { background: #2d3748; border: 1px solid #4a5568; color: white; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-size: 1em; transition: 0.3s; margin: 10px; }
-        .btn:hover { background: #4a5568; border-color: #f6ad55; box-shadow: 0 0 15px rgba(246, 173, 85, 0.4); }
+        body { background: #0b0e14; color: #e0e0e0; font-family: 'Georgia', serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        #game-container { width: 850px; height: 650px; background: radial-gradient(circle, #1a1f26 0%, #0d1117 100%); border: 3px solid #3d4b5c; border-radius: 20px; box-shadow: 0 0 60px rgba(0,0,0,0.9); position: relative; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; border-image: linear-gradient(to bottom, #3d4b5c, #1a1f26) 1; }
+        
+        .mystic-text { font-style: italic; color: #a0aec0; margin-bottom: 20px; font-size: 1.2em; line-height: 1.6; text-shadow: 1px 1px 2px black; }
+        .quote { color: #f6ad55; font-weight: bold; border-bottom: 1px dashed #f6ad55; }
+        
+        /* Кристалл */
+        .gem-crystal {
+            width: 120px; height: 150px; margin: 0 auto 30px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: pulse-glow 3s infinite ease-in-out;
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.5);
+            transition: all 0.5s ease;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); filter: brightness(1) drop-shadow(0 0 10px var(--gem-color)); }
+            50% { transform: scale(1.05); filter: brightness(1.3) drop-shadow(0 0 30px var(--gem-color)); }
+            100% { transform: scale(1); filter: brightness(1) drop-shadow(0 0 10px var(--gem-color)); }
+        }
+
+        .btn { background: #1c2533; border: 1px solid #4a5568; color: #cbd5e0; padding: 15px 30px; cursor: pointer; border-radius: 8px; font-size: 1.1em; transition: 0.4s; margin: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .btn:hover { background: #2d3748; color: #f6ad55; border-color: #f6ad55; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+        
         .hidden { display: none; }
-        .gem-img { font-size: 80px; margin-bottom: 20px; display: block; }
-        input { background: #2d3748; border: 1px solid #4a5568; color: white; padding: 10px; border-radius: 5px; text-align: center; }
+        h1, h2 { color: #f6ad55; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -22,59 +39,55 @@
     <div id="screen-start">
         <h1>L & ⅂ — МАГИСТРАТУМ</h1>
         <p class="mystic-text">Приветствую Тебя, путник! Ты ищешь Золото, но найдешь лишь Истину. Помни: <span class="quote">«Нет Знаний, не дающих Силу»</span>, но Сила без Знаний — лишь пепел на ветру.</p>
-        <p class="mystic-text">Мой горн остыл, и Философский Камень рассыпался. Пройди путь от Песка до Основ Мироздания.</p>
         <button class="btn" onclick="nextScreen('screen-lvl1')">Начать Путешествие</button>
-        <button class="btn" onclick="alert('Вы остались обычным смертным без пятёрки...')">Покинуть Лабораторию</button>
     </div>
 
-    <!-- УРОВЕНЬ 1: ПЕСОК (СМЕСИ) -->
+    <!-- УРОВЕНЬ 1 -->
     <div id="screen-lvl1" class="hidden">
         <h2>Зал Разделения</h2>
-        <p>Алхимик рассыпал железные опилки в песок. Какой артефакт поможет их разделить?</p>
-        <button class="btn" onclick="nextScreen('screen-lvl2')">Магнит</button>
-        <button class="btn" onclick="alert('Фильтрование тут не поможет...')">Фильтр</button>
+        <p class="mystic-text">Алхимик рассыпал железные опилки в речной песок. Какой силой ты очистишь путь?</p>
+        <button class="btn" onclick="nextScreen('screen-lvl2')">Сила Магнита</button>
+        <button class="btn" onclick="alert('Песок и железо остались вместе...')">Сила Воды</button>
     </div>
 
-    <!-- УРОВЕНЬ 2: ВАЛЕНТНОСТЬ -->
+    <!-- УРОВЕНЬ 2 -->
     <div id="screen-lvl2" class="hidden">
         <h2>Кузня Валентности</h2>
-        <p>Для создания формулы Al?O? нужно знать валентности. Какая формула верна?</p>
+        <p class="mystic-text">Дверь заперта на шифр. Соедини Алюминий (III) и Кислород (II) в верное число.</p>
         <button class="btn" onclick="nextScreen('screen-lvl3')">Al2O3</button>
-        <button class="btn" onclick="alert('Нарушен закон валентности!')">Al3O2</button>
+        <button class="btn" onclick="alert('Весы мироздания пошатнулись! Неверная формула.')">Al3O2</button>
     </div>
 
-    <!-- УРОВЕНЬ 3: ГИДРОКСИДЫ -->
+    <!-- УРОВЕНЬ 3 -->
     <div id="screen-lvl3" class="hidden">
         <h2>Лаборатория Основ</h2>
-        <p>Какое вещество окрасит фенолфталеин в малиновый цвет?</p>
-        <button class="btn" onclick="nextScreen('screen-final')">NaOH (Щёлочь)</button>
-        <button class="btn" onclick="alert('Это кислота, она не малиновая!')">HCl</button>
+        <p class="mystic-text">Чтобы пробудить камень, нужно создать Базу. Что превратит бесцветный эликсир в малиновое пламя?</p>
+        <button class="btn" onclick="nextScreen('screen-final')">Щелочь (NaOH)</button>
+        <button class="btn" onclick="alert('Кислота лишь подавит дух камня...')">Кислота (HCl)</button>
     </div>
 
-    <!-- ФИНАЛ: ВЕЛИКОЕ ДЕЛАНИЕ -->
+    <!-- ФИНАЛ -->
     <div id="screen-final" class="hidden">
-        <h2>Magnum Opus</h2>
+        <h2>Великое Делание</h2>
         <div id="gem-container">
-            <span class="gem-img" id="gem-icon">💎</span>
-            <h3 id="gem-name">Название Камня</h3>
+            <div id="gem-visual" class="gem-crystal"></div>
+            <h3 id="gem-name" style="font-size: 2em; margin: 10px 0;"></h3>
             <p id="gem-desc" class="mystic-text"></p>
         </div>
-        <hr style="border: 0.5px solid #3d4b5c; margin: 20px 0;">
-        <p>Твой камень открыл Тайные Двери!</p>
-        <button class="btn" onclick="alert('Дверь Мудрости открыта: Твоя оценка за завтра — 5!')">Дверь Мудрости (5)</button>
-        <button class="btn" onclick="alert('Дверь Удачи открыта: Твоя оценка за завтра — 4 (с правом на 5)!')">Дверь Удачи (4)</button>
+        <button class="btn" onclick="alert('Твоя награда в журнале — Великая Пятёрка!')">Открыть Дверь Мудрости</button>
     </div>
 </div>
 
 <script>
     const gems = [
-        {name: "Изумруд", icon: "💚", desc: "Камень чистого знания. Подобно свежей зелени, твои знания будут расти вечно."},
-        {name: "Рубин", icon: "❤️", desc: "Пламя Жизни. Красный, как лакмус в кислоте, ты полон энергии и страсти к науке."},
-        {name: "Сапфир", icon: "💙", desc: "Синева Небес. Синий, как лакмус в щелочи, ты обрел истинную базу знаний."},
-        {name: "Аметист", icon: "💜", desc: "Камень Ясности. Ты видишь суть вещей сквозь мутные растворы неведения."},
-        {name: "Малахит", icon: "🍀", desc: "Камень Трансформации. Ты познал тайну превращения меди в основу жизни."},
-        {name: "Янтарь", icon: "🟠", desc: "Слеза Древности. Твои знания закалены временем, как смола в океане."},
-        {name: "Топаз", icon: "💎", desc: "Прозрачность Мысли. Твой разум чист, как дистиллированная вода."}
+        {name: "Изумруд", color: "#2ecc71", desc: "Камень чистого знания. Подобно свежей зелени, твои знания будут расти вечно."},
+        {name: "Аметист", color: "#9b59b6", desc: "Камень ясности ума. Очищает помыслы от сомнений."},
+        {name: "Рубин", color: "#e74c3c", desc: "Пламя Жизни. Твоя энергия способна расплавить любой гранит науки."},
+        {name: "Сапфир", color: "#3498db", desc: "Синева Небес. Ты обрел истинную Базу знаний."},
+        {name: "Янтарь", color: "#f39c12", desc: "Слеза Древности. Твои знания закалены временем."},
+        {name: "Малахит", color: "#16a085", desc: "Зелень жизни. Ты познал суть превращений материи."},
+        {name: "Топаз", color: "#00d2ff", desc: "Камень света. Твой разум чист и прозрачен."}
+        // ... добавлю остальные 10 при финальной полировке
     ];
 
     function nextScreen(id) {
@@ -85,8 +98,11 @@
 
     function generateGem() {
         const gem = gems[Math.floor(Math.random() * gems.length)];
-        document.getElementById('gem-icon').innerText = gem.icon;
+        const visual = document.getElementById('gem-visual');
+        visual.style.setProperty('--gem-color', gem.color);
+        visual.style.background = `linear-gradient(135deg, ${gem.color} 0%, #ffffff 50%, ${gem.color} 100%)`;
         document.getElementById('gem-name').innerText = gem.name;
+        document.getElementById('gem-name').style.color = gem.color;
         document.getElementById('gem-desc').innerText = gem.desc;
     }
 </script>
