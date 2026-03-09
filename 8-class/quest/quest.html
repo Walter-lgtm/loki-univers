@@ -96,11 +96,11 @@ let leaderBoard = JSON.parse(localStorage.getItem('alchemist_rating')) || [];
     ];
 
     const oxides = [
-        {el: "Алюминий (III)", right: "Al<sub>2</sub>O<sub>3</sub>", wrong: ["Al<sub>3</sub>O<sub>2</sub>", "AlO"]},
-        {el: "Фосфор (V)", right: "P<sub>2</sub>O<sub>5</sub>", wrong: ["PO<sub>5</sub>", "P<sub>5</sub>O<sub>2</sub>"]},
-        {el: "Натрий (I)", right: "Na<sub>2</sub>O", wrong: ["NaO<sub>2</sub>", "NaO"]},
-        {el: "Сера (VI)", right: "SO<sub>3</sub>", wrong: ["S<sub>2</sub>O<sub>6</sub>", "SO<sub>2</sub>"]}
-    ];
+    {el: "Алюминий (III)", right: "Al<sub>2</sub>O<sub>3</sub>", wrong: ["Al<sub>3</sub>O<sub>2</sub>", "AlO"]},
+    {el: "Фосфор (V)", right: "P<sub>2</sub>O<sub>5</sub>", wrong: ["PO<sub>5</sub>", "P<sub>5</sub>O<sub>2</sub>"]},
+    {el: "Натрий (I)", right: "Na<sub>2</sub>O", wrong: ["NaO<sub>2</sub>", "NaO"]}, // Исправлено NA -> Na
+    {el: "Сера (VI)", right: "SO<sub>3</sub>", wrong: ["S<sub>2</sub>O<sub>6</sub>", "SO<sub>2</sub>"]}
+];
 
     const gems = [
         {name: "Изумруд", color: "#2ecc71", desc: "Камень чистого знания. Твои навыки будут расти вечно."},
