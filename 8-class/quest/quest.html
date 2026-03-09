@@ -37,6 +37,7 @@
         </div>
     </div>
 
+   <div id="lvl-phenomena" class="hidden"></div>
     <div id="lvl1" class="hidden">
         <h2>Зал Разделения</h2>
         <p class="mystic-text" id="riddle-text"></p>
@@ -71,6 +72,13 @@
 </div>
 
 <script>
+    const phenomena = [
+    { text: "Горение магической свечи", type: "chem", desc: "Появился новый запах и свет — это химия!" },
+    { text: "Плавление ледяного кристалла", type: "phys", desc: "Лишь форма изменилась, суть осталась водой." },
+    { text: "Почернение медной чаши на огне", type: "chem", desc: "Медь соединилась с кислородом — новый налет!" },
+    { text: "Растворение сахара в чае", type: "phys", desc: "Молекулы просто перемешались, это физика." },
+    { text: "Скисание молока в кувшине", type: "chem", desc: "Образовался осадок и новый вкус — чистая реакция!" }
+];
     const rewards = {
     'Мудрости (5)': "Философский Камень превратил Твои знания в золотую пятёрку! В журнале засияло золото.",
     'Удачи (4)': "Ты почти познал Великое Делание. Твоя награда — крепкая четвёрка и благословение Алхимика.",
@@ -152,7 +160,26 @@ let leaderBoard = JSON.parse(localStorage.getItem('alchemist_rating')) || [];
     ).join('');
 }
 
-function checkIndicator(name, effect) {
+function setupPhenomena() {
+    const stage = phenomena[Math.floor(Math.random() * phenomena.length)];
+    const lvl = document.getElementById('lvl-phenomena'); // Нужно добавить этот ID в HTML
+    lvl.innerHTML = `
+        <h2>Зал Трансмутаций</h2>
+        <p class="mystic-text">Перед тобой явление: <b>${stage.text}</b>. Какова его природа?</p>
+        <button class="btn" onclick="checkPhenom('${stage.type}', 'phys', '${stage.desc}')">Физическое</button>
+        <button class="btn" onclick="checkPhenom('${stage.type}', 'chem', '${stage.desc}')">Химическое</button>
+    `;
+}
+
+function checkPhenom(correct, chosen, desc) {
+    if (correct === chosen) {
+        alert("Верно! " + desc);
+        nextScreen('lvl2'); // Ведем в Кузню Валентности
+    } else {
+        alert("Ошибся, путник! Энергия рассеялась. Попробуй снова.");
+    }
+}
+    function checkIndicator(name, effect) {
     alert(`Раствор окрасился в ${effect} цвет! Истина открылась.`);
     nextScreen('screen-final');
 }
