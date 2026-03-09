@@ -88,7 +88,11 @@ body {
         <p class="mystic-text" id="riddle-text"></p>
         <div id="riddle-options"></div>
     </div>
-
+    <div id="lvl-weight" class="hidden">
+    <h2>ВЕСЫ ИСТИНЫ</h2>
+    <p class="mystic-text">Чаши замерли... Определи относительную молекулярную массу (M<sub>r</sub>) для: <b id="weight-target" style="color:#f6ad55;"></b></p>
+    <div id="weight-options"></div>
+    </div>
     <div id="lvl2" class="hidden">
         <h2>Кузня Валентности</h2>
         <p class="mystic-text">Собери верную формулу для оксида: <span id="target-element" style="color:#f6ad55;"></span></p>
@@ -117,6 +121,13 @@ body {
 </div>
 
 <script>
+    const weightBalance = [
+    { formula: "H<sub>2</sub>O", right: 18, wrong: [20, 10, 16] },
+    { formula: "CO<sub>2</sub>", right: 44, wrong: [28, 40, 56] },
+    { formula: "O<sub>2</sub>", right: 32, wrong: [16, 48, 64] },
+    { formula: "NaOH", right: 40, wrong: [39, 23, 57] },
+    { formula: "CH<sub>4</sub>", right: 16, wrong: [12, 20, 18] }
+];
     const elementCipher = [
     { name: "Золото (Aurum)", right: "Au", wrong: ["Ag", "Al"] },
     { name: "Серебро (Argentum)", right: "Ag", wrong: ["Au", "Si"] },
@@ -256,6 +267,14 @@ function checkPhenom(correct, chosen, desc) {
         document.getElementById('gem-desc').innerText = gem.desc;
     }
 
+    function setupWeight() {
+        const item = weightBalance[Math.floor(Math.random() * weightBalance.length)];
+        document.getElementById('weight-target').innerHTML = item.formula;
+        const opts = [...item.wrong, item.right].sort(() => Math.random() - 0.5);
+        document.getElementById('weight-options').innerHTML = opts.map(o => 
+            `<button class="btn" onclick="${o === item.right ? "nextScreen('lvl2')" : "alert('Равновесие нарушено! Масса неверна.')"}">${o}</button>`
+        ).join('');
+    }
     function claim(btn, reward) {
     // 1. Анимация выбора
     document.querySelectorAll('.door-btn').forEach(d => {
