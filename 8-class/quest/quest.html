@@ -77,7 +77,12 @@ body {
         </div>
     </div>
 
-   <div id="lvl-phenomena" class="hidden"></div>
+   <div id="lvl-cipher" class="hidden">
+    <h2>ШИФР ЭЛЕМЕНТОВ</h2>
+    <p class="mystic-text">Древний манускрипт упоминает: <b id="cipher-target" style="color:#f6ad55;"></b>. Какой символ откроет замок?</p>
+    <div id="cipher-options"></div>
+</div>
+    <div id="lvl-phenomena" class="hidden"></div>
     <div id="lvl1" class="hidden">
         <h2>Зал Разделения</h2>
         <p class="mystic-text" id="riddle-text"></p>
@@ -112,6 +117,13 @@ body {
 </div>
 
 <script>
+    const elementCipher = [
+    { name: "Золото (Aurum)", right: "Au", wrong: ["Ag", "Al"] },
+    { name: "Серебро (Argentum)", right: "Ag", wrong: ["Au", "Si"] },
+    { name: "Железо (Ferrum)", right: "Fe", wrong: ["F", "Fr"] },
+    { name: "Медь (Cuprum)", right: "Cu", wrong: ["Cr", "Ca"] },
+    { name: "Ртуть (Hydrargyrum)", right: "Hg", wrong: ["H", "Hy"] }
+];
     const phenomena = [
     { text: "Горение магической свечи", type: "chem", desc: "Появился новый запах и свет — это химия!" },
     { text: "Плавление ледяного кристалла", type: "phys", desc: "Лишь форма изменилась, суть осталась водой." },
@@ -158,13 +170,22 @@ let leaderBoard = JSON.parse(localStorage.getItem('alchemist_rating')) || [];
     { name: "Универсальный индикатор", effect: "Сине-фиолетовый", logic: "right" }
 ];
     
+    function setupCipher() {
+    const el = elementCipher[Math.floor(Math.random() * elementCipher.length)];
+    document.getElementById('cipher-target').innerText = el.name;
+    const opts = [...el.wrong, el.right].sort(() => Math.random() - 0.5);
+    document.getElementById('cipher-options').innerHTML = opts.map(o => 
+        `<button class="btn" onclick="${o === el.right ? "nextScreen('lvl-phenomena')" : "alert('Шифр не принят! Элемент сопротивляется.')"}">${o}</button>`
+    ).join('');
+}
     function nextScreen(id) {
     document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
+    if(id === 'lvl-cipher') setupCipher(); // Новый уровень
     if(id === 'lvl-phenomena') setupPhenomena();
     if(id === 'lvl1') setupRiddle();
     if(id === 'lvl2') setupOxide();
-    if(id === 'lvl3') setupLake(); // Новая функция для Озера
+    if(id === 'lvl3') setupLake();
     if(id === 'screen-final') setupGem();
 }
 
