@@ -50,11 +50,8 @@
     </div>
 
     <div id="lvl3" class="hidden">
-        <h2>Озеро Базы</h2>
-        <p class="mystic-text">Какой цвет примет фенолфталеин в растворе гидроксида натрия (NaOH)?</p>
-        <button class="btn" onclick="nextScreen('screen-final')">Малиновый</button>
-        <button class="btn" onclick="alert('Эликсир остался прозрачным...')">Синий</button>
-    </div>
+    <!-- Теперь заполняется через setupLake() -->
+</div>
 
     <div id="screen-final" class="hidden">
         <h2>Великое Делание</h2>
@@ -96,13 +93,21 @@
         {name: "Бирюза", color: "#1abc9c", desc: "Камень победы. Триумф знаний свершился!"}
     ];
 
+    const indicators = [
+    { name: "Фенолфталеин", effect: "Малиновый", logic: "right" },
+    { name: "Лакмус", effect: "Синий", logic: "right" },
+    { name: "Метиловый оранжевый", effect: "Желтый", logic: "right" },
+    { name: "Универсальный индикатор", effect: "Сине-фиолетовый", logic: "right" }
+];
+    
     function nextScreen(id) {
-        document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-        if(id === 'lvl1') setupRiddle();
-        if(id === 'lvl2') setupOxide();
-        if(id === 'screen-final') setupGem();
-    }
+    document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    if(id === 'lvl1') setupRiddle();
+    if(id === 'lvl2') setupOxide();
+    if(id === 'lvl3') setupLake(); // Новая функция для Озера
+    if(id === 'screen-final') setupGem();
+}
 
     function setupRiddle() {
         const rid = riddles[Math.floor(Math.random() * riddles.length)];
@@ -122,6 +127,25 @@
         ).join('');
     }
 
+    function setupLake() {
+    const lakeDiv = document.getElementById('lvl3');
+    lakeDiv.innerHTML = `
+        <h2>Озеро Базы</h2>
+        <p class="mystic-text">Алхимику нужна едкая щелочь, но перед ним две колбы с прозрачной жидкостью. Какой артефакт поможет опознать щелочь?</p>
+        <div id="indicator-options"></div>
+    `;
+    
+    // Перемешиваем индикаторы и создаем кнопки
+    const opts = [...indicators].sort(() => Math.random() - 0.5);
+    document.getElementById('indicator-options').innerHTML = opts.map(ind => 
+        `<button class="btn" onclick="checkIndicator('${ind.name}', '${ind.effect}')">${ind.name}</button>`
+    ).join('');
+}
+
+function checkIndicator(name, effect) {
+    alert(`Раствор окрасился в ${effect} цвет! Истина открылась.`);
+    nextScreen('screen-final');
+}
     function setupGem() {
         const gem = gems[Math.floor(Math.random() * gems.length)];
         const v = document.getElementById('gem-visual');
